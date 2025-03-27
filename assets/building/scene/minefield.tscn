@@ -1,0 +1,30 @@
+[gd_scene load_steps=5 format=3 uid="uid://chcjww155mwqr"]
+
+[ext_resource type="ArrayMesh" uid="uid://cj4e4vmn8mjnb" path="res://assets/building/mesh/minefield.tres" id="1_6eiii"]
+[ext_resource type="Script" uid="uid://dfm0lclfnn83t" path="res://assets/scripts/area_3d.gd" id="2_nu8r8"]
+
+[sub_resource type="ConcavePolygonShape3D" id="ConcavePolygonShape3D_k8ulc"]
+data = PackedVector3Array(0.5, 0.05, 0.5, -0.5, 0, 0.5, -0.5, 0.05, 0.5, 0.5, 0, 0.5, -0.5, 0, 0.5, 0.5, 0.05, 0.5, -0.5, 0.05, -0.5, 0.5, 0, -0.5, 0.5, 0.05, -0.5, -0.5, 0, -0.5, 0.5, 0, -0.5, -0.5, 0.05, -0.5, 0.5, 0.05, -0.5, 0.5, 0, 0.5, 0.5, 0.05, 0.5, 0.5, 0, -0.5, 0.5, 0, 0.5, 0.5, 0.05, -0.5, -0.5, 0.05, 0.5, -0.5, 0, -0.5, -0.5, 0.05, -0.5, -0.5, 0, 0.5, -0.5, 0, -0.5, -0.5, 0.05, 0.5, -0.5, 0.05, 0.5, 0.5, 0.05, -0.5, 0.5, 0.05, 0.5, -0.5, 0.05, -0.5, 0.5, 0.05, -0.5, -0.5, 0.05, 0.5, 0.5, 0, 0.5, -0.5, 0, -0.5, -0.5, 0, 0.5, 0.5, 0, -0.5, -0.5, 0, -0.5, 0.5, 0, 0.5)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_h820h"]
+
+[node name="minefield" type="MeshInstance3D"]
+mesh = ExtResource("1_6eiii")
+
+[node name="stat" type="StaticBody3D" parent="."]
+collision_layer = 2
+
+[node name="col" type="CollisionShape3D" parent="stat"]
+shape = SubResource("ConcavePolygonShape3D_k8ulc")
+
+[node name="Area3D" type="Area3D" parent="."]
+collision_layer = 2
+collision_mask = 2
+script = ExtResource("2_nu8r8")
+
+[node name="col" type="CollisionShape3D" parent="Area3D"]
+transform = Transform3D(0.99, 0, 0, 0, 0.99, 0, 0, 0, 0.99, 0, 0.5, 0)
+shape = SubResource("BoxShape3D_h820h")
+
+[connection signal="area_entered" from="Area3D" to="Area3D" method="_on_area_entered"]
+[connection signal="area_exited" from="Area3D" to="Area3D" method="_on_area_exited"]

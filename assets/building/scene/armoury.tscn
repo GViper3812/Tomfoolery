@@ -1,0 +1,31 @@
+[gd_scene load_steps=5 format=3 uid="uid://b7pvsbugefnjw"]
+
+[ext_resource type="ArrayMesh" uid="uid://dhy5skb7ducej" path="res://assets/building/mesh/armoury.tres" id="1_iandm"]
+[ext_resource type="Script" uid="uid://dfm0lclfnn83t" path="res://assets/scripts/area_3d.gd" id="2_mj8ki"]
+
+[sub_resource type="ConcavePolygonShape3D" id="ConcavePolygonShape3D_l48mj"]
+data = PackedVector3Array(1, 0, -0.5, -1, 0, -0.5, 1, 0, 0.5, 1, 0, 0.5, -1, 0, -0.5, -1, 0, 0.5, 0.7071, 0.3536, -0.5, 1, 0, -0.5, 0.7071, 0.3536, 0.5, 0.7071, 0.3536, 0.5, 1, 0, -0.5, 1, 0, 0.5, 0, 0.5, -0.5, 0.7071, 0.3536, -0.5, 0, 0.5, 0.5, 0, 0.5, 0.5, 0.7071, 0.3536, -0.5, 0.7071, 0.3536, 0.5, -0.7071, 0.3536, 0.5, -0.7071, 0.3536, -0.5, 0, 0.5, 0.5, 0, 0.5, 0.5, -0.7071, 0.3536, -0.5, 0, 0.5, -0.5, -0.7071, 0.3536, 0.5, -1, 0, 0.5, -0.7071, 0.3536, -0.5, -0.7071, 0.3536, -0.5, -1, 0, 0.5, -1, 0, -0.5, 0.7071, 0.3536, 0.5, 1, 0, 0.5, 0, 0, 0.5, 0, 0.5, 0.5, 0.7071, 0.3536, 0.5, 0, 0, 0.5, -0.7071, 0.3536, 0.5, 0, 0.5, 0.5, 0, 0, 0.5, -1, 0, 0.5, -0.7071, 0.3536, 0.5, 0, 0, 0.5, 1, 0, -0.5, 0.7071, 0.3536, -0.5, 0, 0, -0.5, 0.7071, 0.3536, -0.5, 0, 0.5, -0.5, 0, 0, -0.5, 0, 0.5, -0.5, -0.7071, 0.3536, -0.5, 0, 0, -0.5, -0.7071, 0.3536, -0.5, -1, 0, -0.5, 0, 0, -0.5)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_mj8ki"]
+
+[node name="armoury" type="MeshInstance3D"]
+mesh = ExtResource("1_iandm")
+
+[node name="stat" type="StaticBody3D" parent="."]
+collision_layer = 2
+collision_mask = 2
+
+[node name="col" type="CollisionShape3D" parent="stat"]
+shape = SubResource("ConcavePolygonShape3D_l48mj")
+
+[node name="Area3D" type="Area3D" parent="."]
+collision_layer = 2
+collision_mask = 2
+script = ExtResource("2_mj8ki")
+
+[node name="col" type="CollisionShape3D" parent="Area3D"]
+transform = Transform3D(1.98, 0, 0, 0, 0.99, 0, 0, 0, 0.99, 0, 0.5, 0)
+shape = SubResource("BoxShape3D_mj8ki")
+
+[connection signal="area_entered" from="Area3D" to="Area3D" method="_on_area_entered"]
+[connection signal="area_exited" from="Area3D" to="Area3D" method="_on_area_exited"]

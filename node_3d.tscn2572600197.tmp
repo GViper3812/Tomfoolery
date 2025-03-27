@@ -1,0 +1,142 @@
+[gd_scene load_steps=12 format=3 uid="uid://d3yx6al2k3um5"]
+
+[ext_resource type="Script" uid="uid://bjy1atkg7oebe" path="res://Player/character_body_3d.gd" id="1_o1tqw"]
+[ext_resource type="PackedScene" uid="uid://byyk1a1grgcv2" path="res://Player/hud.tscn" id="2_eoku1"]
+[ext_resource type="Script" uid="uid://g87mlfguaeq6" path="res://Scripts/build_manager.gd" id="3_855mp"]
+[ext_resource type="Script" uid="uid://udxkaq3qfjce" path="res://resource_manager.gd" id="4_75q7d"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_rv551"]
+size = Vector3(10, 0.1, 10)
+
+[sub_resource type="PlaneMesh" id="PlaneMesh_62lv0"]
+size = Vector2(10, 10)
+
+[sub_resource type="CapsuleMesh" id="CapsuleMesh_qxy4w"]
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_eu2cq"]
+
+[sub_resource type="GDScript" id="GDScript_r3fl7"]
+script/source = "extends Node3D
+
+const CAMERA_SMOOTH_SPEED = 10.0
+const MAX_LOOK_UP = 75.0
+const MAX_LOOK_DOWN = 15.0
+const ZOOM_SPEED = 0.5
+const MIN_ZOOM = 3.0
+const MAX_ZOOM = 17.0
+const CAMERA_ROTATION_SENSITIVITY = 0.3
+const CAMERA_SMOOTH_ROTATION_SPEED = 16.0
+
+@onready var camera: Camera3D = $\"../Cam\"
+
+var yaw = 45.0
+var pitch = 30.0
+var smooth_yaw = 45.0
+var smooth_pitch = 30.0
+var zoom_distance = 10.0
+var target_zoom_distance = 10.0
+
+func _ready():
+	zoom_distance = target_zoom_distance
+	
+func _input(event):
+	if Input.is_mouse_button_pressed(MOUSE_BUTTON_MIDDLE):
+		if event is InputEventMouseMotion:
+			yaw -= event.relative.x * CAMERA_ROTATION_SENSITIVITY
+			pitch -= event.relative.y * CAMERA_ROTATION_SENSITIVITY
+			
+			pitch = clamp(pitch, MAX_LOOK_DOWN, MAX_LOOK_UP)
+			
+	if event is InputEventMouseButton:
+		if event.button_index == MOUSE_BUTTON_WHEEL_UP:
+			target_zoom_distance = max(MIN_ZOOM, target_zoom_distance - ZOOM_SPEED)
+		elif event.button_index == MOUSE_BUTTON_WHEEL_DOWN:
+			target_zoom_distance = min(MAX_ZOOM, target_zoom_distance + ZOOM_SPEED)
+
+func _process(delta):
+	zoom_distance = lerp(zoom_distance, target_zoom_distance, CAMERA_SMOOTH_SPEED * delta)
+	
+	smooth_yaw = lerp(smooth_yaw, yaw, CAMERA_SMOOTH_ROTATION_SPEED * delta)
+	smooth_pitch = lerp(smooth_pitch, pitch, CAMERA_SMOOTH_ROTATION_SPEED * delta)
+	
+	var offset = Vector3(
+		cos(deg_to_rad(smooth_yaw)) * cos(deg_to_rad(smooth_pitch)),
+		sin(deg_to_rad(smooth_pitch)),
+		sin(deg_to_rad(smooth_yaw)) * cos(deg_to_rad(smooth_pitch))
+		).normalized() * zoom_distance
+	
+	camera.global_transform.origin = global_transform.origin + offset
+	camera.look_at(global_transform.origin, Vector3.UP)
+	
+func get_camera_basis() -> Basis:
+	return camera.global_transform.basis
+"
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_s1lyr"]
+size = Vector3(0.1, 1, 4)
+
+[sub_resource type="QuadMesh" id="QuadMesh_7haat"]
+size = Vector2(2, 1)
+orientation = 0
+
+[node name="Node3D" type="GridMap"]
+cell_size = Vector3(0.5, 0.5, 0.5)
+metadata/_editor_floor_ = Vector3(0, -3, 0)
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 0.926213, 0.377, 0, -0.377, 0.926213, 0, 1.24604, 1.55185)
+
+[node name="StaticBody3D" type="StaticBody3D" parent="."]
+transform = Transform3D(1, -0.000562061, -0.000566001, 0.000562445, 1, 0.000678332, 0.00056562, -0.00067865, 1, 0, 0, 0)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="StaticBody3D"]
+shape = SubResource("BoxShape3D_rv551")
+
+[node name="Floor" type="MeshInstance3D" parent="StaticBody3D"]
+transform = Transform3D(1, -2.85638e-11, 0, 7.82734e-11, 1, 0, 5.82077e-11, -5.82077e-11, 1, 0, 0, 0)
+mesh = SubResource("PlaneMesh_62lv0")
+skeleton = NodePath("../..")
+
+[node name="Player1" type="CharacterBody3D" parent="."]
+script = ExtResource("1_o1tqw")
+
+[node name="Mesh" type="MeshInstance3D" parent="Player1"]
+transform = Transform3D(0.1, 0, 0, 0, 0.1, 0, 0, 0, 0.1, 0, 0.3, 0)
+mesh = SubResource("CapsuleMesh_qxy4w")
+
+[node name="Col" type="CollisionShape3D" parent="Player1"]
+transform = Transform3D(0.1, 0, 0, 0, 0.1, 0, 0, 0, 0.1, 0, 0.31177, 0)
+shape = SubResource("CapsuleShape3D_eu2cq")
+
+[node name="Cam" type="Camera3D" parent="Player1"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.3, 0.762021)
+current = true
+
+[node name="Player1HUD" type="CanvasLayer" parent="Player1"]
+
+[node name="HUD" parent="Player1/Player1HUD" instance=ExtResource("2_eoku1")]
+metadata/_edit_use_anchors_ = true
+
+[node name="Timer" type="Timer" parent="Player1"]
+
+[node name="BuildManager" type="Node3D" parent="Player1"]
+script = ExtResource("3_855mp")
+
+[node name="ResourceManager" type="Node3D" parent="Player1"]
+script = ExtResource("4_75q7d")
+
+[node name="camControl" type="Node3D" parent="Player1"]
+script = SubResource("GDScript_r3fl7")
+
+[node name="StaticBody3D2" type="StaticBody3D" parent="."]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="StaticBody3D2"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2, 0.5, 0.0085454)
+shape = SubResource("BoxShape3D_s1lyr")
+
+[node name="Walls" type="MeshInstance3D" parent="StaticBody3D2"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 2, -2, 0.5, 0.0085454)
+mesh = SubResource("QuadMesh_7haat")
+skeleton = NodePath("../../StaticBody3D/CollisionShape3D")
+
+[connection signal="timeout" from="Player1/Timer" to="Player1/Player1HUD/HUD" method="_on_timer_timeout"]

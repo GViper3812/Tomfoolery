@@ -1,0 +1,15 @@
+DirectionalLight3D
+Camera3D
+Node3D
+MeshInstance3D
+CollisionShape3D
+Area3D
+Node
+StaticBody3D
+MarginContainer
+HBoxContainer
+HSplitContainer
+Button
+Control
+VBoxContainer
+PanelContainer

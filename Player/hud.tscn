@@ -1,0 +1,137 @@
+[gd_scene load_steps=3 format=3 uid="uid://byyk1a1grgcv2"]
+
+[ext_resource type="Script" uid="uid://d4kp3wfix4vip" path="res://assets/scripts/build_menu.gd" id="2_2nm5n"]
+[ext_resource type="Script" uid="uid://dah55mchhvfj6" path="res://Player/resources.gd" id="2_lnhd4"]
+
+[node name="HUD" type="Control"]
+process_mode = 3
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="resources" type="VBoxContainer" parent="."]
+layout_mode = 1
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -170.0
+offset_bottom = 40.0
+grow_horizontal = 0
+script = ExtResource("2_lnhd4")
+
+[node name="requisition" type="HBoxContainer" parent="resources"]
+layout_mode = 2
+
+[node name="req" type="TextureRect" parent="resources/requisition"]
+layout_mode = 2
+
+[node name="current" type="Label" parent="resources/requisition"]
+layout_mode = 2
+
+[node name="gain" type="Label" parent="resources/requisition"]
+layout_mode = 2
+
+[node name="power" type="HBoxContainer" parent="resources"]
+layout_mode = 2
+
+[node name="pow" type="TextureRect" parent="resources/power"]
+layout_mode = 2
+
+[node name="current" type="Label" parent="resources/power"]
+layout_mode = 2
+
+[node name="gain" type="Label" parent="resources/power"]
+layout_mode = 2
+
+[node name="Building" type="PanelContainer" parent="."]
+layout_mode = 0
+offset_left = 1860.0
+offset_top = 270.0
+offset_right = 2160.0
+offset_bottom = 810.0
+script = ExtResource("2_2nm5n")
+
+[node name="Control" type="Control" parent="Building"]
+layout_mode = 2
+
+[node name="MenuToggle" type="Button" parent="Building/Control"]
+layout_mode = 2
+offset_left = 5.0
+offset_top = 535.0
+offset_right = 535.0
+offset_bottom = 585.0
+rotation = -1.5708
+size_flags_horizontal = 0
+text = "Button
+"
+text_overrun_behavior = 1
+
+[node name="HSplitContainer" type="HBoxContainer" parent="Building/Control"]
+layout_mode = 0
+offset_left = 70.0
+offset_top = 10.0
+offset_right = 290.0
+offset_bottom = 530.0
+
+[node name="VBox1" type="VBoxContainer" parent="Building/Control/HSplitContainer"]
+custom_minimum_size = Vector2(100, 500)
+layout_mode = 2
+size_flags_horizontal = 2
+
+[node name="nuclearbattery" type="Button" parent="Building/Control/HSplitContainer/VBox1"]
+custom_minimum_size = Vector2(100, 100)
+layout_mode = 2
+size_flags_vertical = 4
+
+[node name="logisticalhub" type="Button" parent="Building/Control/HSplitContainer/VBox1"]
+custom_minimum_size = Vector2(100, 100)
+layout_mode = 2
+size_flags_vertical = 4
+
+[node name="landingpad" type="Button" parent="Building/Control/HSplitContainer/VBox1"]
+custom_minimum_size = Vector2(100, 100)
+layout_mode = 2
+size_flags_vertical = 4
+
+[node name="industrialhall" type="Button" parent="Building/Control/HSplitContainer/VBox1"]
+custom_minimum_size = Vector2(100, 100)
+layout_mode = 2
+size_flags_vertical = 4
+
+[node name="heavyemplacement" type="Button" parent="Building/Control/HSplitContainer/VBox1"]
+custom_minimum_size = Vector2(100, 100)
+layout_mode = 2
+size_flags_vertical = 4
+
+[node name="VBox2" type="VBoxContainer" parent="Building/Control/HSplitContainer"]
+custom_minimum_size = Vector2(100, 500)
+layout_mode = 2
+size_flags_horizontal = 10
+
+[node name="hydrogenpowerplant" type="Button" parent="Building/Control/HSplitContainer/VBox2"]
+custom_minimum_size = Vector2(100, 100)
+layout_mode = 2
+size_flags_vertical = 4
+
+[node name="armoury" type="Button" parent="Building/Control/HSplitContainer/VBox2"]
+custom_minimum_size = Vector2(100, 100)
+layout_mode = 2
+size_flags_vertical = 4
+
+[node name="medicalunit" type="Button" parent="Building/Control/HSplitContainer/VBox2"]
+custom_minimum_size = Vector2(100, 100)
+layout_mode = 2
+size_flags_vertical = 4
+
+[node name="orbitalcommunicationrelay" type="Button" parent="Building/Control/HSplitContainer/VBox2"]
+custom_minimum_size = Vector2(100, 100)
+layout_mode = 2
+size_flags_vertical = 4
+
+[node name="minefield" type="Button" parent="Building/Control/HSplitContainer/VBox2"]
+custom_minimum_size = Vector2(100, 100)
+layout_mode = 2
+size_flags_vertical = 4

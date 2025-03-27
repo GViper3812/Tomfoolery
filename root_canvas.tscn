@@ -1,0 +1,7 @@
+[gd_scene load_steps=2 format=3 uid="uid://t5fdhqkhew3l"]
+
+[ext_resource type="PackedScene" uid="uid://d3yx6al2k3um5" path="res://main_scene.tscn" id="1_yg80j"]
+
+[node name="RootCanvas" type="CanvasLayer"]
+
+[node name="Node3D" parent="." instance=ExtResource("1_yg80j")]
