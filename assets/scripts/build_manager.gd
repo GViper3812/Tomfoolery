@@ -11,7 +11,7 @@ extends Node
 var mainmat: Material = preload("res://assets/building/shader/mainmat.tres")
 var editmat: Material = preload("res://assets/building/shader/editmat.tres")
 
-var current_building: MeshInstance3D = null
+static var current_building: MeshInstance3D = null
 var mat
 
 func _ready():

@@ -22,7 +22,7 @@ func toggle_menu():
 	menu_visible = !menu_visible
 	get_tree().create_tween().tween_property(panel, "position:x", menu_open_x if menu_visible else menu_closed_x, 0.5).set_trans(Tween.TRANS_SINE)
 
-func _input(event):
+func _unhandled_input(event):
 	if event.is_action_pressed("Toggle_Menu") or button.button_pressed:
 		toggle_menu()
 
