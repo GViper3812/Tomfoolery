@@ -17,7 +17,7 @@ collision_layer = 2
 [node name="col" type="CollisionShape3D" parent="stat"]
 shape = SubResource("ConcavePolygonShape3D_icvmf")
 
-[node name="Area3D" type="Area3D" parent="."]
+[node name="Area3D" type="Area3D" parent="." groups=["building"]]
 collision_layer = 2
 collision_mask = 2
 script = ExtResource("2_oorpm")

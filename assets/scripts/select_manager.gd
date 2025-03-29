@@ -12,3 +12,11 @@ func _input(event: InputEvent) -> void:
 		
 		if area != null:
 			print(area)
+			if area.is_in_group("building"):
+				print("building")
+			elif area.is_in_group("infantry"):
+				print("infantry")
+			elif area.is_in_group("vehicle"):
+				print("vehicle")
+			else:
+				return

@@ -23,6 +23,12 @@ window/size/mode=3
 window/size/initial_position_type=0
 window/size/resizable=false
 
+[global_group]
+
+building=""
+infantry=""
+vehicle=""
+
 [input]
 
 Move_Forward={

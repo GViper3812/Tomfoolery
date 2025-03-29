@@ -1,7 +1,7 @@
 [gd_scene load_steps=14 format=3 uid="uid://d3yx6al2k3um5"]
 
 [ext_resource type="Script" uid="uid://bjy1atkg7oebe" path="res://assets/scripts/movement.gd" id="1_o1tqw"]
-[ext_resource type="PackedScene" uid="uid://byyk1a1grgcv2" path="res://Player/hud.tscn" id="2_eoku1"]
+[ext_resource type="PackedScene" uid="uid://byyk1a1grgcv2" path="res://assets/hud/hud.tscn" id="2_eoku1"]
 [ext_resource type="Script" uid="uid://g87mlfguaeq6" path="res://assets/scripts/build_manager.gd" id="3_855mp"]
 [ext_resource type="Script" uid="uid://udxkaq3qfjce" path="res://assets/scripts/resource_manager.gd" id="4_75q7d"]
 [ext_resource type="Script" uid="uid://c5bwai6kgn1c2" path="res://assets/scripts/cam_control.gd" id="5_jka67"]
