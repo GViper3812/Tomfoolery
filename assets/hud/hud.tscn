@@ -1,7 +1,76 @@
-[gd_scene load_steps=3 format=3 uid="uid://byyk1a1grgcv2"]
+[gd_scene load_steps=16 format=3 uid="uid://byyk1a1grgcv2"]
 
-[ext_resource type="Script" uid="uid://d4kp3wfix4vip" path="res://assets/scripts/build_menu.gd" id="2_2nm5n"]
+[ext_resource type="Script" uid="uid://d4kp3wfix4vip" path="res://assets/hud/scripts/build_menu.gd" id="1_0ahed"]
 [ext_resource type="Script" uid="uid://dah55mchhvfj6" path="res://assets/scripts/resources.gd" id="2_lnhd4"]
+[ext_resource type="Texture2D" uid="uid://dgc74ubuebsbs" path="res://assets/hud/texture/requisition.png" id="2_yktfj"]
+[ext_resource type="Texture2D" uid="uid://bneg3513viksd" path="res://assets/hud/texture/power.png" id="3_3tmnp"]
+[ext_resource type="Script" uid="uid://ty6x8p3whp7e" path="res://assets/hud/scripts/units_menu.gd" id="5_ndvix"]
+[ext_resource type="PackedScene" uid="uid://bqxi5whbe7qux" path="res://assets/hud/buildingselect/base.tscn" id="6_g1w06"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_acvcc"]
+bg_color = Color(0.6, 0.6, 0.6, 0)
+draw_center = false
+border_width_left = 8
+border_width_bottom = 4
+border_color = Color(0.109804, 0.109804, 0.109804, 1)
+corner_radius_bottom_left = 20
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_wf88c"]
+bg_color = Color(0.6, 0.6, 0.6, 0)
+draw_center = false
+border_width_right = 8
+border_width_bottom = 4
+border_color = Color(0.109804, 0.109804, 0.109804, 1)
+corner_radius_bottom_right = 20
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_3tmnp"]
+bg_color = Color(0.111197, 0.111197, 0.111197, 1)
+corner_radius_top_right = 10
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_0ahed"]
+content_margin_left = 4.0
+content_margin_top = 4.0
+content_margin_right = 4.0
+content_margin_bottom = 4.0
+bg_color = Color(0.169245, 0.169245, 0.169245, 1)
+corner_radius_top_left = 8
+corner_radius_top_right = 8
+corner_radius_bottom_right = 8
+corner_radius_bottom_left = 8
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ndvix"]
+content_margin_left = 4.0
+content_margin_top = 4.0
+content_margin_right = 4.0
+content_margin_bottom = 4.0
+bg_color = Color(0.168627, 0.168627, 0.168627, 1)
+corner_radius_top_left = 8
+corner_radius_top_right = 8
+corner_radius_bottom_right = 8
+corner_radius_bottom_left = 8
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_41ool"]
+bg_color = Color(0.109804, 0.109804, 0.109804, 1)
+corner_radius_top_left = 10
+corner_radius_top_right = 10
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_cls6n"]
+bg_color = Color(0.168627, 0.168627, 0.168627, 1)
+corner_radius_top_left = 5
+corner_radius_top_right = 5
+corner_radius_bottom_right = 5
+corner_radius_bottom_left = 5
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_g1w06"]
+bg_color = Color(0.109804, 0.109804, 0.109804, 1)
+corner_radius_top_left = 10
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_hyjc1"]
+bg_color = Color(0.168627, 0.168627, 0.168627, 1)
+corner_radius_top_left = 5
+corner_radius_top_right = 5
+corner_radius_bottom_right = 5
+corner_radius_bottom_left = 5
 
 [node name="HUD" type="Control"]
 process_mode = 3
@@ -12,126 +81,262 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="resources" type="VBoxContainer" parent="."]
+[node name="Panel" type="Panel" parent="."]
 layout_mode = 1
-anchors_preset = 1
+anchors_preset = 2
+anchor_top = 1.0
+anchor_bottom = 1.0
+offset_left = 256.0
+offset_top = -29.0
+offset_right = 1600.0
+offset_bottom = 1.0
+grow_vertical = 0
+mouse_filter = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_acvcc")
+
+[node name="Panel2" type="Panel" parent="."]
+layout_mode = 1
+anchors_preset = 3
 anchor_left = 1.0
+anchor_top = 1.0
 anchor_right = 1.0
-offset_left = -170.0
-offset_bottom = 40.0
+anchor_bottom = 1.0
+offset_left = -1600.0
+offset_top = -29.0
+offset_right = -491.0
+offset_bottom = 1.0
 grow_horizontal = 0
-script = ExtResource("2_lnhd4")
+grow_vertical = 0
+mouse_filter = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_wf88c")
 
-[node name="requisition" type="HBoxContainer" parent="resources"]
+[node name="building" type="PanelContainer" parent="."]
 layout_mode = 2
+anchor_left = 0.971
+anchor_top = 0.222
+anchor_right = 1.0
+anchor_bottom = 0.722
+offset_left = 0.399902
+offset_top = 0.199982
+offset_right = 134.0
+offset_bottom = 0.200012
+grow_horizontal = 2
+grow_vertical = 2
 
-[node name="req" type="TextureRect" parent="resources/requisition"]
+[node name="menu_movement" type="Control" parent="building"]
 layout_mode = 2
+script = ExtResource("1_0ahed")
 
-[node name="current" type="Label" parent="resources/requisition"]
+[node name="HSplitContainer" type="HBoxContainer" parent="building"]
 layout_mode = 2
+alignment = 2
 
-[node name="gain" type="Label" parent="resources/requisition"]
+[node name="MarginContainer" type="MarginContainer" parent="building/HSplitContainer"]
 layout_mode = 2
-
-[node name="power" type="HBoxContainer" parent="resources"]
-layout_mode = 2
-
-[node name="pow" type="TextureRect" parent="resources/power"]
-layout_mode = 2
-
-[node name="current" type="Label" parent="resources/power"]
-layout_mode = 2
-
-[node name="gain" type="Label" parent="resources/power"]
-layout_mode = 2
-
-[node name="Building" type="PanelContainer" parent="."]
-layout_mode = 0
-offset_left = 1860.0
-offset_top = 270.0
-offset_right = 2160.0
-offset_bottom = 810.0
-script = ExtResource("2_2nm5n")
-
-[node name="Control" type="Control" parent="Building"]
-layout_mode = 2
-
-[node name="MenuToggle" type="Button" parent="Building/Control"]
-layout_mode = 2
-offset_left = 5.0
-offset_top = 535.0
-offset_right = 535.0
-offset_bottom = 585.0
-rotation = -1.5708
 size_flags_horizontal = 0
-text = "Button
+theme_override_constants/margin_left = 3
+theme_override_constants/margin_top = 3
+theme_override_constants/margin_right = 3
+theme_override_constants/margin_bottom = 3
+
+[node name="menutoggle" type="Button" parent="building/HSplitContainer/MarginContainer"]
+custom_minimum_size = Vector2(40, 0)
+layout_mode = 2
+action_mode = 0
+text = "Building
 "
 text_overrun_behavior = 1
+metadata/_edit_use_anchors_ = true
 
-[node name="HSplitContainer" type="HBoxContainer" parent="Building/Control"]
-layout_mode = 0
-offset_left = 70.0
-offset_top = 10.0
-offset_right = 290.0
-offset_bottom = 530.0
-
-[node name="VBox1" type="VBoxContainer" parent="Building/Control/HSplitContainer"]
-custom_minimum_size = Vector2(100, 500)
+[node name="VBox1" type="VBoxContainer" parent="building/HSplitContainer"]
 layout_mode = 2
-size_flags_horizontal = 2
+size_flags_horizontal = 3
 
-[node name="nuclearbattery" type="Button" parent="Building/Control/HSplitContainer/VBox1"]
-custom_minimum_size = Vector2(100, 100)
+[node name="nuclearbattery" type="Button" parent="building/HSplitContainer/VBox1"]
 layout_mode = 2
+size_flags_vertical = 3
+
+[node name="logisticalhub" type="Button" parent="building/HSplitContainer/VBox1"]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="landingpad" type="Button" parent="building/HSplitContainer/VBox1"]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="industrialhall" type="Button" parent="building/HSplitContainer/VBox1"]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="heavyemplacement" type="Button" parent="building/HSplitContainer/VBox1"]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="VBox2" type="VBoxContainer" parent="building/HSplitContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="hydrogenpowerplant" type="Button" parent="building/HSplitContainer/VBox2"]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="armoury" type="Button" parent="building/HSplitContainer/VBox2"]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="medicalunit" type="Button" parent="building/HSplitContainer/VBox2"]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="orbitalcommunicationrelay" type="Button" parent="building/HSplitContainer/VBox2"]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="minefield" type="Button" parent="building/HSplitContainer/VBox2"]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="resources" type="PanelContainer" parent="."]
+layout_mode = 1
+anchors_preset = -1
+anchor_top = 1.0
+anchor_bottom = 1.0
+offset_top = -140.0
+offset_right = 265.0
+grow_vertical = 0
+theme_override_styles/panel = SubResource("StyleBoxFlat_3tmnp")
+
+[node name="MarginContainer" type="MarginContainer" parent="resources"]
+layout_mode = 2
+theme_override_constants/margin_left = 6
+theme_override_constants/margin_top = 6
+theme_override_constants/margin_right = 6
+theme_override_constants/margin_bottom = 6
+
+[node name="list" type="VBoxContainer" parent="resources/MarginContainer"]
+layout_mode = 2
+script = ExtResource("2_lnhd4")
+
+[node name="PanelContainer" type="PanelContainer" parent="resources/MarginContainer/list"]
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_styles/panel = SubResource("StyleBoxFlat_0ahed")
+
+[node name="requisition" type="HBoxContainer" parent="resources/MarginContainer/list/PanelContainer"]
+layout_mode = 2
+
+[node name="req" type="TextureRect" parent="resources/MarginContainer/list/PanelContainer/requisition"]
+custom_minimum_size = Vector2(50, 50)
+layout_mode = 2
+size_flags_horizontal = 0
 size_flags_vertical = 4
+texture = ExtResource("2_yktfj")
+expand_mode = 1
 
-[node name="logisticalhub" type="Button" parent="Building/Control/HSplitContainer/VBox1"]
-custom_minimum_size = Vector2(100, 100)
+[node name="current" type="Label" parent="resources/MarginContainer/list/PanelContainer/requisition"]
 layout_mode = 2
-size_flags_vertical = 4
+theme_override_font_sizes/font_size = 35
+text = "500"
 
-[node name="landingpad" type="Button" parent="Building/Control/HSplitContainer/VBox1"]
-custom_minimum_size = Vector2(100, 100)
+[node name="gain" type="Label" parent="resources/MarginContainer/list/PanelContainer/requisition"]
 layout_mode = 2
-size_flags_vertical = 4
+theme_override_font_sizes/font_size = 35
+text = "+5.0/s"
 
-[node name="industrialhall" type="Button" parent="Building/Control/HSplitContainer/VBox1"]
-custom_minimum_size = Vector2(100, 100)
+[node name="PanelContainer2" type="PanelContainer" parent="resources/MarginContainer/list"]
 layout_mode = 2
-size_flags_vertical = 4
+size_flags_vertical = 3
+theme_override_styles/panel = SubResource("StyleBoxFlat_ndvix")
 
-[node name="heavyemplacement" type="Button" parent="Building/Control/HSplitContainer/VBox1"]
-custom_minimum_size = Vector2(100, 100)
+[node name="power" type="HBoxContainer" parent="resources/MarginContainer/list/PanelContainer2"]
 layout_mode = 2
-size_flags_vertical = 4
 
-[node name="VBox2" type="VBoxContainer" parent="Building/Control/HSplitContainer"]
-custom_minimum_size = Vector2(100, 500)
+[node name="pow" type="TextureRect" parent="resources/MarginContainer/list/PanelContainer2/power"]
+custom_minimum_size = Vector2(50, 50)
 layout_mode = 2
-size_flags_horizontal = 10
+texture = ExtResource("3_3tmnp")
+expand_mode = 1
 
-[node name="hydrogenpowerplant" type="Button" parent="Building/Control/HSplitContainer/VBox2"]
-custom_minimum_size = Vector2(100, 100)
+[node name="current" type="Label" parent="resources/MarginContainer/list/PanelContainer2/power"]
 layout_mode = 2
-size_flags_vertical = 4
+theme_override_font_sizes/font_size = 35
+text = "250"
 
-[node name="armoury" type="Button" parent="Building/Control/HSplitContainer/VBox2"]
-custom_minimum_size = Vector2(100, 100)
+[node name="gain" type="Label" parent="resources/MarginContainer/list/PanelContainer2/power"]
 layout_mode = 2
-size_flags_vertical = 4
+theme_override_font_sizes/font_size = 35
+text = "+2.5/s"
 
-[node name="medicalunit" type="Button" parent="Building/Control/HSplitContainer/VBox2"]
-custom_minimum_size = Vector2(100, 100)
-layout_mode = 2
-size_flags_vertical = 4
+[node name="units_list" type="PanelContainer" parent="."]
+layout_mode = 1
+anchors_preset = -1
+anchor_top = 1.0
+anchor_right = 0.74
+anchor_bottom = 1.0
+offset_left = 269.0
+offset_top = -140.0
+offset_right = -90.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_41ool")
 
-[node name="orbitalcommunicationrelay" type="Button" parent="Building/Control/HSplitContainer/VBox2"]
-custom_minimum_size = Vector2(100, 100)
+[node name="Control" type="Control" parent="units_list"]
 layout_mode = 2
-size_flags_vertical = 4
+script = ExtResource("5_ndvix")
 
-[node name="minefield" type="Button" parent="Building/Control/HSplitContainer/VBox2"]
-custom_minimum_size = Vector2(100, 100)
+[node name="MarginContainer" type="MarginContainer" parent="units_list"]
 layout_mode = 2
-size_flags_vertical = 4
+theme_override_constants/margin_left = 5
+theme_override_constants/margin_top = 5
+theme_override_constants/margin_right = 5
+theme_override_constants/margin_bottom = 5
+
+[node name="Panel" type="Panel" parent="units_list/MarginContainer"]
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_cls6n")
+
+[node name="GridContainer" type="GridContainer" parent="units_list/MarginContainer"]
+layout_mode = 2
+
+[node name="selected_functions" type="PanelContainer" parent="."]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.687
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 0.799927
+offset_top = -140.0
+grow_vertical = 0
+theme_override_styles/panel = SubResource("StyleBoxFlat_g1w06")
+metadata/_edit_use_anchors_ = true
+
+[node name="MarginContainer2" type="MarginContainer" parent="selected_functions"]
+layout_mode = 2
+theme_override_constants/margin_left = 4
+theme_override_constants/margin_top = 4
+theme_override_constants/margin_right = 4
+theme_override_constants/margin_bottom = 4
+
+[node name="Panel" type="PanelContainer" parent="selected_functions/MarginContainer2"]
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_hyjc1")
+
+[node name="MarginContainer" type="MarginContainer" parent="selected_functions/MarginContainer2/Panel"]
+layout_mode = 2
+theme_override_constants/margin_left = 5
+theme_override_constants/margin_top = 5
+theme_override_constants/margin_right = 5
+theme_override_constants/margin_bottom = 5
+
+[node name="HSplitContainer" type="HBoxContainer" parent="selected_functions/MarginContainer2/Panel/MarginContainer"]
+layout_mode = 2
+
+[node name="ItemList" type="ItemList" parent="selected_functions/MarginContainer2/Panel/MarginContainer/HSplitContainer"]
+custom_minimum_size = Vector2(100, 0)
+layout_mode = 2
+
+[node name="GridContainer" parent="selected_functions/MarginContainer2/Panel/MarginContainer/HSplitContainer" instance=ExtResource("6_g1w06")]
+layout_mode = 2
+
+[connection signal="toggled" from="building/HSplitContainer/MarginContainer/menutoggle" to="building/menu_movement" method="_on_menutoggle_toggled"]

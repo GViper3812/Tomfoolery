@@ -1,4 +1,4 @@
-[gd_scene load_steps=14 format=3 uid="uid://d3yx6al2k3um5"]
+[gd_scene load_steps=15 format=3 uid="uid://d3yx6al2k3um5"]
 
 [ext_resource type="Script" uid="uid://bjy1atkg7oebe" path="res://assets/scripts/movement.gd" id="1_o1tqw"]
 [ext_resource type="PackedScene" uid="uid://byyk1a1grgcv2" path="res://assets/hud/hud.tscn" id="2_eoku1"]
@@ -7,6 +7,7 @@
 [ext_resource type="Script" uid="uid://c5bwai6kgn1c2" path="res://assets/scripts/cam_control.gd" id="5_jka67"]
 [ext_resource type="Script" uid="uid://bxmqnov0o5684" path="res://assets/scripts/player_manager.gd" id="6_i5arm"]
 [ext_resource type="Script" uid="uid://chql2lmkgffde" path="res://assets/scripts/select_manager.gd" id="7_nfk4m"]
+[ext_resource type="PackedScene" uid="uid://f3bx1murime4" path="res://assets/building/scene/hq.tscn" id="8_66tet"]
 
 [sub_resource type="CapsuleMesh" id="CapsuleMesh_qxy4w"]
 
@@ -34,9 +35,6 @@ transform = Transform3D(1, 0, 0, 0, 0.926213, 0.377, 0, -0.377, 0.926213, 0, 1.2
 
 [node name="Player1" type="CharacterBody3D" parent="."]
 script = ExtResource("1_o1tqw")
-
-[node name="select_manager" type="Node" parent="Player1"]
-script = ExtResource("7_nfk4m")
 
 [node name="mesh" type="MeshInstance3D" parent="Player1"]
 transform = Transform3D(0.1, 0, 0, 0, 0.1, 0, 0, 0, 0.1, 0, 0.3, 0)
@@ -70,6 +68,9 @@ script = ExtResource("4_75q7d")
 [node name="player_manager" type="Node" parent="Player1"]
 script = ExtResource("6_i5arm")
 
+[node name="select_manager" type="Node" parent="Player1"]
+script = ExtResource("7_nfk4m")
+
 [node name="StaticBody3D2" type="StaticBody3D" parent="."]
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="StaticBody3D2"]
@@ -89,5 +90,8 @@ mesh = SubResource("PlaneMesh_wc5p8")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="MeshInstance3D/StaticBody3D"]
 shape = SubResource("ConcavePolygonShape3D_wc5p8")
+
+[node name="hq" parent="." instance=ExtResource("8_66tet")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.25, 0, 0.25)
 
 [connection signal="timeout" from="Player1/Timer" to="Player1/Player1HUD/HUD" method="_on_timer_timeout"]

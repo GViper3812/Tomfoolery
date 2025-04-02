@@ -17,17 +17,17 @@ config/icon="res://icon.svg"
 
 [display]
 
-window/size/viewport_width=1920
-window/size/viewport_height=1080
-window/size/mode=3
-window/size/initial_position_type=0
-window/size/resizable=false
+window/size/viewport_width=1600
+window/size/viewport_height=900
+window/stretch/mode="viewport"
+window/stretch/aspect="expand"
+window/vsync/vsync_mode=0
 
 [global_group]
 
-building=""
 infantry=""
 vehicle=""
+building=""
 
 [input]
 

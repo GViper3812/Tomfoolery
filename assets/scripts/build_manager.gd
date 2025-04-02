@@ -8,15 +8,15 @@ extends Node
 @onready var invalid = preload("res://assets/building/shader/invalid.gdshader")
 @onready var valid = preload("res://assets/building/shader/valid.gdshader")
 
-var mainmat: Material = preload("res://assets/building/shader/mainmat.tres")
-var editmat: Material = preload("res://assets/building/shader/editmat.tres")
+var mainmat : Material = preload("res://assets/building/shader/mainmat.tres")
+var editmat : Material = preload("res://assets/building/shader/editmat.tres")
 
 static var current_building: MeshInstance3D = null
 var mat
 
 func _ready():
-	var vbox1 = hud.get_node_or_null("Building/Control/HSplitContainer/VBox1")
-	var vbox2 = hud.get_node_or_null("Building/Control/HSplitContainer/VBox2")
+	var vbox1 = hud.get_node("building/HSplitContainer/VBox1")
+	var vbox2 = hud.get_node("building/HSplitContainer/VBox2")
 	
 	for vbox in [vbox1, vbox2]:
 		if vbox:
