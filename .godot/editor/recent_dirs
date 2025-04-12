@@ -1,7 +1,8 @@
-res://assets/hud/buildingselect
+res://assets/hud/buildingselect/scripts/hq
 res://assets/hud/scripts
-res://assets/scripts
 res://
+res://assets/hud/buildingselect
+res://assets/scripts
 res://assets/building/shader
 res://assets/building/mesh
 C:/Users/goone/Documents/experiment/assets
@@ -9,4 +10,3 @@ res://assets/building/Mesh
 res://assets/building
 C:/Users/goone/Documents/experiment
 E:/
-res://Player

@@ -1,7 +1,7 @@
-[gd_scene load_steps=16 format=3 uid="uid://byyk1a1grgcv2"]
+[gd_scene load_steps=17 format=3 uid="uid://byyk1a1grgcv2"]
 
 [ext_resource type="Script" uid="uid://d4kp3wfix4vip" path="res://assets/hud/scripts/build_menu.gd" id="1_0ahed"]
-[ext_resource type="Script" uid="uid://dah55mchhvfj6" path="res://assets/scripts/resources.gd" id="2_lnhd4"]
+[ext_resource type="Script" uid="uid://dah55mchhvfj6" path="res://assets/hud/scripts/resources.gd" id="2_lnhd4"]
 [ext_resource type="Texture2D" uid="uid://dgc74ubuebsbs" path="res://assets/hud/texture/requisition.png" id="2_yktfj"]
 [ext_resource type="Texture2D" uid="uid://bneg3513viksd" path="res://assets/hud/texture/power.png" id="3_3tmnp"]
 [ext_resource type="Script" uid="uid://ty6x8p3whp7e" path="res://assets/hud/scripts/units_menu.gd" id="5_ndvix"]
@@ -22,6 +22,12 @@ border_width_right = 8
 border_width_bottom = 4
 border_color = Color(0.109804, 0.109804, 0.109804, 1)
 corner_radius_bottom_right = 20
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_dvaor"]
+bg_color = Color(0.168627, 0.168627, 0.168627, 1)
+draw_center = false
+border_width_bottom = 4
+border_color = Color(0.109804, 0.109804, 0.109804, 1)
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_3tmnp"]
 bg_color = Color(0.111197, 0.111197, 0.111197, 1)
@@ -80,14 +86,14 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+mouse_filter = 2
 
 [node name="Panel" type="Panel" parent="."]
-layout_mode = 1
-anchors_preset = 2
+layout_mode = 2
 anchor_top = 1.0
 anchor_bottom = 1.0
 offset_left = 256.0
-offset_top = -29.0
+offset_top = -19.0
 offset_right = 1600.0
 offset_bottom = 1.0
 grow_vertical = 0
@@ -95,20 +101,27 @@ mouse_filter = 2
 theme_override_styles/panel = SubResource("StyleBoxFlat_acvcc")
 
 [node name="Panel2" type="Panel" parent="."]
-layout_mode = 1
-anchors_preset = 3
-anchor_left = 1.0
-anchor_top = 1.0
-anchor_right = 1.0
-anchor_bottom = 1.0
-offset_left = -1600.0
-offset_top = -29.0
-offset_right = -491.0
-offset_bottom = 1.0
+layout_mode = 2
+offset_left = 996.0
+offset_top = 881.0
+offset_right = 1109.0
+offset_bottom = 901.0
 grow_horizontal = 0
 grow_vertical = 0
 mouse_filter = 2
 theme_override_styles/panel = SubResource("StyleBoxFlat_wf88c")
+
+[node name="Panel3" type="Panel" parent="."]
+layout_mode = 1
+anchors_preset = 2
+anchor_top = 1.0
+anchor_bottom = 1.0
+offset_top = -19.0
+offset_right = 1600.0
+offset_bottom = 1.0
+grow_vertical = 0
+mouse_filter = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_dvaor")
 
 [node name="building" type="PanelContainer" parent="."]
 layout_mode = 2
@@ -125,6 +138,7 @@ grow_vertical = 2
 
 [node name="menu_movement" type="Control" parent="building"]
 layout_mode = 2
+mouse_filter = 2
 script = ExtResource("1_0ahed")
 
 [node name="HSplitContainer" type="HBoxContainer" parent="building"]
@@ -155,22 +169,27 @@ size_flags_horizontal = 3
 [node name="nuclearbattery" type="Button" parent="building/HSplitContainer/VBox1"]
 layout_mode = 2
 size_flags_vertical = 3
+text = "NB"
 
 [node name="logisticalhub" type="Button" parent="building/HSplitContainer/VBox1"]
 layout_mode = 2
 size_flags_vertical = 3
+text = "LH"
 
 [node name="landingpad" type="Button" parent="building/HSplitContainer/VBox1"]
 layout_mode = 2
 size_flags_vertical = 3
+text = "LP"
 
 [node name="industrialhall" type="Button" parent="building/HSplitContainer/VBox1"]
 layout_mode = 2
 size_flags_vertical = 3
+text = "IH"
 
 [node name="heavyemplacement" type="Button" parent="building/HSplitContainer/VBox1"]
 layout_mode = 2
 size_flags_vertical = 3
+text = "HE"
 
 [node name="VBox2" type="VBoxContainer" parent="building/HSplitContainer"]
 layout_mode = 2
@@ -179,22 +198,27 @@ size_flags_horizontal = 3
 [node name="hydrogenpowerplant" type="Button" parent="building/HSplitContainer/VBox2"]
 layout_mode = 2
 size_flags_vertical = 3
+text = "HPP"
 
 [node name="armoury" type="Button" parent="building/HSplitContainer/VBox2"]
 layout_mode = 2
 size_flags_vertical = 3
+text = "AR"
 
 [node name="medicalunit" type="Button" parent="building/HSplitContainer/VBox2"]
 layout_mode = 2
 size_flags_vertical = 3
+text = "MU"
 
 [node name="orbitalcommunicationrelay" type="Button" parent="building/HSplitContainer/VBox2"]
 layout_mode = 2
 size_flags_vertical = 3
+text = "OCR"
 
 [node name="minefield" type="Button" parent="building/HSplitContainer/VBox2"]
 layout_mode = 2
 size_flags_vertical = 3
+text = "MF"
 
 [node name="resources" type="PanelContainer" parent="."]
 layout_mode = 1
@@ -309,7 +333,6 @@ offset_left = 0.799927
 offset_top = -140.0
 grow_vertical = 0
 theme_override_styles/panel = SubResource("StyleBoxFlat_g1w06")
-metadata/_edit_use_anchors_ = true
 
 [node name="MarginContainer2" type="MarginContainer" parent="selected_functions"]
 layout_mode = 2
@@ -332,11 +355,9 @@ theme_override_constants/margin_bottom = 5
 [node name="HSplitContainer" type="HBoxContainer" parent="selected_functions/MarginContainer2/Panel/MarginContainer"]
 layout_mode = 2
 
-[node name="ItemList" type="ItemList" parent="selected_functions/MarginContainer2/Panel/MarginContainer/HSplitContainer"]
-custom_minimum_size = Vector2(100, 0)
-layout_mode = 2
-
 [node name="GridContainer" parent="selected_functions/MarginContainer2/Panel/MarginContainer/HSplitContainer" instance=ExtResource("6_g1w06")]
 layout_mode = 2
+size_flags_horizontal = 3
+script = null
 
 [connection signal="toggled" from="building/HSplitContainer/MarginContainer/menutoggle" to="building/menu_movement" method="_on_menutoggle_toggled"]

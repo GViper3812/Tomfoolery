@@ -23,11 +23,23 @@ window/stretch/mode="viewport"
 window/stretch/aspect="expand"
 window/vsync/vsync_mode=0
 
+[file_customization]
+
+folder_colors={
+"res://assets/building/": "red",
+"res://assets/hud/": "green",
+"res://assets/hud/buildingselect/scripts/": "blue",
+"res://assets/hud/scripts/": "blue",
+"res://assets/infantry/": "purple",
+"res://assets/scripts/": "blue"
+}
+
 [global_group]
 
 infantry=""
 vehicle=""
 building=""
+p1constructionbot=""
 
 [input]
 

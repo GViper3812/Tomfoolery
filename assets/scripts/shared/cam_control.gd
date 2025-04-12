@@ -28,8 +28,7 @@ func _input(event):
 			pitch -= event.relative.y * CAMERA_ROTATION_SENSITIVITY
 			
 			pitch = clamp(pitch, MAX_LOOK_DOWN, MAX_LOOK_UP)
-			
-			
+	
 	if event is InputEventMouseButton:
 		if event.button_index == MOUSE_BUTTON_WHEEL_UP:
 			target_zoom_distance = max(MIN_ZOOM, target_zoom_distance - ZOOM_SPEED)
@@ -50,6 +49,6 @@ func _process(delta):
 	
 	camera.global_transform.origin = global_transform.origin + offset
 	camera.look_at(global_transform.origin, Vector3.UP)
-	
+
 func get_camera_basis() -> Basis:
 	return camera.global_transform.basis

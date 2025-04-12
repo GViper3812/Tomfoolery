@@ -1,116 +1,79 @@
-[gd_scene format=3 uid="uid://dhcbvno2cn470"]
+[gd_scene load_steps=4 format=3 uid="uid://dhcbvno2cn470"]
 
-[node name="hq" type="GridContainer"]
+[ext_resource type="Script" uid="uid://5ia6bubn1cgl" path="res://assets/hud/buildingselect/scripts/fob/spawn_construction_bot.gd" id="1_lc8jq"]
+[ext_resource type="Script" uid="uid://ce82nqw6f656u" path="res://assets/hud/buildingselect/scripts/fob/spawn_scout.gd" id="2_4e7ad"]
+[ext_resource type="Script" uid="uid://fjjwc6mp723q" path="res://assets/hud/buildingselect/scripts/fob/fob_upgrade.gd" id="3_njly4"]
+
+[node name="buildcontianer" type="HBoxContainer"]
+offset_top = 50.0
+offset_right = 100.0
+offset_bottom = 50.0
+mouse_filter = 0
+
+[node name="ItemList" type="ItemList" parent="."]
+custom_minimum_size = Vector2(100, 0)
+layout_mode = 2
+
+[node name="hq" type="GridContainer" parent="."]
+layout_mode = 2
 size_flags_horizontal = 3
 theme_override_constants/h_separation = 1
 theme_override_constants/v_separation = 1
-columns = 6
+columns = 4
 
-[node name="Button10" type="Button" parent="."]
+[node name="spawnconstructionbot" type="Button" parent="hq"]
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
-mouse_filter = 2
-text = "hq"
+text = "Eng"
+script = ExtResource("1_lc8jq")
 
-[node name="Button11" type="Button" parent="."]
+[node name="spawnscout" type="Button" parent="hq"]
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
-mouse_filter = 2
+text = "Scout"
+script = ExtResource("2_4e7ad")
 
-[node name="Button12" type="Button" parent="."]
+[node name="Button12" type="Button" parent="hq"]
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
-mouse_filter = 2
+disabled = true
 
-[node name="Button13" type="Button" parent="."]
+[node name="Button" type="Button" parent="hq"]
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
-mouse_filter = 2
+disabled = true
 
-[node name="Button14" type="Button" parent="."]
+[node name="level2" type="Button" parent="hq"]
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
-mouse_filter = 2
+text = "LVL2
+"
+script = ExtResource("3_njly4")
 
-[node name="Button15" type="Button" parent="."]
+[node name="Button15" type="Button" parent="hq"]
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
-mouse_filter = 2
+disabled = true
 
-[node name="Button16" type="Button" parent="."]
+[node name="Button16" type="Button" parent="hq"]
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
-mouse_filter = 2
+disabled = true
 
-[node name="Button17" type="Button" parent="."]
+[node name="netupgrade" type="Button" parent="hq"]
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
-mouse_filter = 2
+text = "N.E.T
+"
 
-[node name="Button18" type="Button" parent="."]
-layout_mode = 2
-size_flags_horizontal = 3
-size_flags_vertical = 3
-mouse_filter = 2
-
-[node name="Button19" type="Button" parent="."]
-layout_mode = 2
-size_flags_horizontal = 3
-size_flags_vertical = 3
-mouse_filter = 2
-
-[node name="Button20" type="Button" parent="."]
-layout_mode = 2
-size_flags_horizontal = 3
-size_flags_vertical = 3
-mouse_filter = 2
-
-[node name="Button21" type="Button" parent="."]
-layout_mode = 2
-size_flags_horizontal = 3
-size_flags_vertical = 3
-mouse_filter = 2
-
-[node name="Button22" type="Button" parent="."]
-layout_mode = 2
-size_flags_horizontal = 3
-size_flags_vertical = 3
-mouse_filter = 2
-
-[node name="Button23" type="Button" parent="."]
-layout_mode = 2
-size_flags_horizontal = 3
-size_flags_vertical = 3
-mouse_filter = 2
-
-[node name="Button24" type="Button" parent="."]
-layout_mode = 2
-size_flags_horizontal = 3
-size_flags_vertical = 3
-mouse_filter = 2
-
-[node name="Button25" type="Button" parent="."]
-layout_mode = 2
-size_flags_horizontal = 3
-size_flags_vertical = 3
-mouse_filter = 2
-
-[node name="Button26" type="Button" parent="."]
-layout_mode = 2
-size_flags_horizontal = 3
-size_flags_vertical = 3
-mouse_filter = 2
-
-[node name="Button27" type="Button" parent="."]
-layout_mode = 2
-size_flags_horizontal = 3
-size_flags_vertical = 3
-mouse_filter = 2
+[connection signal="pressed" from="hq/spawnconstructionbot" to="hq/spawnconstructionbot" method="_on_pressed"]
+[connection signal="pressed" from="hq/spawnscout" to="hq/spawnscout" method="_on_pressed"]
+[connection signal="pressed" from="hq/level2" to="hq/level2" method="_on_pressed"]

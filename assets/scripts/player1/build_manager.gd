@@ -2,7 +2,7 @@ extends Node
 
 @onready var rm := get_node("../resource_manager")
 @onready var pm := get_node("../player_manager")
-@onready var root_grid: GridMap = get_node("../..")
+@onready var root_grid : GridMap = get_node("../..")
 @onready var hud : Control = get_node_or_null("../Player1HUD/HUD")
 
 @onready var invalid = preload("res://assets/building/shader/invalid.gdshader")
@@ -11,7 +11,7 @@ extends Node
 var mainmat : Material = preload("res://assets/building/shader/mainmat.tres")
 var editmat : Material = preload("res://assets/building/shader/editmat.tres")
 
-static var current_building: MeshInstance3D = null
+static var current_building
 var mat
 
 func _ready():
@@ -44,7 +44,7 @@ func _process(_delta):
 		
 		if Input.is_action_just_pressed("Place_Building"):
 			lock_building()
-			
+		
 	elif pm.get_state() == pm.States.blocked and current_building:
 		update_building_position()
 		mat.shader = invalid
@@ -55,13 +55,21 @@ func _process(_delta):
 func spawn_building(building_scene: PackedScene):
 	if pm.get_state() == pm.States.building or current_building != null:
 		return
+		
+	var building_instance = building_scene.instantiate() as StaticBody3D
+	var mesh_node = building_instance.get_node_or_null("mesh")
 	
-	current_building = building_scene.instantiate() as MeshInstance3D
-	current_building.mesh.surface_set_material(0, editmat)
+	if not mesh_node:
+		push_error("Building scene is missing a MeshInstance3D child.")
+		return
 	
-	mat = current_building.mesh.surface_get_material(0)
+	mesh_node.set_surface_override_material(0, editmat)
 	
+	mat = mesh_node.get_active_material(0)
+	
+	current_building = building_instance
 	root_grid.add_child(current_building)
+
 
 func update_building_position():
 	var world_pos = pm.get_mouse_world_position($"../Cam")
@@ -70,13 +78,17 @@ func update_building_position():
 	
 	var snapped_pos = root_grid.map_to_local(root_grid.local_to_map(world_pos))
 	snapped_pos.y = 0
-	current_building.global_position = snapped_pos
+	current_building.global_transform.origin = snapped_pos
+
 
 func lock_building():
 	if not current_building:
 		return
 	
-	current_building.mesh.surface_set_material(0, mainmat)
+	var mesh_node = current_building.get_node_or_null("mesh")
+	if mesh_node:
+		mesh_node.set_surface_override_material(0, mainmat)
+	
 	current_building.reparent(get_node("/root/rootGrid"))
 	current_building.set_process(false)
 	pm.set_state(pm.States.play)

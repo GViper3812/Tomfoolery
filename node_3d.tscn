@@ -1,12 +1,13 @@
 [gd_scene load_steps=14 format=3 uid="uid://u4pxkxk5rk8"]
 
-[ext_resource type="Script" uid="uid://bjy1atkg7oebe" path="res://assets/scripts/movement.gd" id="1_o1tqw"]
+[ext_resource type="Script" uid="uid://bjy1atkg7oebe" path="res://assets/scripts/shared/movement.gd" id="1_o1tqw"]
 [ext_resource type="PackedScene" uid="uid://byyk1a1grgcv2" path="res://assets/hud/hud.tscn" id="2_eoku1"]
-[ext_resource type="Script" uid="uid://g87mlfguaeq6" path="res://assets/scripts/build_manager.gd" id="3_855mp"]
-[ext_resource type="Script" uid="uid://udxkaq3qfjce" path="res://assets/scripts/resource_manager.gd" id="4_75q7d"]
-[ext_resource type="Script" uid="uid://c5bwai6kgn1c2" path="res://assets/scripts/cam_control.gd" id="5_jka67"]
-[ext_resource type="Script" uid="uid://bxmqnov0o5684" path="res://assets/scripts/player_manager.gd" id="6_i5arm"]
-[ext_resource type="Script" uid="uid://chql2lmkgffde" path="res://assets/scripts/select_manager.gd" id="7_wc5p8"]
+[ext_resource type="Script" uid="uid://g87mlfguaeq6" path="res://assets/scripts/player1/build_manager.gd" id="3_855mp"]
+[ext_resource type="Script" uid="uid://udxkaq3qfjce" path="res://assets/scripts/shared/resource_manager.gd" id="4_75q7d"]
+[ext_resource type="Script" uid="uid://c5bwai6kgn1c2" path="res://assets/scripts/shared/cam_control.gd" id="5_jka67"]
+[ext_resource type="Script" uid="uid://bxmqnov0o5684" path="res://assets/scripts/player1/player_manager.gd" id="6_i5arm"]
+[ext_resource type="Script" uid="uid://chql2lmkgffde" path="res://assets/scripts/player1/select_manager.gd" id="7_wc5p8"]
+
 
 [sub_resource type="CapsuleMesh" id="CapsuleMesh_qxy4w"]
 
