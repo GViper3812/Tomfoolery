@@ -1,4 +1,8 @@
-[gd_scene format=3 uid="uid://11t6n5wg72q7"]
+[gd_scene load_steps=4 format=3 uid="uid://11t6n5wg72q7"]
+
+[ext_resource type="Script" uid="uid://ct8a4uvtfw6p7" path="res://assets/hud/buildingselect/scripts/lp/spawn_grunt_platoon.gd" id="1_8o4s6"]
+[ext_resource type="Script" uid="uid://dhfoqct0efnyy" path="res://assets/hud/buildingselect/scripts/lp/spawn_anti_armour.gd" id="2_7bnpx"]
+[ext_resource type="Script" uid="uid://dpdr7lbqy1n1j" path="res://assets/hud/buildingselect/scripts/lp/spawn_heavy_infantry.gd" id="3_ja1yq"]
 
 [node name="buildcontianer" type="HBoxContainer"]
 offset_top = 50.0
@@ -14,113 +18,59 @@ layout_mode = 2
 size_flags_horizontal = 3
 theme_override_constants/h_separation = 1
 theme_override_constants/v_separation = 1
-columns = 6
+columns = 4
 
-[node name="Button10" type="Button" parent="landingpad"]
+[node name="spawngruntsquad" type="Button" parent="landingpad"]
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
-mouse_filter = 2
-text = "lp"
+text = "ant inf"
+script = ExtResource("1_8o4s6")
 
-[node name="Button11" type="Button" parent="landingpad"]
+[node name="spawnantiarmour" type="Button" parent="landingpad"]
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
-mouse_filter = 2
+text = "anti arm"
+script = ExtResource("2_7bnpx")
 
-[node name="Button12" type="Button" parent="landingpad"]
+[node name="spawnheavyinfantry" type="Button" parent="landingpad"]
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
-mouse_filter = 2
+text = "heavy"
+script = ExtResource("3_ja1yq")
 
 [node name="Button13" type="Button" parent="landingpad"]
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
-mouse_filter = 2
+disabled = true
 
-[node name="Button14" type="Button" parent="landingpad"]
+[node name="level2" type="Button" parent="landingpad"]
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
-mouse_filter = 2
+text = "LVL 2"
 
 [node name="Button15" type="Button" parent="landingpad"]
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
-mouse_filter = 2
+disabled = true
 
 [node name="Button16" type="Button" parent="landingpad"]
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
-mouse_filter = 2
+disabled = true
 
 [node name="Button17" type="Button" parent="landingpad"]
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
-mouse_filter = 2
+disabled = true
 
-[node name="Button18" type="Button" parent="landingpad"]
-layout_mode = 2
-size_flags_horizontal = 3
-size_flags_vertical = 3
-mouse_filter = 2
-
-[node name="Button19" type="Button" parent="landingpad"]
-layout_mode = 2
-size_flags_horizontal = 3
-size_flags_vertical = 3
-mouse_filter = 2
-
-[node name="Button20" type="Button" parent="landingpad"]
-layout_mode = 2
-size_flags_horizontal = 3
-size_flags_vertical = 3
-mouse_filter = 2
-
-[node name="Button21" type="Button" parent="landingpad"]
-layout_mode = 2
-size_flags_horizontal = 3
-size_flags_vertical = 3
-mouse_filter = 2
-
-[node name="Button22" type="Button" parent="landingpad"]
-layout_mode = 2
-size_flags_horizontal = 3
-size_flags_vertical = 3
-mouse_filter = 2
-
-[node name="Button23" type="Button" parent="landingpad"]
-layout_mode = 2
-size_flags_horizontal = 3
-size_flags_vertical = 3
-mouse_filter = 2
-
-[node name="Button24" type="Button" parent="landingpad"]
-layout_mode = 2
-size_flags_horizontal = 3
-size_flags_vertical = 3
-mouse_filter = 2
-
-[node name="Button25" type="Button" parent="landingpad"]
-layout_mode = 2
-size_flags_horizontal = 3
-size_flags_vertical = 3
-mouse_filter = 2
-
-[node name="Button26" type="Button" parent="landingpad"]
-layout_mode = 2
-size_flags_horizontal = 3
-size_flags_vertical = 3
-mouse_filter = 2
-
-[node name="Button27" type="Button" parent="landingpad"]
-layout_mode = 2
-size_flags_horizontal = 3
-size_flags_vertical = 3
-mouse_filter = 2
+[connection signal="pressed" from="landingpad/spawngruntsquad" to="landingpad/spawngruntsquad" method="_on_pressed"]
+[connection signal="pressed" from="landingpad/spawnantiarmour" to="landingpad/spawngruntsquad" method="_on_pressed"]
+[connection signal="pressed" from="landingpad/spawnheavyinfantry" to="landingpad/spawngruntsquad" method="_on_pressed"]

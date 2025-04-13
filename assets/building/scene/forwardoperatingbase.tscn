@@ -2,7 +2,7 @@
 
 [ext_resource type="Script" uid="uid://bct78a024tdxx" path="res://assets/hud/buildingselect/scripts/fob/fob_manager.gd" id="1_fm50t"]
 [ext_resource type="Script" uid="uid://b362ralqapb4o" path="res://assets/hud/buildingselect/scripts/fob/fob_queue.gd" id="1_i0860"]
-[ext_resource type="ArrayMesh" uid="uid://dqisunxw7dnsl" path="res://assets/building/mesh/hq.tres" id="1_k2qyq"]
+[ext_resource type="ArrayMesh" uid="uid://dqisunxw7dnsl" path="res://assets/building/mesh/forwardoperatingbase.tres" id="1_k2qyq"]
 [ext_resource type="Script" uid="uid://dfm0lclfnn83t" path="res://assets/scripts/player1/area_3d.gd" id="2_vyyba"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_i0860"]

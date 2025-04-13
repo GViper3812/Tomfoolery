@@ -7,7 +7,7 @@
 [ext_resource type="Script" uid="uid://c5bwai6kgn1c2" path="res://assets/scripts/shared/cam_control.gd" id="5_jka67"]
 [ext_resource type="Script" uid="uid://bxmqnov0o5684" path="res://assets/scripts/player1/player_manager.gd" id="6_i5arm"]
 [ext_resource type="Script" uid="uid://chql2lmkgffde" path="res://assets/scripts/player1/select_manager.gd" id="7_nfk4m"]
-[ext_resource type="PackedScene" uid="uid://f3bx1murime4" path="res://assets/building/scene/hq.tscn" id="8_66tet"]
+[ext_resource type="PackedScene" uid="uid://f3bx1murime4" path="res://assets/building/scene/forwardoperatingbase.tscn" id="8_66tet"]
 
 [sub_resource type="CapsuleMesh" id="CapsuleMesh_qxy4w"]
 
@@ -89,10 +89,9 @@ mesh = SubResource("PlaneMesh_wc5p8")
 [node name="StaticBody3D" type="StaticBody3D" parent="MeshInstance3D"]
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="MeshInstance3D/StaticBody3D"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0)
 shape = SubResource("BoxShape3D_66tet")
 
-[node name="hq" parent="." instance=ExtResource("8_66tet")]
+[node name="forwardoperatingbase" parent="." instance=ExtResource("8_66tet")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.25, 0, 0.25)
 
 [connection signal="timeout" from="Player1/Timer" to="Player1/Player1HUD/HUD" method="_on_timer_timeout"]
