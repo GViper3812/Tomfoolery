@@ -2,7 +2,41 @@
 
 [ext_resource type="Script" uid="uid://5ia6bubn1cgl" path="res://assets/hud/buildingselect/scripts/fob/spawn_construction_bot.gd" id="1_lc8jq"]
 [ext_resource type="Script" uid="uid://ce82nqw6f656u" path="res://assets/hud/buildingselect/scripts/fob/spawn_scout.gd" id="2_4e7ad"]
-[ext_resource type="Script" uid="uid://fjjwc6mp723q" path="res://assets/hud/buildingselect/scripts/fob/fob_upgrade.gd" id="3_njly4"]
+
+[sub_resource type="GDScript" id="GDScript_rfoyr"]
+script/source = "extends Button
+
+@onready var select_manager = get_node(\"/root/rootGrid/Player1/select_manager\")
+@onready var resource_manager = get_node(\"/root/rootGrid/Player1/resource_manager\")
+
+@onready var selected = select_manager.get_selected()
+@onready var manager = selected.get_node(\"fob_manager\")
+
+const r_cost := 350
+const p_cost := 200
+const delay := 5.0
+const label := \"upgrade fob\"
+
+func _ready():
+	resource_manager.resource_totals.connect(check)
+	var res = resource_manager.get_resources()
+	
+	check(res[\"requisition\"], res[\"power\"])
+
+func check(requisition, power):
+	if r_cost <= requisition and p_cost <= power and manager.is_upgradeable():
+		disabled = false
+	else:
+		disabled = true
+
+func _on_pressed():
+	var selected = select_manager.get_selected()
+	var manager = selected.get_node(\"fob_manager\")
+
+	if resource_manager.deduct_resources(r_cost, p_cost):
+		manager.queue_action(label, delay)
+		disabled = true
+"
 
 [node name="buildcontianer" type="HBoxContainer"]
 offset_top = 50.0
@@ -53,7 +87,7 @@ size_flags_horizontal = 3
 size_flags_vertical = 3
 text = "LVL2
 "
-script = ExtResource("3_njly4")
+script = SubResource("GDScript_rfoyr")
 
 [node name="Button15" type="Button" parent="hq"]
 layout_mode = 2

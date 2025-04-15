@@ -3,40 +3,29 @@ extends Button
 @onready var select_manager = get_node("/root/rootGrid/Player1/select_manager")
 @onready var resource_manager = get_node("/root/rootGrid/Player1/resource_manager")
 
-@onready var selected = select_manager.get_selected()
-
-@onready var manager = selected.get_node("fob_manager")
-@onready var queue = selected.get_node("fob_queue")
-
 const r_cost := 350
 const p_cost := 200
+const delay := 2.0
+const label := "upgrade fob"
 
-# Executed on Instantiation
 func _ready():
 	resource_manager.resource_totals.connect(check)
 	var res = resource_manager.get_resources()
-	
 	check(res["requisition"], res["power"])
 
-# Resource Comparison Check
 func check(requisition, power):
+	var selected = select_manager.get_selected()
+	var manager = selected.get_node("fob_manager")
+
 	if r_cost <= requisition and p_cost <= power and manager.is_upgradeable():
 		disabled = false
-		return true
 	else:
 		disabled = true
-		return false
 
-# Queue the upgrade action
 func _on_pressed():
+	var selected = select_manager.get_selected()
+	var manager = selected.get_node("fob_manager")
+
 	if resource_manager.deduct_resources(r_cost, p_cost):
-		var action = {
-		"label": "upgrade fob",
-		"callable": func():
-			await get_tree().create_timer(10).timeout
-			manager.upgrade()
-		}
-		
+		manager.add_action(label, delay)
 		disabled = true
-		
-		queue.call("add_action", action)

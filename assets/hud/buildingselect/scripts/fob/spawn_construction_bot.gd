@@ -6,13 +6,12 @@ extends Button
 @onready var resource_manager = get_node("/root/rootGrid/Player1/resource_manager")
 
 @onready var selected = select_manager.get_selected()
-
 @onready var manager = selected.get_node("fob_manager")
-@onready var queue_node = selected.get_node("fob_queue")
-@onready var marker = selected.get_node("fobmarker")
 
 const r_cost := 100
 const p_cost := 0
+const label := "spawn construction bot"
+const delay := 2.0
 
 # Executed on Instantiation
 func _ready():
@@ -36,18 +35,7 @@ func check(requisition, power):
 
 # Queue the spawn action
 func _on_pressed():
-	if manager.can_spawn_bot() and resource_manager.deduct_resources(r_cost, p_cost):
-		var action = {
-			"label": "spawn construction bot",
-			"callable": func():
-				await get_tree().create_timer(2).timeout
-				var unit = unit_scene.instantiate()
-				get_tree().current_scene.add_child(unit)
-				unit.global_transform.origin = marker.global_transform.origin
-				check(resource_manager.requisition, resource_manager.power)
-		}
-		
-		queue_node.add_action(action)
-		
-		var updated_res = resource_manager.get_resources()
-		check(updated_res["requisition"], updated_res["power"])
+	if resource_manager.deduct_resources(r_cost, p_cost) and manager.can_spawn_bot():
+		manager.queue_action(label, delay, unit_scene)
+	else:
+		disabled = true

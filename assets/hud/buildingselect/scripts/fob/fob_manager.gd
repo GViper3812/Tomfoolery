@@ -1,11 +1,18 @@
 extends Node
 
 var fob_level = 1
-var constructionbot = 0
+
+signal fob_upgraded(level)
+
+func queue_action(label: String, delay: float, unit_scene: PackedScene = null):
+	var queue = get_node("../fob_queue")
+	queue.add_action(label, delay, unit_scene)
 
 # Upgrade Management
 func upgrade():
 	fob_level += 1
+	print("FOB upgraded to level:", fob_level)
+	emit_signal("fob_upgraded", fob_level)
 
 func is_upgradeable() -> bool:
 	var queue_node = get_node("../fob_queue")
@@ -26,7 +33,7 @@ func is_upgradeable() -> bool:
 
 # Construction Bot Management
 func can_spawn_bot() -> bool:
-	var constructionbot := 0
+	var constructionbot = 0
 	
 	var queue_node = get_node("../fob_queue")
 	var current_action = queue_node.get_current_action()
@@ -43,3 +50,6 @@ func can_spawn_bot() -> bool:
 	constructionbot += spawned_bots.size()
 	
 	return constructionbot < 4
+
+func get_level_2() -> bool:
+	return fob_level == 2

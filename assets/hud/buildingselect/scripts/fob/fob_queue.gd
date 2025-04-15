@@ -4,13 +4,17 @@ var queue: Array[Dictionary] = []
 var processing := false
 var current_action: Dictionary = {}
 
-# Called when adding to queue
-func add_action(action: Dictionary) -> void:
+func add_action(label: String, delay: float, unit_scene: PackedScene = null) -> void:
+	var action = {
+		"label": label,
+		"delay": delay,
+		"unit_scene": unit_scene
+	}
+	
 	queue.append(action)
 	print_queue()
 	process_queue()
 
-# Queue Manager
 func process_queue():
 	if processing or queue.is_empty():
 		return
@@ -19,9 +23,26 @@ func process_queue():
 	current_action = queue.pop_front()
 	print_queue()
 	
-	if current_action.has("callable"):
-		await current_action["callable"].call()
+	var label = current_action.get("label", "unknown")
+	var delay = current_action.get("delay", 0.0)
+	var unit_scene = current_action.get("unit_scene", null)
 	
+	await get_tree().create_timer(delay).timeout
+	
+	if unit_scene:
+		var unit = unit_scene.instantiate()
+		get_tree().current_scene.add_child(unit)
+		
+		var marker = get_parent().get_node("fobmarker")
+		unit.global_transform.origin = marker.global_transform.origin
+
+	else:
+		var manager = get_parent().get_node_or_null("fob_manager")
+		if manager:
+			match label:
+				"upgrade fob":
+					manager.upgrade()
+
 	processing = false
 	current_action = {}
 	process_queue()
@@ -35,10 +56,8 @@ func print_queue():
 			var label = queue[i].get("label", "unknown action")
 			print("  item %d: %s" % [i + 1, label])
 
-# Prints queue head
 func get_current_action() -> Dictionary:
 	return current_action
 
-# Prints queue, not head
 func get_queue() -> Array:
 	return queue

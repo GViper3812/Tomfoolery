@@ -1,6 +1,9 @@
-[gd_scene load_steps=4 format=3 uid="uid://clvflagsj2fru"]
+[gd_scene load_steps=5 format=3 uid="uid://clvflagsj2fru"]
 
 [sub_resource type="TubeTrailMesh" id="TubeTrailMesh_s2wld"]
+
+[sub_resource type="BoxMesh" id="BoxMesh_s2wld"]
+size = Vector3(0.02, 0.05, 0.2)
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_s2wld"]
 size = Vector3(1, 2, 1)
@@ -13,6 +16,10 @@ data = PackedVector3Array(0, 1, 0, 0, 1, 0, 0, 0.9924, -0.0868, 0, 1, 0, -0.0085
 [node name="mesh" type="MeshInstance3D" parent="."]
 transform = Transform3D(0.2, 0, 0, 0, 0.3, 0, 0, 0, 0.2, 0, 0.2, 0)
 mesh = SubResource("TubeTrailMesh_s2wld")
+
+[node name="mesh2" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.1, 0.25, 0.1)
+mesh = SubResource("BoxMesh_s2wld")
 
 [node name="col" type="CollisionShape3D" parent="."]
 transform = Transform3D(0.2, 0, 0, 0, 0.2, 0, 0, 0, 0.2, 0, 0.2, 0)

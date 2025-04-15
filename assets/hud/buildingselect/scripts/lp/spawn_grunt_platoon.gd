@@ -1,23 +1,27 @@
 extends Button
 
 @onready var unit_scene := preload("res://assets/infantry/gruntsquad.tscn")
+
 @onready var select_manager = get_node("/root/rootGrid/Player1/select_manager")
 @onready var resource_manager = get_node("/root/rootGrid/Player1/resource_manager")
 @onready var player_manager = get_node("/root/rootGrid/Player1/player_manager")
 
 @onready var selected = select_manager.get_selected()
-@onready var queue_node = selected.get_node("lp_queue")
-@onready var marker = selected.get_node("marker")
+@onready var manager = selected.get_node("lp_manager")
+@onready var queue = selected.get_node("lp_queue")
 
-const r_cost := 250
-const p_cost := 0
-const cap_cost := 2
+const r_cost := 300
+const p_cost := 100
+const cap_cost := 3
 const cap_type := "infantry"
+const delay := 5.0
+const label := "spawn grunt squad"
 
 # Executed on Instantiation
 func _ready():
 	resource_manager.resource_totals.connect(check)
 	var res = resource_manager.get_resources()
+	
 	check(res["requisition"], res["power"])
 
 # Resource and Unit Cap Comparison Check
@@ -33,28 +37,9 @@ func check(requisition, power):
 		disabled = true
 		return false
 
-
+# Queue the spawn action
 func _on_pressed():
-	if not player_manager.can_spawn_unit(cap_type, cap_cost):
+	if resource_manager.deduct_resources(r_cost, p_cost):
+		manager.queue_action(label, delay, unit_scene)
+	else:
 		disabled = true
-		return
-	
-	if not resource_manager.deduct_resources(r_cost, p_cost):
-		disabled = true
-		return
-	
-	player_manager.register_unit(cap_type, cap_cost)
-	
-	var action = {
-		"label": "spawn grunt squad",
-		"callable": func():
-			await get_tree().create_timer(2).timeout
-			var unit = unit_scene.instantiate()
-			get_tree().current_scene.add_child(unit)
-			unit.global_transform.origin = marker.global_transform.origin
-	}
-	
-	queue_node.add_action(action)
-	
-	var updated_res = resource_manager.get_resources()
-	check(updated_res["requisition"], updated_res["power"])
