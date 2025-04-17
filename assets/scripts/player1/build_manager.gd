@@ -89,7 +89,7 @@ func lock_building():
 	if mesh_node:
 		mesh_node.set_surface_override_material(0, mainmat)
 	
-	current_building.reparent(get_node("/root/rootGrid"))
+	current_building.reparent(get_node("/root/grid"))
 	current_building.set_process(false)
 	pm.set_state(pm.States.play)
 	current_building = null

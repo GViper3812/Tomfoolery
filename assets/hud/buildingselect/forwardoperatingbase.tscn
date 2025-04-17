@@ -1,4 +1,4 @@
-[gd_scene load_steps=4 format=3 uid="uid://dhcbvno2cn470"]
+[gd_scene load_steps=4 format=3 uid="uid://kmnuxluxunne"]
 
 [ext_resource type="Script" uid="uid://5ia6bubn1cgl" path="res://assets/hud/buildingselect/scripts/fob/spawn_construction_bot.gd" id="1_lc8jq"]
 [ext_resource type="Script" uid="uid://ce82nqw6f656u" path="res://assets/hud/buildingselect/scripts/fob/spawn_scout.gd" id="2_4e7ad"]
@@ -6,8 +6,8 @@
 [sub_resource type="GDScript" id="GDScript_rfoyr"]
 script/source = "extends Button
 
-@onready var select_manager = get_node(\"/root/rootGrid/Player1/select_manager\")
-@onready var resource_manager = get_node(\"/root/rootGrid/Player1/resource_manager\")
+@onready var select_manager = get_node(\"/root/grid/Player1/select_manager\")
+@onready var resource_manager = get_node(\"/root/grid/Player1/resource_manager\")
 
 @onready var selected = select_manager.get_selected()
 @onready var manager = selected.get_node(\"fob_manager\")
@@ -30,9 +30,6 @@ func check(requisition, power):
 		disabled = true
 
 func _on_pressed():
-	var selected = select_manager.get_selected()
-	var manager = selected.get_node(\"fob_manager\")
-
 	if resource_manager.deduct_resources(r_cost, p_cost):
 		manager.queue_action(label, delay)
 		disabled = true

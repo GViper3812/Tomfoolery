@@ -1,8 +1,8 @@
 extends Button
 
-@onready var select_manager = get_node("/root/rootGrid/Player1/select_manager")
-@onready var resource_manager = get_node("/root/rootGrid/Player1/resource_manager")
-@onready var fob := get_node("/root/rootGrid/forwardoperatingbase/fob_manager")
+@onready var select_manager = get_node("/root/grid/Player1/select_manager")
+@onready var resource_manager = get_node("/root/grid/Player1/resource_manager")
+@onready var fob := get_node("/root/grid/navmesh/forwardoperatingbase/fob_manager")
 
 @onready var selected = select_manager.get_selected()
 @onready var manager = selected.get_node("lp_manager")
@@ -37,8 +37,6 @@ func check(requisition, power):
 
 # Queue the upgrade action
 func _on_pressed():
-	var selected = select_manager.get_selected()
-	var manager = selected.get_node("lp_manager")
 
 	if resource_manager.deduct_resources(r_cost, p_cost):
 		manager.queue_action(label, delay)

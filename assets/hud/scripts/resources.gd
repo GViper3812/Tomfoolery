@@ -5,7 +5,7 @@ extends VBoxContainer
 @onready var pow : Label = $PanelContainer2/power/current
 @onready var pow_gain : Label = $PanelContainer2/power/gain
 
-@onready var resource_manager = get_node("/root/rootGrid/Player1/resource_manager")
+@onready var resource_manager = get_node("/root/grid/Player1/resource_manager")
 
 func _ready():
 	if resource_manager:

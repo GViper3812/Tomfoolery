@@ -1,5 +1,7 @@
 extends Node
 
+@onready var navmesh : NavigationRegion3D = get_node("/root/grid/navmesh")
+
 var queue: Array[Dictionary] = []
 var processing := false
 var current_action: Dictionary = {}
@@ -31,7 +33,7 @@ func process_queue():
 	
 	if unit_scene:
 		var unit = unit_scene.instantiate()
-		get_tree().current_scene.add_child(unit)
+		navmesh.add_child(unit)
 		
 		var marker = get_parent().get_node("lpmarker")
 		unit.global_transform.origin = marker.global_transform.origin

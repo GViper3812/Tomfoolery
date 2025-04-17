@@ -2,8 +2,8 @@ extends Button
 
 @onready var unit_scene := preload("res://assets/infantry/constructionbot.tscn")
 
-@onready var select_manager = get_node("/root/rootGrid/Player1/select_manager")
-@onready var resource_manager = get_node("/root/rootGrid/Player1/resource_manager")
+@onready var select_manager = get_node("/root/grid/Player1/select_manager")
+@onready var resource_manager = get_node("/root/grid/Player1/resource_manager")
 
 @onready var selected = select_manager.get_selected()
 @onready var manager = selected.get_node("fob_manager")

@@ -1,4 +1,4 @@
-[gd_scene load_steps=16 format=3 uid="uid://d3yx6al2k3um5"]
+[gd_scene load_steps=17 format=3 uid="uid://d3yx6al2k3um5"]
 
 [ext_resource type="Script" uid="uid://bjy1atkg7oebe" path="res://assets/scripts/shared/movement.gd" id="1_o1tqw"]
 [ext_resource type="PackedScene" uid="uid://byyk1a1grgcv2" path="res://assets/hud/hud.tscn" id="2_eoku1"]
@@ -7,32 +7,67 @@
 [ext_resource type="Script" uid="uid://c5bwai6kgn1c2" path="res://assets/scripts/shared/cam_control.gd" id="5_jka67"]
 [ext_resource type="Script" uid="uid://bxmqnov0o5684" path="res://assets/scripts/player1/player_manager.gd" id="6_i5arm"]
 [ext_resource type="Script" uid="uid://chql2lmkgffde" path="res://assets/scripts/player1/select_manager.gd" id="7_nfk4m"]
-[ext_resource type="PackedScene" uid="uid://f3bx1murime4" path="res://assets/building/scene/forwardoperatingbase.tscn" id="8_66tet"]
+[ext_resource type="PackedScene" uid="uid://i7hnb33dov54" path="res://assets/building/scene/forwardoperatingbase.tscn" id="8_66tet"]
 [ext_resource type="PackedScene" uid="uid://bekt2t4ba0847" path="res://assets/building/scene/landingpad.tscn" id="9_7ycvg"]
 
-[sub_resource type="CapsuleMesh" id="CapsuleMesh_qxy4w"]
-
-[sub_resource type="BoxShape3D" id="BoxShape3D_i5arm"]
-size = Vector3(0.6, 0.6, 0.6)
-
-[sub_resource type="BoxShape3D" id="BoxShape3D_s1lyr"]
-size = Vector3(0.1, 1, 4)
-
-[sub_resource type="QuadMesh" id="QuadMesh_7haat"]
-size = Vector2(2, 1)
-orientation = 0
+[sub_resource type="NavigationMesh" id="NavigationMesh_7ycvg"]
+vertices = PackedVector3Array(-9.74993, 0.02, -0.753008, -2.49993, 0.02, -0.503008, -2.49993, 0.02, -2.00301, -1.74993, 0.02, -2.25301, -1.49993, 0.02, -1.75301, -0.999928, 0.02, -9.75301, -9.74993, 0.02, -9.75301, -1.49993, 0.02, 0.246992, -0.999928, 0.02, 0.246992, -0.749928, 0.02, -1.75301, 1.25007, 0.02, -1.75301, 3.50007, 0.02, 0.746992, 9.75007, 0.02, 1.49699, 9.75007, 0.02, -9.75301, 1.50007, 0.02, 0.746992, 3.75007, 0.02, 1.49699, -2.49993, 0.02, 1.99699, -9.74993, 0.02, 9.74699, -2.74993, 0.02, 9.74699, -1.49993, 0.02, 2.24699, -0.749928, 0.02, 2.24699, -2.24993, 0.02, 2.49699, 3.25007, 0.02, 2.24699, 3.25007, 0.02, 9.74699, 9.75007, 0.02, 9.74699)
+polygons = [PackedInt32Array(2, 1, 0), PackedInt32Array(5, 4, 3), PackedInt32Array(3, 2, 5), PackedInt32Array(5, 2, 6), PackedInt32Array(6, 2, 0), PackedInt32Array(7, 4, 8), PackedInt32Array(8, 4, 9), PackedInt32Array(9, 4, 5), PackedInt32Array(11, 10, 12), PackedInt32Array(12, 10, 13), PackedInt32Array(13, 10, 5), PackedInt32Array(10, 11, 14), PackedInt32Array(12, 15, 11), PackedInt32Array(10, 9, 5), PackedInt32Array(1, 16, 0), PackedInt32Array(0, 16, 18), PackedInt32Array(0, 18, 17), PackedInt32Array(7, 8, 19), PackedInt32Array(19, 8, 20), PackedInt32Array(18, 16, 21), PackedInt32Array(21, 19, 20), PackedInt32Array(20, 22, 21), PackedInt32Array(21, 22, 23), PackedInt32Array(21, 23, 18), PackedInt32Array(15, 12, 22), PackedInt32Array(22, 12, 23), PackedInt32Array(23, 12, 24)]
+cell_height = 0.01
+agent_height = 4.0
+agent_radius = 0.25
 
 [sub_resource type="PlaneMesh" id="PlaneMesh_wc5p8"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_66tet"]
 size = Vector3(2, 0.001, 2)
 
-[node name="rootGrid" type="GridMap"]
+[sub_resource type="QuadMesh" id="QuadMesh_7haat"]
+size = Vector2(2, 1)
+orientation = 0
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_s1lyr"]
+size = Vector3(0.1, 1, 2)
+
+[sub_resource type="CapsuleMesh" id="CapsuleMesh_qxy4w"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_i5arm"]
+size = Vector3(0.6, 0.6, 0.6)
+
+[node name="grid" type="GridMap"]
 cell_size = Vector3(0.5, 0.5, 0.5)
+
+[node name="world" type="WorldEnvironment" parent="."]
+
+[node name="navmesh" type="NavigationRegion3D" parent="."]
+navigation_mesh = SubResource("NavigationMesh_7ycvg")
 metadata/_editor_floor_ = Vector3(0, 0, 0)
 
-[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 0.926213, 0.377, 0, -0.377, 0.926213, 0, 1.24604, 1.55185)
+[node name="MeshInstance3D" type="MeshInstance3D" parent="navmesh"]
+transform = Transform3D(10, 0, 0, 0, 1, 0, 0, 0, 10, 7.12872e-05, 0.00543886, -0.00300813)
+mesh = SubResource("PlaneMesh_wc5p8")
+
+[node name="StaticBody3D" type="StaticBody3D" parent="navmesh/MeshInstance3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="navmesh/MeshInstance3D/StaticBody3D"]
+shape = SubResource("BoxShape3D_66tet")
+
+[node name="Walls" type="MeshInstance3D" parent="navmesh"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 2, -1.99993, 0.60421, 0.00553727)
+mesh = SubResource("QuadMesh_7haat")
+skeleton = NodePath("")
+
+[node name="StaticBody3D2" type="StaticBody3D" parent="navmesh/Walls"]
+
+[node name="CollisionShape3D2" type="CollisionShape3D" parent="navmesh/Walls/StaticBody3D2"]
+shape = SubResource("BoxShape3D_s1lyr")
+
+[node name="forwardoperatingbase" parent="navmesh" instance=ExtResource("8_66tet")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.25, 0, 0.247)
+
+[node name="landingpad" parent="navmesh" instance=ExtResource("9_7ycvg")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.5, 0, 1.497)
 
 [node name="Player1" type="CharacterBody3D" parent="."]
 script = ExtResource("1_o1tqw")
@@ -71,31 +106,5 @@ script = ExtResource("6_i5arm")
 
 [node name="select_manager" type="Node" parent="Player1"]
 script = ExtResource("7_nfk4m")
-
-[node name="StaticBody3D2" type="StaticBody3D" parent="."]
-
-[node name="CollisionShape3D" type="CollisionShape3D" parent="StaticBody3D2"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2, 0.5, 0.0085454)
-shape = SubResource("BoxShape3D_s1lyr")
-
-[node name="Walls" type="MeshInstance3D" parent="StaticBody3D2"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 2, -2, 0.5, 0.0085454)
-mesh = SubResource("QuadMesh_7haat")
-skeleton = NodePath("")
-
-[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
-transform = Transform3D(10, 0, 0, 0, 1, 0, 0, 0, 10, 0, 0, 0)
-mesh = SubResource("PlaneMesh_wc5p8")
-
-[node name="StaticBody3D" type="StaticBody3D" parent="MeshInstance3D"]
-
-[node name="CollisionShape3D" type="CollisionShape3D" parent="MeshInstance3D/StaticBody3D"]
-shape = SubResource("BoxShape3D_66tet")
-
-[node name="forwardoperatingbase" parent="." instance=ExtResource("8_66tet")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.25, 0, 0.25)
-
-[node name="landingpad" parent="." instance=ExtResource("9_7ycvg")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.25, 0, 1.25)
 
 [connection signal="timeout" from="Player1/Timer" to="Player1/Player1HUD/HUD" method="_on_timer_timeout"]

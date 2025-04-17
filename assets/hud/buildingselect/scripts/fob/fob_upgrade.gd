@@ -1,7 +1,10 @@
 extends Button
 
-@onready var select_manager = get_node("/root/rootGrid/Player1/select_manager")
-@onready var resource_manager = get_node("/root/rootGrid/Player1/resource_manager")
+@onready var select_manager = get_node("/root/grid/Player1/select_manager")
+@onready var resource_manager = get_node("/root/grid/Player1/resource_manager")
+
+@onready var selected = select_manager.get_selected()
+@onready var manager = selected.get_node("fob_manager")
 
 const r_cost := 350
 const p_cost := 200
@@ -23,9 +26,6 @@ func check(requisition, power):
 		disabled = true
 
 func _on_pressed():
-	var selected = select_manager.get_selected()
-	var manager = selected.get_node("fob_manager")
-
 	if resource_manager.deduct_resources(r_cost, p_cost):
 		manager.add_action(label, delay)
 		disabled = true

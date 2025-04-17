@@ -1,6 +1,6 @@
 extends Node
 
-@onready var fob := get_node("/root/rootGrid/forwardoperatingbase/fob_manager")
+@onready var fob := get_node("/root/grid/navmesh/forwardoperatingbase/fob_manager")
 
 signal upgrade_status_changed
 
@@ -10,7 +10,7 @@ func queue_action(label: String, delay: float, unit_scene: PackedScene = null):
 	var queue = get_node("../lp_queue")
 	queue.add_action(label, delay, unit_scene)
 
-func _on_fob_upgraded(level: int):
+func _on_fob_upgraded():
 	emit_signal("upgrade_status_changed")
 
 # Upgrade Management

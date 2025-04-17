@@ -40,5 +40,14 @@ shape = SubResource("BoxShape3D_45v3p")
 [node name="lpmarker" type="Marker3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.20363, 0, 0)
 
+[node name="NavigationObstacle3D" type="NavigationObstacle3D" parent="."]
+height = 0.43
+vertices = PackedVector3Array(0.85, 0, 0.425, 0.85, 0, -0.425, -0.85, 0, -0.425, -0.85, 0, 0.425)
+affect_navigation_mesh = true
+
+[node name="col" type="CollisionShape3D" parent="NavigationObstacle3D"]
+transform = Transform3D(0.85, 0, 0, 0, 0.85, 0, 0, 0, 0.85, 0, 0, 0)
+shape = SubResource("ConcavePolygonShape3D_5yck6")
+
 [connection signal="area_entered" from="area" to="area" method="_on_area_entered"]
 [connection signal="area_exited" from="area" to="area" method="_on_area_exited"]

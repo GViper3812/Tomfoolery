@@ -1,5 +1,7 @@
 extends Node
 
+@onready var navmesh : NavigationRegion3D = get_node("/root/grid/navmesh")
+
 var queue: Array[Dictionary] = []
 var processing := false
 var current_action: Dictionary = {}
@@ -31,18 +33,21 @@ func process_queue():
 	
 	if unit_scene:
 		var unit = unit_scene.instantiate()
-		get_tree().current_scene.add_child(unit)
+		navmesh.add_child(unit)
 		
 		var marker = get_parent().get_node("fobmarker")
 		unit.global_transform.origin = marker.global_transform.origin
-
+		var nav_map_rid = get_viewport().get_camera_3d().get_world_3d().navigation_map
+		var snap_pos = NavigationServer3D.map_get_closest_point(nav_map_rid, marker.global_position)
+		unit.global_position = snap_pos
+	
 	else:
 		var manager = get_parent().get_node_or_null("fob_manager")
 		if manager:
 			match label:
 				"upgrade fob":
 					manager.upgrade()
-
+	
 	processing = false
 	current_action = {}
 	process_queue()
