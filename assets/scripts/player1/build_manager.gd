@@ -5,6 +5,8 @@ extends Node
 @onready var root_grid : GridMap = get_node("../..")
 @onready var hud : Control = get_node_or_null("../Player1HUD/HUD")
 
+@onready var navmesh = get_node("/root/grid/navmesh")
+
 @onready var invalid = preload("res://assets/building/shader/invalid.gdshader")
 @onready var valid = preload("res://assets/building/shader/valid.gdshader")
 
@@ -32,8 +34,6 @@ func _on_button_pressed(button: Button):
 		if building_scene:
 			spawn_building(building_scene)
 			pm.set_state(pm.States.building)
-
-
 
 func _process(_delta):
 	if pm.get_state() == pm.States.building and current_building:
@@ -68,8 +68,8 @@ func spawn_building(building_scene: PackedScene):
 	mat = mesh_node.get_active_material(0)
 	
 	current_building = building_instance
-	root_grid.add_child(current_building)
-
+	
+	navmesh.add_child(current_building)
 
 func update_building_position():
 	var world_pos = pm.get_mouse_world_position($"../Cam")
@@ -80,7 +80,6 @@ func update_building_position():
 	snapped_pos.y = 0
 	current_building.global_transform.origin = snapped_pos
 
-
 func lock_building():
 	if not current_building:
 		return
@@ -89,7 +88,10 @@ func lock_building():
 	if mesh_node:
 		mesh_node.set_surface_override_material(0, mainmat)
 	
-	current_building.reparent(get_node("/root/grid"))
 	current_building.set_process(false)
 	pm.set_state(pm.States.play)
+	
+	if navmesh.navigation_mesh:
+		navmesh.bake_navigation_mesh()
+	
 	current_building = null

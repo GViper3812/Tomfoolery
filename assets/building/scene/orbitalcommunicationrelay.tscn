@@ -1,23 +1,27 @@
-[gd_scene load_steps=5 format=3 uid="uid://d2ual8b6jvial"]
+[gd_scene load_steps=4 format=3 uid="uid://d2ual8b6jvial"]
 
 [ext_resource type="ArrayMesh" uid="uid://chtysprtw241b" path="res://assets/building/mesh/orbitalcommunicationrelay.tres" id="1_tloq7"]
 [ext_resource type="Script" uid="uid://dfm0lclfnn83t" path="res://assets/scripts/player1/area_3d.gd" id="2_5yybr"]
 
-[sub_resource type="ConcavePolygonShape3D" id="ConcavePolygonShape3D_w6fwp"]
-data = PackedVector3Array(1, 1, 0.5, 1, 0, 0.5, 0, 1, 0.5, 0, 1, -0.5, 1, 0, -0.5, 1, 1, -0.5, -1, 0, -0.5, 0, 1, -0.5, 0, 1, 0.5, -1, 0, -0.5, 0, 1, 0.5, -1, 0, 0.5, -1, 0, -0.5, 1, 0, 0.5, 1, 0, -0.5, 1, 1, -0.5, 1, 0, 0.5, 1, 1, 0.5, 1, 0, 0.5, -1, 0, 0.5, 0, 1, 0.5, 1, 0, 0.5, -1, 0, -0.5, -1, 0, 0.5, 1, 1, 0.5, 0, 1, 0.5, 1, 1, -0.5, 1, 1, -0.5, 0, 1, 0.5, 0, 1, -0.5, 0, 1, -0.5, -1, 0, -0.5, 1, 0, -0.5, 1, 1, -0.5, 1, 0, -0.5, 1, 0, 0.5)
-
 [sub_resource type="BoxShape3D" id="BoxShape3D_rwgwy"]
+size = Vector3(3.2, 1.75, 1.6)
 
 [node name="orbitalcommunicationrelay" type="StaticBody3D"]
 collision_layer = 2
 
+[node name="NavigationObstacle3D" type="NavigationObstacle3D" parent="."]
+height = 2.25
+vertices = PackedVector3Array(1.6, 0, 0.8, -1.6, 0, 0.8, -1.599, 0, -0.8, 1.6, 0, -0.8)
+affect_navigation_mesh = true
+carve_navigation_mesh = true
+
 [node name="mesh" type="MeshInstance3D" parent="."]
-transform = Transform3D(0.85, 0, 0, 0, 0.85, 0, 0, 0, 0.85, 0, 0, 0)
+transform = Transform3D(1.6, 0, 0, 0, 1.6, 0, 0, 0, 1.6, 0, 0, 0)
 mesh = ExtResource("1_tloq7")
 
 [node name="col" type="CollisionShape3D" parent="."]
-transform = Transform3D(0.85, 0, 0, 0, 0.85, 0, 0, 0, 0.85, 0, 0, 0)
-shape = SubResource("ConcavePolygonShape3D_w6fwp")
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
+shape = SubResource("BoxShape3D_rwgwy")
 
 [node name="area" type="Area3D" parent="." groups=["building"]]
 collision_layer = 2
@@ -25,7 +29,7 @@ collision_mask = 2
 script = ExtResource("2_5yybr")
 
 [node name="col" type="CollisionShape3D" parent="area"]
-transform = Transform3D(1.98, 0, 0, 0, 0.99, 0, 0, 0, 0.99, 0, 0.5, 0)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.85, 0)
 shape = SubResource("BoxShape3D_rwgwy")
 
 [connection signal="area_entered" from="area" to="area" method="_on_area_entered"]

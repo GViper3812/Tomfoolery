@@ -20,12 +20,17 @@ script = ExtResource("1_fm50t")
 [node name="fob_queue" type="Node" parent="."]
 script = ExtResource("1_i0860")
 
+[node name="NavigationObstacle3D" type="NavigationObstacle3D" parent="."]
+height = 2.0
+vertices = PackedVector3Array(1.6, 0, -3.2, 1.6, 0, 3.2, -1.6, 0, 3.2, -1.6, 0, -3.2)
+affect_navigation_mesh = true
+
 [node name="mesh" type="MeshInstance3D" parent="."]
-transform = Transform3D(0.85, 0, 0, 0, 0.85, 0, 0, 0, 0.85, 0, 0, 0)
+transform = Transform3D(1.6, 0, 0, 0, 1.6, 0, 0, 0, 1.6, 0, 0, 0)
 mesh = ExtResource("1_k2qyq")
 
 [node name="col" type="CollisionShape3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.425, 0)
+transform = Transform3D(1.9, 0, 0, 0, 1.9, 0, 0, 0, 1.9, 0, 0.850487, 0)
 shape = SubResource("BoxShape3D_i0860")
 
 [node name="Area3D" type="Area3D" parent="." groups=["building"]]
@@ -34,19 +39,11 @@ collision_mask = 2
 script = ExtResource("2_vyyba")
 
 [node name="col" type="CollisionShape3D" parent="Area3D"]
-transform = Transform3D(0.85, 0, 0, 0, 0.85, 0, 0, 0, 0.85, 0, 0, 0)
+transform = Transform3D(1.6, 0, 0, 0, 1.6, 0, 0, 0, 1.6, 0, 0, 0)
 shape = SubResource("ConcavePolygonShape3D_fm50t")
 
 [node name="fobmarker" type="Marker3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.01, 0, 3.469)
-
-[node name="NavigationObstacle3D" type="NavigationObstacle3D" parent="."]
-vertices = PackedVector3Array(-0.85, 0, 1.7, 0.85, 0, 1.7, 0.85, 0, -1.7, -0.85, 0, -1.7)
-affect_navigation_mesh = true
-
-[node name="col" type="CollisionShape3D" parent="NavigationObstacle3D"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.425, 0)
-shape = SubResource("BoxShape3D_i0860")
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 4)
 
 [connection signal="area_entered" from="Area3D" to="Area3D" method="_on_area_entered"]
 [connection signal="area_exited" from="Area3D" to="Area3D" method="_on_area_exited"]

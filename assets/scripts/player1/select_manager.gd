@@ -17,7 +17,6 @@ func _input(event: InputEvent) -> void:
 		return
 	
 	if event is InputEventMouseButton and event.pressed:
-		# Handle Left Click (Selection)
 		if event.button_index == MOUSE_BUTTON_LEFT and pm.get_state() == pm.States.play:
 			var area = pm.get_first_area_hit($"../Cam")
 			var current = get_current_selection()

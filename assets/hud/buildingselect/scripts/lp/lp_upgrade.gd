@@ -16,9 +16,9 @@ const label := "upgrade lp"
 # Executed on Instantiation
 func _ready():
 	resource_manager.resource_totals.connect(check)
-
+	
 	manager.upgrade_status_changed.connect(_on_upgrade_status_changed)
-
+	
 	var res = resource_manager.get_resources()
 	check(res["requisition"], res["power"])
 
