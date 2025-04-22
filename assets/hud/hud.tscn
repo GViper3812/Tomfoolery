@@ -1,27 +1,11 @@
-[gd_scene load_steps=17 format=3 uid="uid://byyk1a1grgcv2"]
+[gd_scene load_steps=15 format=3 uid="uid://byyk1a1grgcv2"]
 
 [ext_resource type="Script" uid="uid://d4kp3wfix4vip" path="res://assets/hud/scripts/build_menu.gd" id="1_0ahed"]
 [ext_resource type="Script" uid="uid://dah55mchhvfj6" path="res://assets/hud/scripts/resources.gd" id="2_lnhd4"]
 [ext_resource type="Texture2D" uid="uid://dgc74ubuebsbs" path="res://assets/hud/texture/requisition.png" id="2_yktfj"]
 [ext_resource type="Texture2D" uid="uid://bneg3513viksd" path="res://assets/hud/texture/power.png" id="3_3tmnp"]
 [ext_resource type="Script" uid="uid://ty6x8p3whp7e" path="res://assets/hud/scripts/units_menu.gd" id="5_ndvix"]
-[ext_resource type="PackedScene" uid="uid://bqxi5whbe7qux" path="res://assets/hud/buildingselect/base.tscn" id="6_g1w06"]
-
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_acvcc"]
-bg_color = Color(0.6, 0.6, 0.6, 0)
-draw_center = false
-border_width_left = 8
-border_width_bottom = 4
-border_color = Color(0.109804, 0.109804, 0.109804, 1)
-corner_radius_bottom_left = 20
-
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_wf88c"]
-bg_color = Color(0.6, 0.6, 0.6, 0)
-draw_center = false
-border_width_right = 8
-border_width_bottom = 4
-border_color = Color(0.109804, 0.109804, 0.109804, 1)
-corner_radius_bottom_right = 20
+[ext_resource type="PackedScene" uid="uid://bqxi5whbe7qux" path="res://assets/hud/buildingselect/player1/base.tscn" id="6_g1w06"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_dvaor"]
 bg_color = Color(0.168627, 0.168627, 0.168627, 1)
@@ -88,37 +72,14 @@ grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 2
 
-[node name="Panel" type="Panel" parent="."]
-layout_mode = 2
-anchor_top = 1.0
-anchor_bottom = 1.0
-offset_left = 256.0
-offset_top = -19.0
-offset_right = 1600.0
-offset_bottom = 1.0
-grow_vertical = 0
-mouse_filter = 2
-theme_override_styles/panel = SubResource("StyleBoxFlat_acvcc")
-
-[node name="Panel2" type="Panel" parent="."]
-layout_mode = 2
-offset_left = 996.0
-offset_top = 881.0
-offset_right = 1109.0
-offset_bottom = 901.0
-grow_horizontal = 0
-grow_vertical = 0
-mouse_filter = 2
-theme_override_styles/panel = SubResource("StyleBoxFlat_wf88c")
-
 [node name="Panel3" type="Panel" parent="."]
 layout_mode = 1
-anchors_preset = 2
+anchors_preset = -1
 anchor_top = 1.0
-anchor_bottom = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.001
 offset_top = -19.0
-offset_right = 1600.0
-offset_bottom = 1.0
+offset_bottom = 0.189941
 grow_vertical = 0
 mouse_filter = 2
 theme_override_styles/panel = SubResource("StyleBoxFlat_dvaor")

@@ -1,0 +1,59 @@
+[gd_scene load_steps=11 format=3 uid="uid://bhc6r2lse00s7"]
+
+[ext_resource type="Script" uid="uid://bjy1atkg7oebe" path="res://assets/scripts/shared/movement.gd" id="1_6iqoo"]
+[ext_resource type="Script" uid="uid://cmksg5qcykn7q" path="res://assets/scripts/shared/player_service.gd" id="2_jaoer"]
+[ext_resource type="PackedScene" uid="uid://byyk1a1grgcv2" path="res://assets/hud/hud.tscn" id="3_8lhrm"]
+[ext_resource type="Script" uid="uid://c5bwai6kgn1c2" path="res://assets/scripts/shared/cam_control.gd" id="4_up5o4"]
+[ext_resource type="Script" uid="uid://g87mlfguaeq6" path="res://assets/scripts/shared/build_manager.gd" id="5_wh5uk"]
+[ext_resource type="Script" uid="uid://udxkaq3qfjce" path="res://assets/scripts/shared/resource_manager.gd" id="6_ehhk3"]
+[ext_resource type="Script" uid="uid://bxmqnov0o5684" path="res://assets/scripts/shared/player_manager.gd" id="7_mt4e1"]
+[ext_resource type="Script" uid="uid://chql2lmkgffde" path="res://assets/scripts/shared/select_manager.gd" id="8_7d0q2"]
+
+[sub_resource type="CapsuleMesh" id="CapsuleMesh_qxy4w"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_i5arm"]
+size = Vector3(0.6, 0.6, 0.6)
+
+[node name="Player2" type="CharacterBody3D"]
+script = ExtResource("1_6iqoo")
+
+[node name="player_services" type="Node" parent="." groups=["ps"]]
+script = ExtResource("2_jaoer")
+player_id = 2
+
+[node name="mesh" type="MeshInstance3D" parent="."]
+transform = Transform3D(0.1, 0, 0, 0, 0.1, 0, 0, 0, 0.1, 0, 0.3, 0)
+visible = false
+mesh = SubResource("CapsuleMesh_qxy4w")
+
+[node name="col1" type="CollisionShape3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, 0)
+shape = SubResource("BoxShape3D_i5arm")
+
+[node name="Cam" type="Camera3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.3, 0.762021)
+current = true
+
+[node name="Player2HUD" type="CanvasLayer" parent="."]
+
+[node name="HUD" parent="Player2HUD" instance=ExtResource("3_8lhrm")]
+metadata/_edit_use_anchors_ = true
+
+[node name="Timer" type="Timer" parent="."]
+
+[node name="cam_control" type="Node3D" parent="."]
+script = ExtResource("4_up5o4")
+
+[node name="build_manager" type="Node" parent="."]
+script = ExtResource("5_wh5uk")
+
+[node name="resource_manager" type="Node" parent="."]
+script = ExtResource("6_ehhk3")
+
+[node name="player_manager" type="Node" parent="."]
+script = ExtResource("7_mt4e1")
+
+[node name="select_manager" type="Node" parent="."]
+script = ExtResource("8_7d0q2")
+
+[connection signal="timeout" from="Timer" to="Player2HUD/HUD" method="_on_timer_timeout"]

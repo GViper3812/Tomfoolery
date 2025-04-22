@@ -1,0 +1,77 @@
+[gd_scene load_steps=2 format=3 uid="uid://bqxi5whbe7qux"]
+
+[ext_resource type="Script" uid="uid://cmw7g2i28qbk0" path="res://assets/hud/buildingselect/player1/scripts/armoury_queue.gd" id="1_vdjra"]
+
+
+[node name="buildcontianer" type="HBoxContainer"]
+offset_top = 50.0
+offset_right = 100.0
+offset_bottom = 50.0
+script = ExtResource("1_vdjra")
+
+[node name="ItemList" type="ItemList" parent="."]
+custom_minimum_size = Vector2(100, 0)
+layout_mode = 2
+
+[node name="base" type="GridContainer" parent="."]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_constants/h_separation = 1
+theme_override_constants/v_separation = 1
+columns = 4
+
+[node name="Button10" type="Button" parent="base"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+mouse_filter = 2
+disabled = true
+
+[node name="Button11" type="Button" parent="base"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+mouse_filter = 2
+disabled = true
+
+[node name="Button12" type="Button" parent="base"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+mouse_filter = 2
+disabled = true
+
+[node name="Button13" type="Button" parent="base"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+mouse_filter = 2
+disabled = true
+
+[node name="Button14" type="Button" parent="base"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+mouse_filter = 2
+disabled = true
+
+[node name="Button15" type="Button" parent="base"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+mouse_filter = 2
+disabled = true
+
+[node name="Button16" type="Button" parent="base"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+mouse_filter = 2
+disabled = true
+
+[node name="Button17" type="Button" parent="base"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+mouse_filter = 2
+disabled = true

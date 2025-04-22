@@ -1,8 +1,8 @@
 res://assets/infantry/scripts
-res://assets/hud/buildingselect/scripts/fob
-res://assets/hud/buildingselect/scripts/lp
-res://assets/hud/scripts
 res://
+res://assets/scripts/shared
+res://assets/scripts/initialization
+res://assets/hud/scripts
 res://assets/hud/buildingselect
 res://assets/scripts
 res://assets/building/shader
