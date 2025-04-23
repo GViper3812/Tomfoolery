@@ -1,6 +1,6 @@
 [gd_resource type="ArrayMesh" load_steps=3 format=4 uid="uid://deob753hseqad"]
 
-[ext_resource type="Material" uid="uid://bgsd4o8grgv37" path="res://assets/building/shader/mainmat.tres" id="1_ex7lb"]
+[ext_resource type="Material" uid="uid://bgsd4o8grgv37" path="res://assets/shader/building/mainmat.tres" id="1_ex7lb"]
 
 [sub_resource type="ArrayMesh" id="ArrayMesh_3i2dt"]
 _surfaces = [{

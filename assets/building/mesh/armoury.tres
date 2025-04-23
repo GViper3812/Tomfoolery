@@ -1,7 +1,7 @@
 [gd_resource type="ArrayMesh" load_steps=4 format=4 uid="uid://dhy5skb7ducej"]
 
-[ext_resource type="Material" uid="uid://bgsd4o8grgv37" path="res://assets/building/shader/mainmat.tres" id="1_socxb"]
-[ext_resource type="Material" uid="uid://cbblnsl5w8y64" path="res://assets/building/shader/editmat.tres" id="2_socxb"]
+[ext_resource type="Material" uid="uid://bgsd4o8grgv37" path="res://assets/shader/building/mainmat.tres" id="1_socxb"]
+[ext_resource type="Material" uid="uid://cbblnsl5w8y64" path="res://assets/shader/building/editmat.tres" id="2_socxb"]
 
 [sub_resource type="ArrayMesh" id="ArrayMesh_jikif"]
 _surfaces = [{

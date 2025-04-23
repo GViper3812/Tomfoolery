@@ -72,6 +72,10 @@ grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 2
 
+[node name="selectionrect" type="ColorRect" parent="."]
+layout_mode = 0
+color = Color(0.397078, 0.768516, 0.21485, 0.356863)
+
 [node name="Panel3" type="Panel" parent="."]
 layout_mode = 1
 anchors_preset = -1

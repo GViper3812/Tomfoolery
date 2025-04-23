@@ -31,7 +31,8 @@ folder_colors={
 "res://assets/hud/buildingselect/player1/scripts/": "blue",
 "res://assets/hud/scripts/": "blue",
 "res://assets/infantry/": "purple",
-"res://assets/scripts/": "blue"
+"res://assets/scripts/": "blue",
+"res://assets/shader/": "gray"
 }
 
 [global_group]
@@ -42,6 +43,7 @@ building=""
 p1constructionbot=""
 fob=""
 ps=""
+selectable=""
 
 [input]
 
