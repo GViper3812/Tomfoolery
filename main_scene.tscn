@@ -1,4 +1,4 @@
-[gd_scene load_steps=24 format=3 uid="uid://d3yx6al2k3um5"]
+[gd_scene load_steps=28 format=3 uid="uid://d3yx6al2k3um5"]
 
 [ext_resource type="Script" uid="uid://ckulfa6mhb6g5" path="res://assets/scripts/initialization/main_scene.gd" id="1_7ycvg"]
 [ext_resource type="Script" uid="uid://bjy1atkg7oebe" path="res://assets/scripts/shared/movement.gd" id="1_o1tqw"]
@@ -8,10 +8,14 @@
 [ext_resource type="Script" uid="uid://cmksg5qcykn7q" path="res://assets/scripts/shared/player_service.gd" id="4_wr18j"]
 [ext_resource type="Script" uid="uid://c5bwai6kgn1c2" path="res://assets/scripts/shared/cam_control.gd" id="5_jka67"]
 [ext_resource type="Script" uid="uid://bxmqnov0o5684" path="res://assets/scripts/shared/player_manager.gd" id="6_i5arm"]
-[ext_resource type="Script" uid="uid://chql2lmkgffde" path="res://assets/scripts/shared/select_manager.gd" id="7_nfk4m"]
+[ext_resource type="Script" uid="uid://chql2lmkgffde" path="res://assets/scripts/shared/selection/select_manager.gd" id="7_nfk4m"]
 [ext_resource type="PackedScene" uid="uid://i7hnb33dov54" path="res://assets/building/player1/scene/forwardoperatingbase.tscn" id="8_66tet"]
 [ext_resource type="Script" uid="uid://dvsmk6wpnf47h" path="res://assets/infantry/scripts/scout.gd" id="11_671wp"]
+[ext_resource type="Script" uid="uid://ccv0dku5v1s47" path="res://assets/scripts/shared/selection/input_handler.gd" id="11_mo76n"]
+[ext_resource type="Script" uid="uid://dr3jg1hktmf56" path="res://assets/scripts/shared/selection/selection_logic.gd" id="12_42l1d"]
 [ext_resource type="Material" uid="uid://dfot2yws7gpvl" path="res://assets/shader/targeting/outline.tres" id="12_mo76n"]
+[ext_resource type="Script" uid="uid://co4yvtegk2ffh" path="res://assets/scripts/shared/selection/hud_controller.gd" id="13_2jcla"]
+[ext_resource type="Script" uid="uid://diua3lcb5aa1c" path="res://assets/scripts/shared/selection/order_handler.gd" id="13_m35m6"]
 
 [sub_resource type="NavigationMesh" id="NavigationMesh_66tet"]
 vertices = PackedVector3Array(-0.8, 0.25, -43.3006, -0.0999994, 0.25, -43.4006, -0.2, 0.25, -49.9006, -9.9, 0.25, -49.9006, -9.9, 0.25, -42.8006, -0.8, 0.25, -42.7006, 2.1, 0.25, -43.4006, 2.2, 0.25, -49.9006, 2.7, 0.25, -43.4006, 2.8, 0.25, -42.7006, 9.9, 0.25, -42.8006, 9.9, 0.25, -49.9006, -9.9, 0.25, -37.2006, -0.8, 0.25, -37.3006, 2.8, 0.25, -37.3006, 9.9, 0.25, -37.2006, 6.1, 0.25, -5.20061, 6.2, 0.25, -5.00061, 9.9, 0.25, -5.00061, 2.7, 0.25, -36.6006, -9.9, 0.25, -4.50061, -4.2, 0.25, -4.40061, -4.2, 0.25, -5.00061, -4, 0.25, -5.20061, -0.7, 0.25, -36.6006, 1.7, 0.25, -4.80061, 1.6, 0.25, -2.90061, 2.3, 0.25, -2.80061, 6.1, 0.25, -4.80061, 2.3, 0.25, 2.99939, 9.9, 0.25, 2.99939, -1.3, 0.25, -2.80061, -0.599999, 0.25, -2.90061, -0.7, 0.25, -4.80061, -3.8, 0.25, -4.80061, -3.8, 0.25, 3.99939, -1.1, 0.25, 3.89939, -1.3, 0.25, 3.79939, -9.9, 0.25, 4.59939, -4.2, 0.25, 4.49939, 2.3, 0.25, 3.79939, 2.1, 0.25, 3.89939, 2.1, 0.25, 9.89939, 9.9, 0.25, 9.89939, -3.8, 0.25, 5.09939, -4, 0.25, 5.19939, -4, 0.25, 9.89939, -4.2, 0.25, 5.09939, -9.9, 0.25, 9.89939)
@@ -137,6 +141,18 @@ script = ExtResource("6_i5arm")
 
 [node name="select_manager" type="Node" parent="Player1"]
 script = ExtResource("7_nfk4m")
+
+[node name="input_handler" type="Node" parent="Player1/select_manager"]
+script = ExtResource("11_mo76n")
+
+[node name="selection_logic" type="Node" parent="Player1/select_manager"]
+script = ExtResource("12_42l1d")
+
+[node name="order_handler" type="Node" parent="Player1/select_manager"]
+script = ExtResource("13_m35m6")
+
+[node name="hud_controller" type="Node" parent="Player1/select_manager"]
+script = ExtResource("13_2jcla")
 
 [node name="char" type="CharacterBody3D" parent="." groups=["selectable"]]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 6.77963)

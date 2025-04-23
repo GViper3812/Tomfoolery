@@ -6,7 +6,7 @@
 [ext_resource type="Script" uid="uid://udxkaq3qfjce" path="res://assets/scripts/shared/resource_manager.gd" id="4_75q7d"]
 [ext_resource type="Script" uid="uid://c5bwai6kgn1c2" path="res://assets/scripts/shared/cam_control.gd" id="5_jka67"]
 [ext_resource type="Script" uid="uid://bxmqnov0o5684" path="res://assets/scripts/shared/player_manager.gd" id="6_i5arm"]
-[ext_resource type="Script" uid="uid://chql2lmkgffde" path="res://assets/scripts/shared/select_manager.gd" id="7_wc5p8"]
+[ext_resource type="Script" uid="uid://chql2lmkgffde" path="res://assets/scripts/shared/selection/select_manager.gd" id="7_wc5p8"]
 
 
 
