@@ -38,3 +38,11 @@ func _process(delta):
 
 func get_selected() -> Node:
 	return selected
+
+func select_squad(squad: Node):
+	selection_logic.clear_selection()
+	selected = squad
+	selected_units = [squad]
+	
+	if squad.has_method("set_selected"):
+		squad.set_selected(true, Color.GREEN)

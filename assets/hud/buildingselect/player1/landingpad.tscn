@@ -1,6 +1,6 @@
 [gd_scene load_steps=5 format=3 uid="uid://11t6n5wg72q7"]
 
-[ext_resource type="Script" uid="uid://ct8a4uvtfw6p7" path="res://assets/hud/buildingselect/player1/scripts/lp/spawn_grunt_platoon.gd" id="1_r4c2l"]
+[ext_resource type="Script" uid="uid://ct8a4uvtfw6p7" path="res://assets/hud/buildingselect/player1/scripts/lp/spawn_grunt_squad.gd" id="1_r4c2l"]
 [ext_resource type="Script" uid="uid://dhfoqct0efnyy" path="res://assets/hud/buildingselect/player1/scripts/lp/spawn_anti_armour.gd" id="2_qb4nq"]
 [ext_resource type="Script" uid="uid://dpdr7lbqy1n1j" path="res://assets/hud/buildingselect/player1/scripts/lp/spawn_heavy_infantry.gd" id="3_xbwkt"]
 [ext_resource type="Script" uid="uid://dx1ocgdmefbmp" path="res://assets/hud/buildingselect/player1/scripts/lp/lp_upgrade.gd" id="4_txaj0"]

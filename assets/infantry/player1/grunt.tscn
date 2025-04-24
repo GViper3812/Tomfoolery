@@ -1,7 +1,7 @@
-[gd_scene load_steps=7 format=3 uid="uid://clvflagsj2fru"]
+[gd_scene load_steps=7 format=3 uid="uid://bklh20vk0jeal"]
 
-[ext_resource type="Script" uid="uid://dvsmk6wpnf47h" path="res://assets/infantry/scripts/scout.gd" id="1_epnep"]
-[ext_resource type="Material" uid="uid://dfot2yws7gpvl" path="res://assets/shader/targeting/outline.tres" id="2_3jrur"]
+[ext_resource type="Script" uid="uid://dtxc0gv65n1q7" path="res://assets/infantry/player1/base_grunt.gd" id="1_0c8hf"]
+[ext_resource type="Material" uid="uid://dfot2yws7gpvl" path="res://assets/shader/targeting/outline.tres" id="2_g2le1"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_s2wld"]
 size = Vector3(1, 2, 1)
@@ -13,16 +13,21 @@ size = Vector3(0.02, 0.05, 0.2)
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_epnep"]
 
-[node name="char" type="CharacterBody3D" groups=["selectable"]]
+[node name="grunt" type="CharacterBody3D" groups=["selectable"]]
 collision_layer = 2
 collision_mask = 2
-script = ExtResource("1_epnep")
+script = ExtResource("1_0c8hf")
 
 [node name="NavigationAgent3D" type="NavigationAgent3D" parent="."]
-path_desired_distance = 0.1
-target_desired_distance = 0.2
+path_desired_distance = 0.5
+target_desired_distance = 0.1
 avoidance_enabled = true
-radius = 0.15
+radius = 0.25
+neighbor_distance = 15.0
+max_neighbors = 40
+max_speed = 2.0
+avoidance_layers = 2
+avoidance_mask = 2
 debug_enabled = true
 
 [node name="col" type="CollisionShape3D" parent="."]
@@ -39,7 +44,7 @@ transform = Transform3D(1, 0, 0, 0, 1.1, 0, 0, 0, 1, 0, 0, 0)
 visible = false
 mesh = SubResource("TubeTrailMesh_s2wld")
 skeleton = NodePath("")
-surface_material_override/0 = ExtResource("2_3jrur")
+surface_material_override/0 = ExtResource("2_g2le1")
 
 [node name="mesh2" type="MeshInstance3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.1, 0.25, 0.1)
@@ -52,4 +57,5 @@ skeleton = NodePath("")
 transform = Transform3D(0.2, 0, 0, 0, 0.2, 0, 0, 0, 0.2, 0, 0.2, 0)
 shape = SubResource("CapsuleShape3D_epnep")
 
+[connection signal="velocity_computed" from="NavigationAgent3D" to="." method="_on_velocity_computed"]
 [connection signal="input_event" from="area" to="." method="_on_area_input_event"]

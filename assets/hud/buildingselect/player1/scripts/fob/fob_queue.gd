@@ -36,7 +36,6 @@ func process_queue():
 		var unit = unit_scene.instantiate()
 		
 		unit.owner_id = manager.owner_id
-		unit.add_to_group("selectable")
 		
 		navmesh.add_child(unit)
 		

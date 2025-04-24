@@ -1,24 +1,30 @@
 extends CharacterBody3D
 
-@export var owner_id := 1
+@export var owner_id := 0
 @onready var agent: NavigationAgent3D = $NavigationAgent3D
 @onready var outline_mesh: MeshInstance3D = $mesh/outline
 @onready var outline_material := preload("res://assets/shader/targeting/outline.tres")
 
+var squad_ref: Node = null
 var current_outline: ShaderMaterial = null
 var target_velocity: Vector3 = Vector3.ZERO
-@export var speed := 3.0
+var speed := 2.0
 
-const TARGET_THRESHOLD := 0.2
 const REPULSION_RADIUS := 0.3
 const REPULSION_STRENGTH := 10.0
+
+func set_squad(squad: Node):
+	squad_ref = squad
+
+func get_squad():
+	return squad_ref
 
 func move_to(destination: Vector3):
 	var nav_map = agent.get_navigation_map()
 	var safe_target = NavigationServer3D.map_get_closest_point(nav_map, destination)
 	agent.target_position = safe_target
 
-func set_selected(selected: bool, color: Color = Color.GREEN):
+func set_selected(selected: bool, color: Color = Color.WHITE):
 	if selected:
 		if current_outline == null:
 			current_outline = outline_material.duplicate()

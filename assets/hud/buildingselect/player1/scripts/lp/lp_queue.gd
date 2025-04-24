@@ -41,19 +41,19 @@ func process_queue():
 	if unit_scene:
 		var unit = unit_scene.instantiate()
 		navmesh.add_child(unit)
-
+		
 		if marker:
 			unit.global_transform.origin = marker.global_transform.origin
 		
 		if "owner_id" in unit:
 			unit.owner_id = manager.owner_id
-
+		
 	else:
 		if manager:
 			match label:
 				"upgrade lp":
 					manager.upgrade()
-
+	
 	processing = false
 	current_action = {}
 	process_queue()

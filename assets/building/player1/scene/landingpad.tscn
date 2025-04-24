@@ -40,7 +40,7 @@ transform = Transform3D(1.9, 0, 0, 0, 1.9, 0, 0, 0, 1.9, 0, 0.425, 0)
 shape = SubResource("BoxShape3D_45v3p")
 
 [node name="lpmarker" type="Marker3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.85, 0, 0)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.5, 0, 0)
 
 [connection signal="area_entered" from="area" to="area" method="_on_area_entered"]
 [connection signal="area_exited" from="area" to="area" method="_on_area_exited"]

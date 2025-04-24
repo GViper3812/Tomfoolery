@@ -50,8 +50,6 @@ func check(requisition, power):
 func _on_pressed():
 	if rm.deduct_resources(r_cost, p_cost) and pm.can_spawn_unit(cap_type, cap_cost):
 		manager.queue_action(label, delay, unit_scene)
-	else:
-		disabled = true
 
 func find_services(id : int) -> Node:
 	for node in get_tree().get_nodes_in_group("ps"):

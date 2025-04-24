@@ -20,7 +20,11 @@ func select_single_target(area: Node):
 				break
 	
 	var current = manager.hud_controller.get_current_selection()
-	if owner_node == null or owner_node == current:
+	var is_shift := Input.is_key_pressed(KEY_SHIFT)
+	
+	if owner_node == null:
+		if not is_shift:
+			clear_selection()
 		return
 	
 	var is_friendly: bool = "owner_id" in owner_node and owner_node.owner_id == manager.player_id
@@ -29,6 +33,10 @@ func select_single_target(area: Node):
 		if not is_friendly:
 			print("Cannot select enemy building.")
 			return
+		
+		if not is_shift:
+			clear_selection()
+		
 		manager.selected = area_parent
 		var building_type := "base"
 		for child in area_parent.get_children():
@@ -36,34 +44,70 @@ func select_single_target(area: Node):
 				building_type = child.building_type
 				break
 		manager.hud_controller.select_building(building_type)
+	
 	elif area.is_in_group("infantry") or area.is_in_group("vehicle"):
-		clear_selection()
+		var squad = null
+		if area.get_parent().has_method("get_squad"):
+			squad = area.get_parent().get_squad()
+		
+		if squad != null:
+			if is_shift:
+				toggle_selection(squad, true)
+			else:
+				clear_selection()
+				toggle_selection(squad, false)
+			return
+		
 		if is_friendly:
-			manager.selected = area_parent
-			manager.selected_units = [manager.selected]
-			if manager.selected.has_method("set_selected"):
-				manager.selected.set_selected(true, Color.GREEN)
+			if not is_shift:
+				clear_selection()
+			toggle_selection(owner_node, is_shift)
 		else:
-			if area_parent.has_method("set_selected"):
-				area_parent.set_selected(true, Color.RED)
-				manager.selected_hostile = area_parent
+			if not is_shift:
+				clear_selection()
+			
+			if owner_node.has_method("set_selected"):
+				owner_node.set_selected(true, Color.RED)
+				manager.selected_hostile = owner_node
 				manager.hostile_recent = true
 
 func select_units_in_rect():
-	clear_selection()
+	var is_shift := Input.is_key_pressed(KEY_SHIFT)
 	var rect = Rect2(manager.selection_rect.global_position, manager.selection_rect.size)
+	
+	if not is_shift:
+		clear_selection()
+	
 	for unit in get_tree().get_nodes_in_group("selectable"):
 		if not unit is Node3D:
 			continue
 		if not "owner_id" in unit or unit.owner_id != manager.player_id:
 			continue
+		
 		var screen_pos = manager.cam.unproject_position(unit.global_transform.origin)
 		if rect.has_point(screen_pos):
-			manager.selected_units.append(unit)
-			if unit.has_method("set_selected"):
-				unit.set_selected(true, Color.GREEN)
+			var squad = null
+			if unit.has_method("get_squad"):
+				squad = unit.get_squad()
+			
+			if squad != null and not manager.selected_units.has(squad):
+				manager.select_squad(squad)
+			elif squad == null:
+				toggle_selection(unit, is_shift)
+	
 	manager.selected = null
 	print_selected_units()
+
+func toggle_selection(unit: Node, is_shift: bool):
+	if manager.selected_units.has(unit):
+		if is_shift:
+			manager.selected_units.erase(unit)
+			if unit.has_method("set_selected"):
+				unit.set_selected(false)
+	else:
+		manager.selected_units.append(unit)
+		if unit.has_method("set_selected"):
+			unit.set_selected(true, Color.GREEN)
 
 func clear_selection():
 	for unit in manager.selected_units:

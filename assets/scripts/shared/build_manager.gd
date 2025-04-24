@@ -56,10 +56,14 @@ func spawn_building(building_scene: PackedScene):
 	
 	var building_instance = building_scene.instantiate() as StaticBody3D
 	var mesh_node = building_instance.get_node_or_null("mesh")
+	var col = building_instance.get_node_or_null("col")
 	
 	for child in building_instance.get_children():
 		if "owner_id" in child:
 			child.owner_id = services.player_id
+	
+	if col:
+		col.disabled = true
 	
 	mesh_node.set_surface_override_material(0, editmat)
 	mat = editmat
@@ -86,6 +90,10 @@ func lock_building():
 	var mesh_node = current_building.get_node_or_null("mesh")
 	if mesh_node:
 		mesh_node.set_surface_override_material(0, mainmat)
+	
+	var col = current_building.get_node_or_null("col")
+	if col:
+		col.disabled = false
 	
 	current_building.set_process(false)
 	pm.set_state(pm.States.play)

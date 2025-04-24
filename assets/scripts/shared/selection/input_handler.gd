@@ -36,7 +36,8 @@ func process_input(event):
 				if area:
 					manager.selection_logic.select_single_target(area)
 				else:
-					manager.selection_logic.clear_selection()
+					if not Input.is_key_pressed(KEY_SHIFT):
+						manager.selection_logic.clear_selection()
 			else:
 				manager.selection_logic.select_units_in_rect()
 	
