@@ -9,7 +9,7 @@ var processing : bool = false
 var current_action : Dictionary = {}
 
 func _ready():
-	navmesh = get_node("/root/grid/navmesh")
+	navmesh = get_node("/root/root/navmesh")
 	manager = get_parent().get_node_or_null("lp_manager")
 	marker = get_parent().get_node_or_null("lpmarker")
 
@@ -43,11 +43,11 @@ func process_queue():
 		navmesh.add_child(unit)
 		
 		if marker:
-			unit.global_transform.origin = marker.global_transform.origin
+			unit.global_position = marker.global_position
 		
 		if "owner_id" in unit:
 			unit.owner_id = manager.owner_id
-		
+	
 	else:
 		if manager:
 			match label:

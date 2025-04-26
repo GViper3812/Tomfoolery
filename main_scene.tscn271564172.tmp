@@ -1,0 +1,208 @@
+[gd_scene load_steps=27 format=3 uid="uid://d3yx6al2k3um5"]
+
+[ext_resource type="Script" uid="uid://ckulfa6mhb6g5" path="res://assets/scripts/initialization/main_scene.gd" id="1_7ycvg"]
+[ext_resource type="Script" uid="uid://bjy1atkg7oebe" path="res://assets/scripts/shared/movement.gd" id="1_o1tqw"]
+[ext_resource type="Material" uid="uid://57bx5pt4eyog" path="res://assets/shader/fog/fog_shader_material.tres" id="1_u0ygc"]
+[ext_resource type="PackedScene" uid="uid://byyk1a1grgcv2" path="res://assets/hud/hud.tscn" id="2_eoku1"]
+[ext_resource type="Script" uid="uid://cqx441w55pfer" path="res://assets/scripts/shared/fog_manager.gd" id="2_m35m6"]
+[ext_resource type="Script" uid="uid://g87mlfguaeq6" path="res://assets/scripts/shared/build_manager.gd" id="3_855mp"]
+[ext_resource type="Script" uid="uid://udxkaq3qfjce" path="res://assets/scripts/shared/resource_manager.gd" id="4_75q7d"]
+[ext_resource type="Script" uid="uid://cmksg5qcykn7q" path="res://assets/scripts/shared/player_service.gd" id="4_wr18j"]
+[ext_resource type="Script" uid="uid://c5bwai6kgn1c2" path="res://assets/scripts/shared/cam_control.gd" id="5_jka67"]
+[ext_resource type="Script" uid="uid://bxmqnov0o5684" path="res://assets/scripts/shared/player_manager.gd" id="6_i5arm"]
+[ext_resource type="Script" uid="uid://chql2lmkgffde" path="res://assets/scripts/shared/selection/select_manager.gd" id="7_nfk4m"]
+[ext_resource type="PackedScene" uid="uid://i7hnb33dov54" path="res://assets/building/player1/scene/forwardoperatingbase.tscn" id="8_66tet"]
+[ext_resource type="Script" uid="uid://ccv0dku5v1s47" path="res://assets/scripts/shared/selection/input_handler.gd" id="11_mo76n"]
+[ext_resource type="Script" uid="uid://dr3jg1hktmf56" path="res://assets/scripts/shared/selection/selection_logic.gd" id="12_42l1d"]
+[ext_resource type="Script" uid="uid://co4yvtegk2ffh" path="res://assets/scripts/shared/selection/hud_controller.gd" id="13_2jcla"]
+[ext_resource type="Script" uid="uid://diua3lcb5aa1c" path="res://assets/scripts/shared/selection/order_handler.gd" id="13_m35m6"]
+[ext_resource type="PackedScene" uid="uid://clvflagsj2fru" path="res://assets/infantry/player1/scout.tscn" id="15_2jcla"]
+
+[sub_resource type="GDScript" id="GDScript_u0ygc"]
+script/source = "extends Node2D
+
+@export var world_size := Vector2(256, 256)
+@export var fog_resolution := Vector2(256, 256)
+@export var solid_radius := 8.0
+@export var ring_radius := 24.0
+@export var ring_alpha := 0.2
+
+func _process(_delta):
+	print(\"I'm alive!\")
+	queue_redraw()
+
+func _draw():
+	for unit in get_tree().get_nodes_in_group(\"owner_1\"):
+		if not unit is Node3D:
+			continue
+		var pos_2d := world_to_fog_viewport(unit.global_position)
+		draw_circle_alpha_blend(pos_2d, solid_radius, ring_radius, ring_alpha)
+
+func draw_circle_alpha_blend(center: Vector2, solid_radius: float, ring_radius: float, ring_alpha: float = 0.2):
+	draw_circle(center, solid_radius, Color(1, 1, 1, 1.0))
+	for r in range(int(solid_radius) + 1, int(ring_radius)):
+		draw_circle(center, r, Color(1, 1, 1, ring_alpha))
+
+func world_to_fog_viewport(world_pos: Vector3) -> Vector2:
+	var uv := Vector2(world_pos.x, world_pos.z) / world_size
+	return uv * fog_resolution
+"
+
+[sub_resource type="QuadMesh" id="QuadMesh_6jybn"]
+material = ExtResource("1_u0ygc")
+size = Vector2(256, 256)
+orientation = 1
+
+[sub_resource type="NavigationMesh" id="NavigationMesh_66tet"]
+vertices = PackedVector3Array(-0.8, 0.25, -43.3006, -0.0999994, 0.25, -43.4006, -0.2, 0.25, -49.9006, -9.9, 0.25, -49.9006, -9.9, 0.25, -42.8006, -0.8, 0.25, -42.7006, 2.1, 0.25, -43.4006, 2.2, 0.25, -49.9006, 2.7, 0.25, -43.4006, 2.8, 0.25, -42.7006, 9.9, 0.25, -42.8006, 9.9, 0.25, -49.9006, -9.9, 0.25, -37.2006, -0.8, 0.25, -37.3006, 2.8, 0.25, -37.3006, 9.9, 0.25, -37.2006, -9.9, 0.25, -8.2006, -6.1, 0.25, -8.2006, -6, 0.25, -9.1006, 4.1, 0.25, -9.1006, 4.2, 0.25, -8.4006, 9.9, 0.25, -8.5006, 2.7, 0.25, -36.6006, -0.7, 0.25, -36.6006, -5.9, 3.15, -4.1006, -2.1, 3.15, -4.1006, -2.1, 3.15, -4.9006, -1.4, 3.15, -5.0006, -1.5, 3.15, -8.9006, -5.9, 3.15, -8.9006, 3.9, 3.15, -5.0006, 3.9, 3.15, -8.9006, -5.8, 0.25, -8.8006, -5.8, 0.25, -5.1006, 3.9, 0.25, -5.1006, 3.9, 0.25, -8.8006, 4.2, 0.25, -4.9006, 3.5, 0.25, -4.8006, 3.6, 0.25, -2.9006, 5.2, 0.25, -2.9006, 9.9, 0.25, -2.0006, 5.3, 0.25, -2.0006, -9.9, 0.25, 4.2994, -6.1, 0.25, 4.2994, -5.8, 0.25, -4.8006, -5.8, 0.25, 4.8994, -2.1, 0.25, 4.8994, -2.1, 0.25, -4.8006, 1.7, 0.25, -2.8006, -1.8, 0.25, -4.8006, -1.8, 0.25, 3.2994, 1.7, 0.25, 3.1994, -5.9, 3.15, 4.9994, -2.1, 3.15, 4.9994, 5.3, 0.25, 2.9994, 9.9, 0.25, 2.9994, 5.2, 0.25, 3.8994, 4.4, 0.25, 3.8994, 4.4, 0.25, 9.8994, 9.9, 0.25, 9.8994, 1.8, 0.25, 3.8994, -1.8, 0.25, 5.0994, -2.5, 0.25, 5.1994, -2.4, 0.25, 9.8994, 2.6, 0.25, 3.8994, 2.6, 0.25, 9.8994, -6.1, 0.25, 5.0994, -5.5, 0.25, 9.8994, -5.4, 0.25, 5.1994, -9.9, 0.25, 9.8994)
+polygons = [PackedInt32Array(1, 0, 2), PackedInt32Array(2, 0, 3), PackedInt32Array(3, 0, 4), PackedInt32Array(0, 5, 4), PackedInt32Array(1, 2, 6), PackedInt32Array(6, 2, 7), PackedInt32Array(8, 6, 7), PackedInt32Array(8, 7, 9), PackedInt32Array(9, 7, 10), PackedInt32Array(10, 7, 11), PackedInt32Array(13, 12, 5), PackedInt32Array(5, 12, 4), PackedInt32Array(9, 10, 14), PackedInt32Array(14, 10, 15), PackedInt32Array(18, 17, 16), PackedInt32Array(20, 19, 21), PackedInt32Array(21, 19, 22), PackedInt32Array(21, 22, 14), PackedInt32Array(21, 14, 15), PackedInt32Array(22, 19, 23), PackedInt32Array(23, 19, 18), PackedInt32Array(13, 23, 12), PackedInt32Array(12, 23, 18), PackedInt32Array(12, 18, 16), PackedInt32Array(26, 25, 24), PackedInt32Array(28, 27, 26), PackedInt32Array(28, 26, 29), PackedInt32Array(29, 26, 24), PackedInt32Array(30, 27, 31), PackedInt32Array(31, 27, 28), PackedInt32Array(35, 34, 32), PackedInt32Array(32, 34, 33), PackedInt32Array(37, 36, 38), PackedInt32Array(38, 36, 39), PackedInt32Array(36, 20, 39), PackedInt32Array(39, 20, 21), PackedInt32Array(39, 21, 40), PackedInt32Array(40, 41, 39), PackedInt32Array(16, 17, 42), PackedInt32Array(42, 17, 43), PackedInt32Array(47, 46, 44), PackedInt32Array(44, 46, 45), PackedInt32Array(38, 48, 37), PackedInt32Array(37, 48, 49), PackedInt32Array(51, 50, 48), PackedInt32Array(48, 50, 49), PackedInt32Array(53, 52, 25), PackedInt32Array(25, 52, 24), PackedInt32Array(41, 40, 54), PackedInt32Array(54, 40, 55), PackedInt32Array(56, 54, 55), PackedInt32Array(58, 57, 56), PackedInt32Array(58, 56, 59), PackedInt32Array(59, 56, 55), PackedInt32Array(51, 60, 50), PackedInt32Array(50, 60, 61), PackedInt32Array(63, 62, 61), PackedInt32Array(60, 64, 61), PackedInt32Array(61, 64, 65), PackedInt32Array(61, 65, 63), PackedInt32Array(64, 57, 65), PackedInt32Array(65, 57, 58), PackedInt32Array(42, 43, 66), PackedInt32Array(66, 68, 67), PackedInt32Array(67, 69, 66), PackedInt32Array(66, 69, 42), PackedInt32Array(68, 62, 67), PackedInt32Array(67, 62, 63)]
+geometry_parsed_geometry_type = 1
+cell_size = 0.1
+cell_height = 0.1
+agent_radius = 0.1
+agent_max_climb = 0.2
+
+[sub_resource type="BoxMesh" id="BoxMesh_7ycvg"]
+size = Vector3(20, 0.1, 60)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_7ycvg"]
+size = Vector3(20, 0.1, 60)
+
+[sub_resource type="BoxMesh" id="BoxMesh_wr18j"]
+size = Vector3(4, 3, 10)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_wr18j"]
+size = Vector3(4, 3, 10)
+
+[sub_resource type="CapsuleMesh" id="CapsuleMesh_qxy4w"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_i5arm"]
+size = Vector3(0.6, 0.6, 0.6)
+
+[node name="root" type="Node3D"]
+
+[node name="grid" type="GridMap" parent="."]
+cell_size = Vector3(1, 1, 1)
+
+[node name="fog_manager" type="Node3D" parent="."]
+script = ExtResource("2_m35m6")
+world_size = Vector2(32, 32)
+
+[node name="fog_viewport" type="SubViewport" parent="."]
+disable_3d = true
+transparent_bg = true
+size = Vector2i(256, 256)
+render_target_update_mode = 4
+
+[node name="fog_canvas" type="CanvasLayer" parent="fog_viewport"]
+
+[node name="fog_draw" type="Node2D" parent="fog_viewport/fog_canvas"]
+script = SubResource("GDScript_u0ygc")
+
+[node name="fog_layer" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.06, 0)
+mesh = SubResource("QuadMesh_6jybn")
+
+[node name="game_manager" type="Node" parent="."]
+script = ExtResource("1_7ycvg")
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
+transform = Transform3D(0.641681, -0.419996, 0.641755, 0.117208, 0.880609, 0.459119, -0.757963, -0.219389, 0.614297, 5.27733, 3.0469, 13.4208)
+sky_mode = 1
+
+[node name="navmesh" type="NavigationRegion3D" parent="."]
+navigation_mesh = SubResource("NavigationMesh_66tet")
+
+[node name="floor" type="StaticBody3D" parent="navmesh"]
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="navmesh/floor"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -20)
+mesh = SubResource("BoxMesh_7ycvg")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="navmesh/floor"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -20.0006)
+shape = SubResource("BoxShape3D_7ycvg")
+
+[node name="wall1" type="StaticBody3D" parent="navmesh"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4, 1.5, 0)
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="navmesh/wall1"]
+mesh = SubResource("BoxMesh_wr18j")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="navmesh/wall1"]
+shape = SubResource("BoxShape3D_wr18j")
+
+[node name="wall2" type="StaticBody3D" parent="navmesh"]
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, -1, 1.5, -7)
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="navmesh/wall2"]
+mesh = SubResource("BoxMesh_wr18j")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="navmesh/wall2"]
+shape = SubResource("BoxShape3D_wr18j")
+
+[node name="fob1" parent="navmesh" groups=["fob"] instance=ExtResource("8_66tet")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3.5, 0, 0.5)
+
+[node name="fob2" parent="navmesh" groups=["fob"] instance=ExtResource("8_66tet")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, -40)
+
+[node name="Player1" type="CharacterBody3D" parent="."]
+script = ExtResource("1_o1tqw")
+
+[node name="player_services" type="Node" parent="Player1" groups=["ps"]]
+script = ExtResource("4_wr18j")
+player_id = 1
+
+[node name="mesh" type="MeshInstance3D" parent="Player1"]
+transform = Transform3D(0.1, 0, 0, 0, 0.1, 0, 0, 0, 0.1, 0, 0.3, 0)
+visible = false
+mesh = SubResource("CapsuleMesh_qxy4w")
+
+[node name="col1" type="CollisionShape3D" parent="Player1"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, 0)
+shape = SubResource("BoxShape3D_i5arm")
+
+[node name="Cam" type="Camera3D" parent="Player1"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.3, 0.762021)
+current = true
+
+[node name="Player1HUD" type="CanvasLayer" parent="Player1"]
+
+[node name="HUD" parent="Player1/Player1HUD" instance=ExtResource("2_eoku1")]
+metadata/_edit_use_anchors_ = true
+
+[node name="Timer" type="Timer" parent="Player1"]
+
+[node name="cam_control" type="Node3D" parent="Player1"]
+script = ExtResource("5_jka67")
+
+[node name="build_manager" type="Node" parent="Player1"]
+script = ExtResource("3_855mp")
+
+[node name="resource_manager" type="Node" parent="Player1"]
+script = ExtResource("4_75q7d")
+
+[node name="player_manager" type="Node" parent="Player1"]
+script = ExtResource("6_i5arm")
+
+[node name="select_manager" type="Node" parent="Player1"]
+script = ExtResource("7_nfk4m")
+
+[node name="input_handler" type="Node" parent="Player1/select_manager"]
+script = ExtResource("11_mo76n")
+
+[node name="selection_logic" type="Node" parent="Player1/select_manager"]
+script = ExtResource("12_42l1d")
+
+[node name="order_handler" type="Node" parent="Player1/select_manager"]
+script = ExtResource("13_m35m6")
+
+[node name="hud_controller" type="Node" parent="Player1/select_manager"]
+script = ExtResource("13_2jcla")
+
+[node name="char" parent="." instance=ExtResource("15_2jcla")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3.50462, 0, 6.94376)
+owner_id = 2
+
+[connection signal="timeout" from="Player1/Timer" to="Player1/Player1HUD/HUD" method="_on_timer_timeout"]

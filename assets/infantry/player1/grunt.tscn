@@ -16,6 +16,7 @@ size = Vector3(0.02, 0.05, 0.2)
 [node name="grunt" type="CharacterBody3D" groups=["selectable"]]
 collision_layer = 2
 collision_mask = 2
+floor_constant_speed = true
 script = ExtResource("1_0c8hf")
 
 [node name="NavigationAgent3D" type="NavigationAgent3D" parent="."]

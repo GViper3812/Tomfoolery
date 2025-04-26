@@ -13,6 +13,7 @@ config_version=5
 config/name="Experiment"
 run/main_scene="res://main_scene.tscn"
 config/features=PackedStringArray("4.4", "Forward Plus")
+run/max_fps=60
 config/icon="res://icon.svg"
 
 [display]
@@ -44,6 +45,7 @@ p1constructionbot=""
 fob=""
 ps=""
 selectable=""
+owner_1=""
 
 [input]
 

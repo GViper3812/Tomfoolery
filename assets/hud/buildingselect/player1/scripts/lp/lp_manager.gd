@@ -21,23 +21,23 @@ func is_upgradeable() -> bool:
 	var queue_node = get_node_or_null("../lp_queue")
 	if not queue_node:
 		return false
-
+	
 	var current_action = queue_node.get_current_action()
 	var queue = queue_node.get_queue()
-
+	
 	if not fob or not fob.get_level_2():
 		return false
-
+	
 	if lp_level != 1:
 		return false
-
+	
 	if current_action.has("label") and current_action["label"] == "upgrade lp":
 		return false
-
+	
 	for action in queue:
 		if action.has("label") and action["label"] == "upgrade lp":
 			return false
-
+	
 	return true
 
 func get_fob(id: int) -> Node:

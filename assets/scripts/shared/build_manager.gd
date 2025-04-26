@@ -5,8 +5,8 @@ extends Node
 @onready var rm = services.rm
 @onready var sm = services.sm
 @onready var hud : Control = services.get_hud()
-@onready var root_grid := get_node("../..")
-@onready var navmesh = get_node("/root/grid/navmesh")
+@onready var root_grid := get_node("../../grid")
+@onready var navmesh = get_node("/root/root/navmesh")
 
 var editmat: ShaderMaterial = preload("res://assets/shader/building/editmat.tres")
 var mainmat: Material = preload("res://assets/shader/building/mainmat.tres")
@@ -20,7 +20,7 @@ var mat: ShaderMaterial
 func _ready():
 	var vbox1 = hud.get_node("building/HSplitContainer/VBox1")
 	var vbox2 = hud.get_node("building/HSplitContainer/VBox2")
-
+	
 	for vbox in [vbox1, vbox2]:
 		if vbox:
 			for button in vbox.get_children():

@@ -1,0 +1,8 @@
+[gd_resource type="ShaderMaterial" load_steps=2 format=3 uid="uid://57bx5pt4eyog"]
+
+[ext_resource type="Shader" uid="uid://hpgm0r0clt2x" path="res://assets/shader/fog/fog_shader_material.gdshader" id="1_k6qo3"]
+
+[resource]
+render_priority = 0
+shader = ExtResource("1_k6qo3")
+shader_parameter/alpha_strength = 1.0

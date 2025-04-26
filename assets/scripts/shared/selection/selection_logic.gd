@@ -78,6 +78,8 @@ func select_units_in_rect():
 	if not is_shift:
 		clear_selection()
 	
+	var squads_selected := {}
+	
 	for unit in get_tree().get_nodes_in_group("selectable"):
 		if not unit is Node3D:
 			continue
@@ -90,13 +92,16 @@ func select_units_in_rect():
 			if unit.has_method("get_squad"):
 				squad = unit.get_squad()
 			
-			if squad != null and not manager.selected_units.has(squad):
-				manager.select_squad(squad)
-			elif squad == null:
+			if squad != null:
+				if not squads_selected.has(squad) and not manager.selected_units.has(squad):
+					manager.select_squad(squad)
+					squads_selected[squad] = true
+			else:
 				toggle_selection(unit, is_shift)
 	
 	manager.selected = null
 	print_selected_units()
+
 
 func toggle_selection(unit: Node, is_shift: bool):
 	if manager.selected_units.has(unit):

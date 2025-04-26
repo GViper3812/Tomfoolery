@@ -1,6 +1,6 @@
 extends Node
 
-@onready var navmesh := get_node("/root/grid/navmesh")
+@onready var navmesh := get_node("/root/root/navmesh")
 @onready var manager := get_node("../fob_manager")
 
 var queue: Array[Dictionary] = []
