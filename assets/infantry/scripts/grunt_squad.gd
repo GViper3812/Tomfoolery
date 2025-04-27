@@ -11,6 +11,8 @@ extends Node3D
 var soldiers: Array = []
 var follow_enabled := false
 
+@onready var fog_draw = get_node("/root/main/fog_viewport/fog_canvas/fog_draw")
+
 func get_formation_offsets() -> Array:
 	return [
 		Vector3(0, 0, 0), Vector3(1, 0, 0), Vector3(-1, 0, 0),
@@ -32,9 +34,11 @@ func _ready():
 	add_child(timer)
 	timer.start()
 
-func _process(delta: float):
+func _process(delta):
 	if follow_enabled:
 		update_squad_position()
+	if owner_id == 1:
+		fog_draw.draw_fog(global_position, 8, 4, 0.2)
 
 func spawn_squad():
 	var offsets = get_formation_offsets()
@@ -80,7 +84,7 @@ func set_selected(state: bool, color: Color = Color.GREEN):
 		soldier.set_selected(state, color)
 
 func on_squad_selected():
-	var sm_path = "/root/root/Player%d/select_manager" % owner_id
+	var sm_path = "/root/main/Player%d/select_manager" % owner_id
 	if has_node(sm_path):
 		get_node(sm_path).select_squad(self)
 

@@ -9,7 +9,7 @@ var processing : bool = false
 var current_action : Dictionary = {}
 
 func _ready():
-	navmesh = get_node("/root/root/navmesh")
+	navmesh = get_node("/root/main/navmesh")
 	manager = get_parent().get_node_or_null("lp_manager")
 	marker = get_parent().get_node_or_null("lpmarker")
 

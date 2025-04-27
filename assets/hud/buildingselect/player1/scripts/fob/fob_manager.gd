@@ -5,7 +5,13 @@ var fob_level := 1
 
 @export var building_type := "forwardoperatingbase"
 
+@onready var fog_draw = get_node("/root/main/fog_viewport/fog_canvas/fog_draw")
+
 signal fob_upgraded(level)
+
+func _process(delta):
+	if owner_id == 1:
+		fog_draw.draw_fog(get_parent().global_position, 16, 8, 0.7)
 
 func queue_action(label: String, delay: float, unit_scene: PackedScene = null):
 	var queue = get_node("../fob_queue")

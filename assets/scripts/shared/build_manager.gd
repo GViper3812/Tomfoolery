@@ -6,7 +6,7 @@ extends Node
 @onready var sm = services.sm
 @onready var hud : Control = services.get_hud()
 @onready var root_grid := get_node("../../grid")
-@onready var navmesh = get_node("/root/root/navmesh")
+@onready var navmesh = get_node("/root/main/navmesh")
 
 var editmat: ShaderMaterial = preload("res://assets/shader/building/editmat.tres")
 var mainmat: Material = preload("res://assets/shader/building/mainmat.tres")
