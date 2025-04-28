@@ -5,9 +5,16 @@ res://assets/shader/building/editmat.tres
 res://assets/shader/building/mainmat.tres
 res://assets/building/mesh/forwardoperatingbase.tres
 res://assets/building/mesh/landingpad.tres
-res://assets/shader/fog/fog_draw.gd
+res://assets/scripts/shared/fog_manager.gd
 res://assets/infantry/player1/gruntsquad.tscn
 res://assets/infantry/player1/constructionbot.tscn
 res://assets/building/player1/scene/landingpad.tscn
 res://assets/infantry/player1/grunt.tscn
 res://assets/building/player1/scene/forwardoperatingbase.tscn
+res://assets/infantry/player1/scout.tscn
+res://assets/infantry/player1/base_grunt.gd
+res://assets/infantry/scripts/grunt_squad.gd
+res://assets/shader/fog/fog_draw.gd
+res://assets/scripts/shared/selection/select_manager.gd
+res://assets/scripts/shared/selection/input_handler.gd
+res://assets/hud/hud.tscn

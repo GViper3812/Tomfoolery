@@ -91,10 +91,10 @@ func on_squad_selected():
 func update_squad_position():
 	if soldiers.is_empty():
 		return
-
+	
 	var total := Vector3.ZERO
 	for soldier in soldiers:
 		total += soldier.global_position
-
+	
 	var avg := total / soldiers.size()
 	global_position = Vector3(avg.x, 0.25, avg.z)

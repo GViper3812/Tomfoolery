@@ -22,7 +22,7 @@ func process_input(event):
 		if manager.pm.get_state() == manager.pm.States.play:
 			manager.selecting = true
 			manager.start_mouse_pos = event.position
-			manager.selection_rect.global_position = manager.start_mouse_pos
+			manager.selection_rect.position = manager.start_mouse_pos
 			manager.selection_rect.size = Vector2.ZERO
 			manager.selection_rect.visible = true
 	
@@ -42,14 +42,20 @@ func process_input(event):
 				manager.selection_logic.select_units_in_rect()
 	
 	if event is InputEventMouseMotion and manager.selecting:
-		var end_mouse_pos = event.position
-		var top_left = Vector2(
-			min(manager.start_mouse_pos.x, end_mouse_pos.x),
-			min(manager.start_mouse_pos.y, end_mouse_pos.y)
+		var mouse_pos = event.position
+		
+		var rect_pos = Vector2(
+			min(manager.start_mouse_pos.x, mouse_pos.x),
+			min(manager.start_mouse_pos.y, mouse_pos.y)
 		)
-		var size = (end_mouse_pos - manager.start_mouse_pos).abs()
-		manager.selection_rect.global_position = top_left
-		manager.selection_rect.size = size
+		
+		var rect_size = Vector2(
+			abs(mouse_pos.x - manager.start_mouse_pos.x),
+			abs(mouse_pos.y - manager.start_mouse_pos.y)
+		)
+		
+		manager.selection_rect.position = rect_pos
+		manager.selection_rect.size = rect_size
 	
 	if event is InputEventMouseButton and event.button_index == MOUSE_BUTTON_RIGHT and event.pressed:
 		manager.order_handler.handle_right_click()

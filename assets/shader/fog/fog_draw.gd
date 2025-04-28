@@ -14,22 +14,22 @@ var memory_image: Image
 var memory_texture: ImageTexture = ImageTexture.new()
 
 func _ready():
-	memory_image = Image.create(fog_resolution.x, fog_resolution.y, false, Image.FORMAT_RGBA8)
-	memory_image.fill(Color(0, 0, 0, 1.0))
+	memory_image = Image.create(int(fog_resolution.x), int(fog_resolution.y), false, Image.FORMAT_RGBA8)
+	memory_image.fill(Color(0.0, 0.0, 0.0, 1.0))
 	memory_texture.set_image(memory_image)
 
 func _process(_delta):
 	queue_redraw()
 
 func _draw():
-	draw_texture(memory_texture, Vector2.ZERO, Color(0.3, 0.3, 0.3, 1.0))
+	draw_texture(memory_texture, Vector2.ZERO, Color(1.0, 1.0, 1.0, 0.3))
 	
 	for request in draw_requests:
 		var world_pos = request.position
 		var solid_radius = request.solid_radius
 		var ring_radius = request.ring_radius
 		var ring_alpha = request.ring_alpha
-	
+		
 		var pos_2d = world_to_fog_viewport(world_pos)
 		var offset_pos = pos_2d + Vector2(128, 128)
 		draw_circle_alpha_blend(offset_pos, solid_radius, ring_radius, ring_alpha)

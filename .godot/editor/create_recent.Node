@@ -1,3 +1,4 @@
+SubViewport
 Timer
 Node2D
 MeshInstance3D
@@ -6,10 +7,8 @@ Camera3D
 TextureRect
 ColorRect
 CanvasLayer
-SubViewport
 WorldEnvironment
 Node3D
 TileMapLayer
 GridMap
 Node
-NavigationAgent3D

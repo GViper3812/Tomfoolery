@@ -33,17 +33,17 @@ mesh = ExtResource("1_k2qyq")
 transform = Transform3D(1.9, 0, 0, 0, 1.9, 0, 0, 0, 1.9, 0, 0.850487, 0)
 shape = SubResource("BoxShape3D_i0860")
 
-[node name="Area3D" type="Area3D" parent="." groups=["building"]]
+[node name="fob_area" type="Area3D" parent="." groups=["building"]]
 collision_layer = 2
 collision_mask = 2
 script = ExtResource("2_vyyba")
 
-[node name="col" type="CollisionShape3D" parent="Area3D"]
+[node name="col" type="CollisionShape3D" parent="fob_area"]
 transform = Transform3D(1.6, 0, 0, 0, 1.6, 0, 0, 0, 1.6, 0, 0, 0)
 shape = SubResource("ConcavePolygonShape3D_fm50t")
 
 [node name="fobmarker" type="Marker3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 4)
 
-[connection signal="area_entered" from="Area3D" to="Area3D" method="_on_area_entered"]
-[connection signal="area_exited" from="Area3D" to="Area3D" method="_on_area_exited"]
+[connection signal="area_entered" from="fob_area" to="fob_area" method="_on_area_entered"]
+[connection signal="area_exited" from="fob_area" to="fob_area" method="_on_area_exited"]

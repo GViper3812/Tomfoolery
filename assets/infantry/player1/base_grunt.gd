@@ -9,7 +9,7 @@ var squad_ref: Node = null
 var formation_index: int = -1
 var current_outline: ShaderMaterial = null
 var target_velocity: Vector3 = Vector3.ZERO
-var speed := 3.0
+var speed := 2.0
 
 const REPULSION_RADIUS := 0.3
 const REPULSION_STRENGTH := 10.0
@@ -75,5 +75,5 @@ func _physics_process(delta):
 	if repulsion.length() > 0.01:
 		target_velocity += repulsion.normalized() * REPULSION_STRENGTH * delta
 	
-	velocity = target_velocity.limit_length(1.0)
+	velocity = target_velocity
 	move_and_slide()
