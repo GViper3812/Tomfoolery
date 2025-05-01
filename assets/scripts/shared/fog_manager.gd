@@ -1,4 +1,5 @@
 extends Node3D
+
 class_name FogController
 
 @export var world_size := Vector2(256, 256)

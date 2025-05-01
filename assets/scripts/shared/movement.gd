@@ -1,6 +1,6 @@
 extends CharacterBody3D
 
-const SPEED := 4.0
+const SPEED := 10.0
 const MOVEMENT_SMOOTH_SPEED = 5.0
 
 var target_velocity = Vector3.ZERO

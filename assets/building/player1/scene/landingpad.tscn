@@ -8,7 +8,7 @@
 [sub_resource type="BoxShape3D" id="BoxShape3D_45v3p"]
 size = Vector3(1.7, 0.425, 0.85)
 
-[node name="landingpad" type="StaticBody3D" groups=["building"]]
+[node name="landingpad" type="StaticBody3D" groups=["owner_1"]]
 collision_layer = 2
 
 [node name="lp_manager" type="Node" parent="."]

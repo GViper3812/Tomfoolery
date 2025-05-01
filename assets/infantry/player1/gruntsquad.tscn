@@ -2,7 +2,7 @@
 
 [ext_resource type="Script" uid="uid://bhdr8y7p11v0m" path="res://assets/infantry/scripts/grunt_squad.gd" id="1_5ul6t"]
 
-[node name="squad" type="Node3D" groups=["owner_1", "selectable"]]
+[node name="squad" type="Node3D" groups=["infantry", "owner_1", "selectable"]]
 script = ExtResource("1_5ul6t")
 
 [node name="NavigationAgent3D" type="NavigationAgent3D" parent="."]

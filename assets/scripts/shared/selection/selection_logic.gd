@@ -102,7 +102,6 @@ func select_units_in_rect():
 	manager.selected = null
 	print_selected_units()
 
-
 func toggle_selection(unit: Node, is_shift: bool):
 	if manager.selected_units.has(unit):
 		if is_shift:

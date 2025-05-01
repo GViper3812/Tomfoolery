@@ -47,6 +47,7 @@ ps=""
 selectable=""
 owner_1=""
 owner_2=""
+targetable=""
 
 [input]
 
