@@ -5,6 +5,8 @@ extends CharacterBody3D
 @onready var outline_mesh: MeshInstance3D = $mesh/outline
 @onready var outline_material := preload("res://assets/shader/targeting/outline.tres")
 
+@onready var fog_draw = get_node("/root/main/fog_viewport/fog_canvas/fog_draw")
+
 # Movement
 var current_outline: ShaderMaterial = null
 var target_velocity: Vector3 = Vector3.ZERO
@@ -23,10 +25,16 @@ var target: Node = null
 var target_hardness := 0.0
 var attack_timer := 0.0
 @onready var scan_timer := Timer.new()
+var capture_target: CapturePoint = null
+var capture_triggered := false
 
 # Repulsion
 const REPULSION_RADIUS := 0.3
 const REPULSION_STRENGTH := 10.0
+
+# General
+func get_owner_id() -> int:
+	return owner_id
 
 # Setup
 func _ready():
@@ -36,11 +44,15 @@ func _ready():
 	add_child(scan_timer)
 	scan_timer.start()
 
+func _process(delta):
+	fog_draw.draw_fog(global_position, 12, 6, 0.2)
+
 func _on_scan_timer_timeout():
 	if not target or not is_instance_valid(target):
 		find_target()
 
 func move_to(destination: Vector3):
+	reset_capture()
 	var nav_map = agent.get_navigation_map()
 	var safe_target = NavigationServer3D.map_get_closest_point(nav_map, destination)
 	agent.target_position = safe_target
@@ -90,12 +102,21 @@ func _physics_process(delta):
 				if "hardness" in target:
 					target_hardness = target.hardness
 				var effective_damage := attack_damage * (1.0 - target_hardness)
-				print("%s is attacking %s (hardness: %.2f) for %.2f effective damage" % [name, target.name, target_hardness, effective_damage])
 				target.take_damage(effective_damage)
 				attack_timer = attack_cooldown
 	
 	velocity = target_velocity
 	move_and_slide()
+
+func issue_capture_order(target: Node):
+	reset_capture()
+	if target is CapturePoint:
+		capture_target = target
+		move_to(target.global_position)
+
+func reset_capture():
+	capture_target = null
+	capture_triggered = false
 
 # Targeting
 func take_damage(amount: float):
@@ -104,6 +125,7 @@ func take_damage(amount: float):
 		queue_free()
 
 func set_target(t: Node):
+	reset_capture()
 	if t and t.has_method("take_damage") and t.owner_id != owner_id:
 		target = t
 

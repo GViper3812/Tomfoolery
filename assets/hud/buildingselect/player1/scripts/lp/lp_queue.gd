@@ -40,13 +40,14 @@ func process_queue():
 	
 	if unit_scene:
 		var unit = unit_scene.instantiate()
+		unit.initialize(manager.owner_id)
 		navmesh.add_child(unit)
-		
-		if marker:
-			unit.global_position = marker.global_position
 		
 		if "owner_id" in unit:
 			unit.owner_id = manager.owner_id
+		
+		if marker:
+			unit.global_position = marker.global_position
 	
 	else:
 		if manager:

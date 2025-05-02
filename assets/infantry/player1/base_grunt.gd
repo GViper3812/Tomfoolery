@@ -1,7 +1,6 @@
 extends CharacterBody3D
 
-
-@export var owner_id := 0
+@onready var owner_id := 0
 @onready var agent: NavigationAgent3D = $NavigationAgent3D
 @onready var outline_mesh: MeshInstance3D = $mesh/outline
 @onready var outline_material := preload("res://assets/shader/targeting/outline.tres")
@@ -33,6 +32,10 @@ var attack_timer := 0.1
 # Timers
 @onready var top_level_timer := Timer.new()
 @onready var scan_timer := Timer.new()
+
+# General
+func get_owner_id() -> int:
+	return owner_id
 
 # Setup
 func _ready():
@@ -114,7 +117,6 @@ func _physics_process(delta):
 				if "hardness" in target:
 					target_hardness = target.hardness
 				var effective_damage := attack_damage * (1.0 - target_hardness)
-				print("%s is attacking %s (hardness: %.2f) for %.2f effective damage" % [name, target.name, target_hardness, effective_damage])
 				target.take_damage(effective_damage)
 				attack_timer = attack_cooldown
 	

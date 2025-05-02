@@ -3,8 +3,8 @@ extends Node3D
 # Squad Properties
 @export var squad_size := 9
 @export var formation_spacing := 0.6
-@export var owner_id := 0
 @export var grunt_scene: PackedScene
+var owner_id: int
 
 @onready var agent: NavigationAgent3D = $NavigationAgent3D
 @onready var container: Node = $grunt_container
@@ -12,6 +12,16 @@ extends Node3D
 
 var soldiers: Array = []
 var follow_enabled := false
+var capture_target: CapturePoint = null
+var capture_registered_units := {}
+var suppress_reset := false
+
+# General
+func get_owner_id() -> int:
+	return owner_id
+
+func initialize(p_owner_id: int):
+	owner_id = p_owner_id
 
 # Formation
 func get_formation_offsets() -> Array:
@@ -64,6 +74,19 @@ func _process(_delta):
 	if follow_enabled:
 		update_squad_position()
 	fog_draw.draw_fog(global_position, 8, 4, 0.2)
+	
+	if capture_target and is_instance_valid(capture_target):
+		var distance = global_position.distance_to(capture_target.global_position)
+		if distance < 2.0:
+			for soldier in soldiers:
+				if not soldier or not is_instance_valid(soldier):
+					continue
+				if not capture_registered_units.has(soldier):
+					capture_registered_units[soldier] = true
+			
+			if capture_registered_units.size() >= soldiers.size():
+				capture_target = null
+				capture_registered_units.clear()
 
 func spawn_squad():
 	var offsets = get_formation_offsets()
@@ -86,6 +109,7 @@ func spawn_squad():
 
 # Command Control
 func move_to(target: Vector3):
+	reset_capture()
 	var center = NavigationServer3D.map_get_closest_point(agent.get_navigation_map(), target)
 	agent.target_position = center
 	
@@ -105,11 +129,13 @@ func move_to(target: Vector3):
 		i += 1
 
 func assign_squad_target(target: Node):
+	reset_capture()
 	for soldier in soldiers:
 		if soldier and is_instance_valid(soldier):
 			soldier.set_target(target)
 
 func attack_target(target: Node):
+	reset_capture()
 	if not target or not is_instance_valid(target):
 		return
 	
@@ -131,6 +157,22 @@ func attack_target(target: Node):
 		soldier.move_to(unit_target)
 		soldier.set_target(target)
 		i += 1
+
+func issue_capture_order(target: Node):
+	suppress_reset = true
+	
+	if target is CapturePoint:
+		reset_capture()
+		capture_target = target
+		move_to(target.global_position)
+	
+	suppress_reset = false
+
+func reset_capture():
+	if suppress_reset:
+		return
+	capture_target = null
+	capture_registered_units.clear()
 
 # Selection
 func set_selected(state: bool, color: Color = Color.GREEN):

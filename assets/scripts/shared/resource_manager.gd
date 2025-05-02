@@ -1,11 +1,10 @@
 extends Node
 
-signal resources_updated(requisition, power)
-
+signal resources_updated(requisition, requisition_gain, power, power_gain)
 signal resource_totals(requisition, power)
 
-var requisition : float = 5000
-var power : float = 1500
+var requisition : float = 500
+var power : float = 150
 var requisition_gain : float = 20
 var power_gain : float = 5
 
@@ -32,4 +31,13 @@ func deduct_resources(requisition_cost: int, power_cost: int) -> bool:
 	return false
 
 func get_resources() -> Dictionary:
-	return {"requisition": requisition, "power": power}
+	return {
+		"requisition": requisition,
+		"power": power
+	}
+
+func increase_req_gain(amount: float):
+	requisition_gain += amount
+
+func decrease_req_gain(amount: float):
+	requisition_gain = max(0, requisition_gain - amount)
