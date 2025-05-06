@@ -1,7 +1,8 @@
 [gd_scene load_steps=6 format=3 uid="uid://cnuwc36ekksek"]
 
-[ext_resource type="Script" uid="uid://cb1w1wssihlpy" path="res://assets/infantry/scripts/constructionbot.gd" id="1_sgxs4"]
+[ext_resource type="Script" uid="uid://cb1w1wssihlpy" path="res://assets/infantry/player1/scripts/constructionbot.gd" id="1_sgxs4"]
 [ext_resource type="Material" uid="uid://dfot2yws7gpvl" path="res://assets/shader/targeting/outline.tres" id="2_500ms"]
+
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_unyxk"]
 size = Vector3(1, 2, 1)

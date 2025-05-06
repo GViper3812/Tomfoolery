@@ -1,8 +1,9 @@
-[gd_scene load_steps=7 format=3 uid="uid://i7hnb33dov54"]
+[gd_scene load_steps=8 format=3 uid="uid://i7hnb33dov54"]
 
 [ext_resource type="Script" uid="uid://bct78a024tdxx" path="res://assets/hud/buildingselect/player1/scripts/fob/fob_manager.gd" id="1_fm50t"]
 [ext_resource type="Script" uid="uid://b362ralqapb4o" path="res://assets/hud/buildingselect/player1/scripts/fob/fob_queue.gd" id="1_i0860"]
 [ext_resource type="ArrayMesh" uid="uid://dqisunxw7dnsl" path="res://assets/building/mesh/forwardoperatingbase.tres" id="1_k2qyq"]
+[ext_resource type="Script" uid="uid://bu3i6ln0t4yud" path="res://assets/building/shared/forwardoperatingbase.gd" id="1_mbgtx"]
 [ext_resource type="Script" uid="uid://dfm0lclfnn83t" path="res://assets/scripts/player1/area_3d.gd" id="2_vyyba"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_i0860"]
@@ -11,8 +12,9 @@ size = Vector3(1.7, 0.85, 3.4)
 [sub_resource type="ConcavePolygonShape3D" id="ConcavePolygonShape3D_fm50t"]
 data = PackedVector3Array(1, 0, 2, -1, 0, 2, 0, 1, 2, -1, 0, -2, 1, 0, -2, 0, 1, -2, 0, 1, -2, 1, 0, 2, 0, 1, 2, 1, 0, -2, 1, 0, 2, 0, 1, -2, 0, 1, 2, -1, 0, -2, 0, 1, -2, -1, 0, 2, -1, 0, -2, 0, 1, 2, 1, 0, 2, -1, 0, -2, -1, 0, 2, 1, 0, -2, -1, 0, -2, 1, 0, 2)
 
-[node name="forwardoperatingbase" type="StaticBody3D"]
+[node name="forwardoperatingbase" type="StaticBody3D" groups=["building", "fob", "owner_1", "targetable", "vis_control"]]
 collision_layer = 2
+script = ExtResource("1_mbgtx")
 
 [node name="fob_manager" type="Node" parent="."]
 script = ExtResource("1_fm50t")

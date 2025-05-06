@@ -1,0 +1,51 @@
+[gd_scene load_steps=8 format=3 uid="uid://d2vg3wr4ew4ii"]
+
+[ext_resource type="Script" uid="uid://bu3i6ln0t4yud" path="res://assets/building/shared/forwardoperatingbase.gd" id="1_5k8am"]
+[ext_resource type="Script" uid="uid://bnw73e7wjkovt" path="res://assets/hud/buildingselect/AI/scripts/fob/fob_manager.gd" id="1_xxret"]
+[ext_resource type="Script" uid="uid://l10evey3728k" path="res://assets/hud/buildingselect/AI/scripts/fob/fob_queue.gd" id="2_5k8am"]
+[ext_resource type="ArrayMesh" uid="uid://dqisunxw7dnsl" path="res://assets/building/mesh/forwardoperatingbase.tres" id="3_17gk6"]
+[ext_resource type="Script" uid="uid://dfm0lclfnn83t" path="res://assets/scripts/player1/area_3d.gd" id="4_deitr"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_i0860"]
+size = Vector3(1.7, 0.85, 3.4)
+
+[sub_resource type="ConcavePolygonShape3D" id="ConcavePolygonShape3D_fm50t"]
+data = PackedVector3Array(1, 0, 2, -1, 0, 2, 0, 1, 2, -1, 0, -2, 1, 0, -2, 0, 1, -2, 0, 1, -2, 1, 0, 2, 0, 1, 2, 1, 0, -2, 1, 0, 2, 0, 1, -2, 0, 1, 2, -1, 0, -2, 0, 1, -2, -1, 0, 2, -1, 0, -2, 0, 1, 2, 1, 0, 2, -1, 0, -2, -1, 0, 2, 1, 0, -2, -1, 0, -2, 1, 0, 2)
+
+[node name="forwardoperatingbase" type="StaticBody3D" groups=["building", "fob", "owner_2", "targetable", "vis_control"]]
+collision_layer = 2
+script = ExtResource("1_5k8am")
+
+[node name="fob_manager" type="Node" parent="."]
+script = ExtResource("1_xxret")
+
+[node name="fob_queue" type="Node" parent="."]
+script = ExtResource("2_5k8am")
+
+[node name="NavigationObstacle3D" type="NavigationObstacle3D" parent="."]
+height = 2.0
+vertices = PackedVector3Array(1.6, 0, -3.2, 1.6, 0, 3.2, -1.6, 0, 3.2, -1.6, 0, -3.2)
+affect_navigation_mesh = true
+
+[node name="mesh" type="MeshInstance3D" parent="."]
+transform = Transform3D(1.6, 0, 0, 0, 1.6, 0, 0, 0, 1.6, 0, 0, 0)
+mesh = ExtResource("3_17gk6")
+
+[node name="col" type="CollisionShape3D" parent="."]
+transform = Transform3D(1.9, 0, 0, 0, 1.9, 0, 0, 0, 1.9, 0, 0.850487, 0)
+shape = SubResource("BoxShape3D_i0860")
+
+[node name="fob_area" type="Area3D" parent="." groups=["building"]]
+collision_layer = 2
+collision_mask = 2
+script = ExtResource("4_deitr")
+
+[node name="col" type="CollisionShape3D" parent="fob_area"]
+transform = Transform3D(1.6, 0, 0, 0, 1.6, 0, 0, 0, 1.6, 0, 0, 0)
+shape = SubResource("ConcavePolygonShape3D_fm50t")
+
+[node name="fobmarker" type="Marker3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 4)
+
+[connection signal="area_entered" from="fob_area" to="fob_area" method="_on_area_entered"]
+[connection signal="area_exited" from="fob_area" to="fob_area" method="_on_area_exited"]

@@ -1,0 +1,35 @@
+[gd_scene load_steps=4 format=3 uid="uid://bdfpk57oj5tua"]
+
+[ext_resource type="ArrayMesh" uid="uid://tdsvskvvqnc1" path="res://assets/building/mesh/industrialhall.tres" id="1_n7x2t"]
+[ext_resource type="Script" uid="uid://dfm0lclfnn83t" path="res://assets/scripts/player1/area_3d.gd" id="2_ym34y"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_xettj"]
+size = Vector3(2, 1, 4)
+
+[node name="industrialhall" type="StaticBody3D"]
+collision_layer = 2
+
+[node name="NavigationObstacle3D" type="NavigationObstacle3D" parent="."]
+height = 2.0
+vertices = PackedVector3Array(-1.6, 0, 3.2, -1.6, 0, -3.2, 1.6, 0, -3.2, 1.6, 0, 3.2)
+affect_navigation_mesh = true
+
+[node name="mesh" type="MeshInstance3D" parent="."]
+transform = Transform3D(1.6, 0, 0, 0, 1.6, 0, 0, 0, 1.6, 0, 0, 0)
+mesh = ExtResource("1_n7x2t")
+
+[node name="col" type="CollisionShape3D" parent="."]
+transform = Transform3D(1.6, 0, 0, 0, 1.6, 0, 0, 0, 1.6, 0.001, 0.85, 0.003)
+shape = SubResource("BoxShape3D_xettj")
+
+[node name="area" type="Area3D" parent="." groups=["building"]]
+collision_layer = 2
+collision_mask = 2
+script = ExtResource("2_ym34y")
+
+[node name="col" type="CollisionShape3D" parent="area"]
+transform = Transform3D(1.6, 0, 0, 0, 1.6, 0, 0, 0, 1.6, 0.001, 0.85, 0.003)
+shape = SubResource("BoxShape3D_xettj")
+
+[connection signal="area_entered" from="area" to="area" method="_on_area_entered"]
+[connection signal="area_exited" from="area" to="area" method="_on_area_exited"]

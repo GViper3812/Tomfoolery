@@ -13,7 +13,6 @@ section_length = 0.1
 section_rings = 5
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_138g7"]
-size = Vector3(0.8, 1, 0.8)
 
 [node name="cap" type="Node3D"]
 script = ExtResource("1_rd3hy")

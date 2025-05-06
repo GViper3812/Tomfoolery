@@ -1,7 +1,8 @@
 [gd_scene load_steps=7 format=3 uid="uid://clvflagsj2fru"]
 
-[ext_resource type="Script" uid="uid://dvsmk6wpnf47h" path="res://assets/infantry/scripts/scout.gd" id="1_epnep"]
+[ext_resource type="Script" uid="uid://dvsmk6wpnf47h" path="res://assets/infantry/player1/scripts/scout.gd" id="1_epnep"]
 [ext_resource type="Material" uid="uid://dfot2yws7gpvl" path="res://assets/shader/targeting/outline.tres" id="2_3jrur"]
+
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_s2wld"]
 size = Vector3(1, 2, 1)

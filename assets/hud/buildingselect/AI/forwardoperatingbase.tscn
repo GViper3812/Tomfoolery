@@ -1,0 +1,79 @@
+[gd_scene load_steps=4 format=3 uid="uid://3h255qc0uaif"]
+
+[ext_resource type="Script" uid="uid://5ia6bubn1cgl" path="res://assets/hud/buildingselect/player1/scripts/fob/spawn_construction_bot.gd" id="1_vfnhd"]
+[ext_resource type="Script" uid="uid://ce82nqw6f656u" path="res://assets/hud/buildingselect/player1/scripts/fob/spawn_scout.gd" id="2_2tvo1"]
+[ext_resource type="Script" uid="uid://fjjwc6mp723q" path="res://assets/hud/buildingselect/player1/scripts/fob/fob_upgrade.gd" id="3_r3uxy"]
+
+[node name="buildcontianer" type="HBoxContainer"]
+offset_top = 50.0
+offset_right = 100.0
+offset_bottom = 50.0
+mouse_filter = 0
+
+[node name="ItemList" type="ItemList" parent="."]
+custom_minimum_size = Vector2(100, 0)
+layout_mode = 2
+
+[node name="hq" type="GridContainer" parent="."]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_constants/h_separation = 1
+theme_override_constants/v_separation = 1
+columns = 4
+
+[node name="spawnconstructionbot" type="Button" parent="hq"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+text = "Eng"
+script = ExtResource("1_vfnhd")
+
+[node name="spawnscout" type="Button" parent="hq"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+text = "Scout"
+script = ExtResource("2_2tvo1")
+
+[node name="Button12" type="Button" parent="hq"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+disabled = true
+
+[node name="Button" type="Button" parent="hq"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+disabled = true
+
+[node name="level2" type="Button" parent="hq"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+text = "LVL2
+"
+script = ExtResource("3_r3uxy")
+
+[node name="Button15" type="Button" parent="hq"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+disabled = true
+
+[node name="Button16" type="Button" parent="hq"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+disabled = true
+
+[node name="netupgrade" type="Button" parent="hq"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+text = "N.E.T
+"
+
+[connection signal="pressed" from="hq/spawnconstructionbot" to="hq/spawnconstructionbot" method="_on_pressed"]
+[connection signal="pressed" from="hq/spawnscout" to="hq/spawnscout" method="_on_pressed"]
+[connection signal="pressed" from="hq/level2" to="hq/level2" method="_on_pressed"]

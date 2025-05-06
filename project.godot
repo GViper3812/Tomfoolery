@@ -29,6 +29,9 @@ window/vsync/vsync_mode=0
 folder_colors={
 "res://assets/building/": "red",
 "res://assets/hud/": "green",
+"res://assets/hud/buildingselect/AI/scripts/": "blue",
+"res://assets/hud/buildingselect/AI/scripts/fob/": "blue",
+"res://assets/hud/buildingselect/AI/scripts/lp/": "blue",
 "res://assets/hud/buildingselect/player1/scripts/": "blue",
 "res://assets/hud/scripts/": "blue",
 "res://assets/infantry/": "purple",
@@ -48,6 +51,7 @@ selectable=""
 owner_1=""
 owner_2=""
 targetable=""
+vis_control=""
 
 [input]
 

@@ -1,5 +1,6 @@
-[gd_scene load_steps=6 format=3 uid="uid://bekt2t4ba0847"]
+[gd_scene load_steps=7 format=3 uid="uid://bekt2t4ba0847"]
 
+[ext_resource type="Script" uid="uid://ciy6gvyjkpkpm" path="res://assets/building/shared/landingpad.gd" id="1_6ulho"]
 [ext_resource type="Script" uid="uid://b1yhm3725rwe8" path="res://assets/hud/buildingselect/player1/scripts/lp/lp_manager.gd" id="1_tir6n"]
 [ext_resource type="Script" uid="uid://djc07fhvxxtar" path="res://assets/hud/buildingselect/player1/scripts/lp/lp_queue.gd" id="2_6ulho"]
 [ext_resource type="ArrayMesh" uid="uid://c1ku4wawwsshr" path="res://assets/building/mesh/landingpad.tres" id="3_dia7q"]
@@ -8,8 +9,9 @@
 [sub_resource type="BoxShape3D" id="BoxShape3D_45v3p"]
 size = Vector3(1.7, 0.425, 0.85)
 
-[node name="landingpad" type="StaticBody3D" groups=["owner_1"]]
+[node name="landingpad" type="StaticBody3D" groups=["building", "owner_1", "targetable", "vis_control"]]
 collision_layer = 2
+script = ExtResource("1_6ulho")
 
 [node name="lp_manager" type="Node" parent="."]
 script = ExtResource("1_tir6n")

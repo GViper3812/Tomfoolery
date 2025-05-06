@@ -1,10 +1,13 @@
+res://assets/building/shared
+res://assets/infantry/ai/scripts
+res://assets/infantry/ai
+res://assets/scripts/AI
 res://assets/building/capture
 res://assets/building
 res://assets/shader/fog
 res://
 res://assets/scripts/shared
 res://assets/infantry/player1
-res://assets/infantry/scripts
 res://assets/scripts/shared/selection
 res://assets/shader/targeting
 res://assets/scripts/initialization

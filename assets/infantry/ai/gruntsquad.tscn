@@ -1,0 +1,10 @@
+[gd_scene load_steps=2 format=3 uid="uid://bcis50io1oh3w"]
+
+[ext_resource type="Script" uid="uid://b6j8av6lf5wko" path="res://assets/infantry/ai/scripts/grunt_squad.gd" id="1_bgkom"]
+
+[node name="squad" type="Node3D" groups=["infantry", "owner_2", "selectable"]]
+script = ExtResource("1_bgkom")
+
+[node name="NavigationAgent3D" type="NavigationAgent3D" parent="."]
+
+[node name="grunt_container" type="Node3D" parent="."]

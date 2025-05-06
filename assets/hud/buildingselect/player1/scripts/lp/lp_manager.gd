@@ -3,11 +3,18 @@ extends Node
 var owner_id := 1
 var lp_level := 1
 var fob : Node
+var visible := false
 
 @export var building_type := "landingpad"
 
+@onready var fog_draw = get_node("/root/main/fog_viewport/fog_canvas/fog_draw")
+
 func _ready() -> void:
 	var fob := get_fob(owner_id)
+
+func _process(delta):
+	if owner_id == 1 and visible:
+		fog_draw.draw_fog(get_parent().global_position, 12, 8, 0.7)
 
 func queue_action(label: String, delay: float, unit_scene: PackedScene = null):
 	var queue = get_node("../lp_queue")

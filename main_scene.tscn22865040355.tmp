@@ -1,0 +1,465 @@
+[gd_scene load_steps=49 format=3 uid="uid://d3yx6al2k3um5"]
+
+[ext_resource type="Script" uid="uid://ckulfa6mhb6g5" path="res://assets/scripts/initialization/main_scene.gd" id="1_7ycvg"]
+[ext_resource type="Script" uid="uid://bjy1atkg7oebe" path="res://assets/scripts/shared/movement.gd" id="1_o1tqw"]
+[ext_resource type="Material" uid="uid://57bx5pt4eyog" path="res://assets/shader/fog/fog_shader_material.tres" id="1_u0ygc"]
+[ext_resource type="Script" uid="uid://d1blqooaf3sc3" path="res://assets/shader/fog/fog_draw.gd" id="2_7th4q"]
+[ext_resource type="PackedScene" uid="uid://byyk1a1grgcv2" path="res://assets/hud/hud.tscn" id="2_eoku1"]
+[ext_resource type="Script" uid="uid://cqx441w55pfer" path="res://assets/scripts/shared/fog_manager.gd" id="2_m35m6"]
+[ext_resource type="Script" uid="uid://g87mlfguaeq6" path="res://assets/scripts/player1/build_manager.gd" id="3_855mp"]
+[ext_resource type="Script" uid="uid://udxkaq3qfjce" path="res://assets/scripts/shared/resource_manager.gd" id="4_75q7d"]
+[ext_resource type="Script" uid="uid://cmksg5qcykn7q" path="res://assets/scripts/shared/player_service.gd" id="4_wr18j"]
+[ext_resource type="Script" uid="uid://bct78a024tdxx" path="res://assets/hud/buildingselect/player1/scripts/fob/fob_manager.gd" id="5_ak604"]
+[ext_resource type="Script" uid="uid://c5bwai6kgn1c2" path="res://assets/scripts/shared/cam_control.gd" id="5_jka67"]
+[ext_resource type="Script" uid="uid://bxmqnov0o5684" path="res://assets/scripts/shared/player_manager.gd" id="6_i5arm"]
+[ext_resource type="Script" uid="uid://b362ralqapb4o" path="res://assets/hud/buildingselect/player1/scripts/fob/fob_queue.gd" id="6_vimvf"]
+[ext_resource type="ArrayMesh" uid="uid://dqisunxw7dnsl" path="res://assets/building/mesh/forwardoperatingbase.tres" id="7_ghshe"]
+[ext_resource type="Script" uid="uid://chql2lmkgffde" path="res://assets/scripts/shared/selection/select_manager.gd" id="7_nfk4m"]
+[ext_resource type="Script" uid="uid://dfm0lclfnn83t" path="res://assets/scripts/player1/area_3d.gd" id="8_fv2he"]
+[ext_resource type="Script" uid="uid://bnw73e7wjkovt" path="res://assets/hud/buildingselect/AI/scripts/fob/fob_manager.gd" id="9_j8kkg"]
+[ext_resource type="PackedScene" uid="uid://s783c3d2jnrh" path="res://assets/building/capture/cap.tscn" id="9_vimvf"]
+[ext_resource type="Script" uid="uid://ccv0dku5v1s47" path="res://assets/scripts/shared/selection/input_handler.gd" id="11_mo76n"]
+[ext_resource type="Script" uid="uid://dr3jg1hktmf56" path="res://assets/scripts/shared/selection/selection_logic.gd" id="12_42l1d"]
+[ext_resource type="Script" uid="uid://co4yvtegk2ffh" path="res://assets/scripts/shared/selection/hud_controller.gd" id="13_2jcla"]
+[ext_resource type="Script" uid="uid://diua3lcb5aa1c" path="res://assets/scripts/shared/selection/order_handler.gd" id="13_m35m6"]
+[ext_resource type="Script" uid="uid://dbsinqyu1i53t" path="res://assets/scripts/ai/ai_resource_manager.gd" id="22_ghshe"]
+[ext_resource type="Script" uid="uid://dn5tcu23vq00t" path="res://assets/scripts/ai/ai_service.gd" id="22_kv3aw"]
+[ext_resource type="Script" uid="uid://dfffgl0r81c0" path="res://assets/scripts/ai/ai_build_manager.gd" id="23_fv2he"]
+[ext_resource type="Script" uid="uid://bftwcq3nthovr" path="res://assets/scripts/ai/ai_manager.gd" id="24_fv2he"]
+[ext_resource type="Script" uid="uid://n43i7h5yut72" path="res://assets/scripts/ai/rbs_process.gd" id="25_5smuj"]
+[ext_resource type="Script" uid="uid://dsddqrutdlduv" path="res://assets/scripts/ai/ai_tech_state.gd" id="26_y5ved"]
+[ext_resource type="Script" uid="uid://72wbm0ysnp5c" path="res://assets/scripts/ai/gat_process.gd" id="27_kv3aw"]
+[ext_resource type="Script" uid="uid://y0c6x1ec7dgr" path="res://assets/scripts/ai/get_data.gd" id="29_ijoax"]
+
+[sub_resource type="QuadMesh" id="QuadMesh_6jybn"]
+material = ExtResource("1_u0ygc")
+size = Vector2(256, 256)
+orientation = 1
+
+[sub_resource type="NavigationMesh" id="NavigationMesh_66tet"]
+geometry_parsed_geometry_type = 1
+cell_size = 0.1
+cell_height = 0.1
+agent_radius = 0.1
+agent_max_climb = 0.2
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_i0860"]
+size = Vector3(1.7, 0.85, 3.4)
+
+[sub_resource type="ConcavePolygonShape3D" id="ConcavePolygonShape3D_fm50t"]
+data = PackedVector3Array(1, 0, 2, -1, 0, 2, 0, 1, 2, -1, 0, -2, 1, 0, -2, 0, 1, -2, 0, 1, -2, 1, 0, 2, 0, 1, 2, 1, 0, -2, 1, 0, 2, 0, 1, -2, 0, 1, 2, -1, 0, -2, 0, 1, -2, -1, 0, 2, -1, 0, -2, 0, 1, 2, 1, 0, 2, -1, 0, -2, -1, 0, 2, 1, 0, -2, -1, 0, -2, 1, 0, 2)
+
+[sub_resource type="BoxMesh" id="BoxMesh_wr18j"]
+size = Vector3(4, 3, 20)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_wr18j"]
+size = Vector3(4, 3, 20)
+
+[sub_resource type="BoxMesh" id="BoxMesh_vimvf"]
+size = Vector3(4, 3, 15)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_vimvf"]
+size = Vector3(4, 3, 15)
+
+[sub_resource type="BoxMesh" id="BoxMesh_ghshe"]
+size = Vector3(4, 3, 10)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_ghshe"]
+size = Vector3(4, 3, 10)
+
+[sub_resource type="BoxMesh" id="BoxMesh_fv2he"]
+size = Vector3(4, 3, 35)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_fv2he"]
+size = Vector3(4, 3, 35)
+
+[sub_resource type="BoxMesh" id="BoxMesh_5smuj"]
+size = Vector3(4, 3, 25)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_5smuj"]
+size = Vector3(4, 3, 25)
+
+[sub_resource type="BoxMesh" id="BoxMesh_7ycvg"]
+size = Vector3(100, 0.1, 100)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_7ycvg"]
+size = Vector3(100, 0.1, 100)
+
+[sub_resource type="CapsuleMesh" id="CapsuleMesh_qxy4w"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_i5arm"]
+size = Vector3(0.6, 0.6, 0.6)
+
+[node name="main" type="Node3D"]
+
+[node name="grid" type="GridMap" parent="."]
+cell_size = Vector3(1, 1, 1)
+
+[node name="fog_manager" type="Node3D" parent="."]
+script = ExtResource("2_m35m6")
+world_size = Vector2(32, 32)
+
+[node name="fog_viewport" type="SubViewport" parent="."]
+transparent_bg = true
+size = Vector2i(256, 256)
+render_target_update_mode = 4
+
+[node name="fog_canvas" type="CanvasLayer" parent="fog_viewport"]
+
+[node name="fog_draw" type="Node2D" parent="fog_viewport/fog_canvas"]
+script = ExtResource("2_7th4q")
+
+[node name="fog_layer" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.06, 0)
+mesh = SubResource("QuadMesh_6jybn")
+
+[node name="game_manager" type="Node" parent="."]
+script = ExtResource("1_7ycvg")
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
+transform = Transform3D(0.641681, -0.419996, 0.641755, 0.117208, 0.880609, 0.459119, -0.757963, -0.219389, 0.614297, 34.2485, 45.3556, 32.5121)
+sky_mode = 1
+
+[node name="navmesh" type="NavigationRegion3D" parent="."]
+navigation_mesh = SubResource("NavigationMesh_66tet")
+
+[node name="fob1" type="StaticBody3D" parent="navmesh" groups=["building", "fob", "owner_1"]]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 37.5, 0, 37.5)
+collision_layer = 2
+
+[node name="fob_manager" type="Node" parent="navmesh/fob1"]
+script = ExtResource("5_ak604")
+
+[node name="fob_queue" type="Node" parent="navmesh/fob1"]
+script = ExtResource("6_vimvf")
+
+[node name="NavigationObstacle3D" type="NavigationObstacle3D" parent="navmesh/fob1"]
+height = 2.0
+vertices = PackedVector3Array(1.6, 0, -3.2, 1.6, 0, 3.2, -1.6, 0, 3.2, -1.6, 0, -3.2)
+affect_navigation_mesh = true
+
+[node name="mesh" type="MeshInstance3D" parent="navmesh/fob1"]
+transform = Transform3D(1.6, 0, 0, 0, 1.6, 0, 0, 0, 1.6, 0, 0, 0)
+mesh = ExtResource("7_ghshe")
+
+[node name="build_col" type="CollisionShape3D" parent="navmesh/fob1"]
+transform = Transform3D(1.9, 0, 0, 0, 1.9, 0, 0, 0, 1.9, 0, 0.850487, 0)
+shape = SubResource("BoxShape3D_i0860")
+
+[node name="fob_area1" type="Area3D" parent="navmesh/fob1" groups=["building"]]
+collision_layer = 2
+collision_mask = 2
+script = ExtResource("8_fv2he")
+
+[node name="col" type="CollisionShape3D" parent="navmesh/fob1/fob_area1"]
+transform = Transform3D(1.6, 0, 0, 0, 1.6, 0, 0, 0, 1.6, 0, 0, 0)
+shape = SubResource("ConcavePolygonShape3D_fm50t")
+
+[node name="fobmarker" type="Marker3D" parent="navmesh/fob1"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 4)
+
+[node name="fob2" type="StaticBody3D" parent="navmesh" groups=["building", "fob", "owner_2"]]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -37.5, 0, -37.5)
+collision_layer = 2
+
+[node name="fob_manager" type="Node" parent="navmesh/fob2"]
+script = ExtResource("9_j8kkg")
+
+[node name="fob_queue" type="Node" parent="navmesh/fob2"]
+script = ExtResource("6_vimvf")
+
+[node name="NavigationObstacle3D" type="NavigationObstacle3D" parent="navmesh/fob2"]
+height = 2.0
+vertices = PackedVector3Array(1.6, 0, -3.2, 1.6, 0, 3.2, -1.6, 0, 3.2, -1.6, 0, -3.2)
+affect_navigation_mesh = true
+
+[node name="mesh" type="MeshInstance3D" parent="navmesh/fob2"]
+transform = Transform3D(1.6, 0, 0, 0, 1.6, 0, 0, 0, 1.6, 0, 0, 0)
+mesh = ExtResource("7_ghshe")
+
+[node name="build_col" type="CollisionShape3D" parent="navmesh/fob2"]
+transform = Transform3D(1.9, 0, 0, 0, 1.9, 0, 0, 0, 1.9, 0, 0.850487, 0)
+shape = SubResource("BoxShape3D_i0860")
+
+[node name="fob_area2" type="Area3D" parent="navmesh/fob2" groups=["building"]]
+collision_layer = 2
+collision_mask = 2
+script = ExtResource("8_fv2he")
+
+[node name="col" type="CollisionShape3D" parent="navmesh/fob2/fob_area2"]
+transform = Transform3D(1.6, 0, 0, 0, 1.6, 0, 0, 0, 1.6, 0, 0, 0)
+shape = SubResource("ConcavePolygonShape3D_fm50t")
+
+[node name="fobmarker" type="Marker3D" parent="navmesh/fob2"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 4)
+
+[node name="capCentral" parent="navmesh" instance=ExtResource("9_vimvf")]
+
+[node name="cap" parent="navmesh" instance=ExtResource("9_vimvf")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -40, 0.25, 40)
+
+[node name="cap2" parent="navmesh" instance=ExtResource("9_vimvf")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 40, 0.25, -40)
+
+[node name="cap3" parent="navmesh" instance=ExtResource("9_vimvf")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 10, 0.25, 35)
+
+[node name="cap4" parent="navmesh" instance=ExtResource("9_vimvf")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 35, 0.25, 10)
+
+[node name="cap5" parent="navmesh" instance=ExtResource("9_vimvf")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -10, 0.25, -35)
+
+[node name="cap6" parent="navmesh" instance=ExtResource("9_vimvf")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -35, 0.25, -10)
+
+[node name="walls" type="Node3D" parent="navmesh"]
+
+[node name="1wall1" type="StaticBody3D" parent="navmesh/walls"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 25, 1.5, 35)
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="navmesh/walls/1wall1"]
+mesh = SubResource("BoxMesh_wr18j")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="navmesh/walls/1wall1"]
+shape = SubResource("BoxShape3D_wr18j")
+
+[node name="1wall2" type="StaticBody3D" parent="navmesh/walls"]
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 35, 1.5, 25)
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="navmesh/walls/1wall2"]
+mesh = SubResource("BoxMesh_wr18j")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="navmesh/walls/1wall2"]
+shape = SubResource("BoxShape3D_wr18j")
+
+[node name="2wall1" type="StaticBody3D" parent="navmesh/walls"]
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, -35, 1.5, -25)
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="navmesh/walls/2wall1"]
+mesh = SubResource("BoxMesh_wr18j")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="navmesh/walls/2wall1"]
+shape = SubResource("BoxShape3D_wr18j")
+
+[node name="2wall2" type="StaticBody3D" parent="navmesh/walls"]
+transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, -25, 1.5, -35)
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="navmesh/walls/2wall2"]
+mesh = SubResource("BoxMesh_wr18j")
+skeleton = NodePath("../../2wall1")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="navmesh/walls/2wall2"]
+shape = SubResource("BoxShape3D_wr18j")
+
+[node name="++center1" type="StaticBody3D" parent="navmesh/walls"]
+transform = Transform3D(0.906308, 0, 0.422618, 0, 1, 0, -0.422618, 0, 0.906308, 18, 1.5, 12)
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="navmesh/walls/++center1"]
+mesh = SubResource("BoxMesh_vimvf")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="navmesh/walls/++center1"]
+transform = Transform3D(1, 0, -5.96046e-08, 0, 1, 0, 5.96046e-08, 0, 1, 0, 0, 0)
+shape = SubResource("BoxShape3D_vimvf")
+
+[node name="++center2" type="StaticBody3D" parent="navmesh/walls"]
+transform = Transform3D(0.422618, 0, 0.906308, 0, 1, 0, -0.906308, 0, 0.422618, 12, 1.5, 18)
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="navmesh/walls/++center2"]
+mesh = SubResource("BoxMesh_vimvf")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="navmesh/walls/++center2"]
+transform = Transform3D(1, 0, -5.96046e-08, 0, 1, 0, 5.96046e-08, 0, 1, 0, 0, 0)
+shape = SubResource("BoxShape3D_vimvf")
+
+[node name="++center3" type="StaticBody3D" parent="navmesh/walls"]
+transform = Transform3D(-0.707107, 0, 0.707107, 0, 1, 0, -0.707107, 0, -0.707107, 10, 1.5, 10)
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="navmesh/walls/++center3"]
+mesh = SubResource("BoxMesh_ghshe")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="navmesh/walls/++center3"]
+shape = SubResource("BoxShape3D_ghshe")
+
+[node name="+-center1" type="StaticBody3D" parent="navmesh/walls"]
+transform = Transform3D(-0.906308, 0, 0.422618, 0, 1, 0, -0.422618, 0, -0.906308, 30, 1.5, -20)
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="navmesh/walls/+-center1"]
+mesh = SubResource("BoxMesh_fv2he")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="navmesh/walls/+-center1"]
+shape = SubResource("BoxShape3D_fv2he")
+
+[node name="+-center2" type="StaticBody3D" parent="navmesh/walls"]
+transform = Transform3D(-0.422618, 0, 0.906308, 0, 1, 0, -0.906308, 0, -0.422618, 20, 1.5, -30)
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="navmesh/walls/+-center2"]
+mesh = SubResource("BoxMesh_fv2he")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="navmesh/walls/+-center2"]
+shape = SubResource("BoxShape3D_fv2he")
+
+[node name="+-center3" type="StaticBody3D" parent="navmesh/walls"]
+transform = Transform3D(0.707107, 0, 0.707107, 0, 1, 0, -0.707107, 0, 0.707107, 12, 1.5, -12)
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="navmesh/walls/+-center3"]
+mesh = SubResource("BoxMesh_5smuj")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="navmesh/walls/+-center3"]
+shape = SubResource("BoxShape3D_5smuj")
+
+[node name="-+center1" type="StaticBody3D" parent="navmesh/walls"]
+transform = Transform3D(-0.906308, 0, 0.422618, 0, 1, 0, -0.422618, 0, -0.906308, -30, 1.5, 20)
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="navmesh/walls/-+center1"]
+mesh = SubResource("BoxMesh_fv2he")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="navmesh/walls/-+center1"]
+shape = SubResource("BoxShape3D_fv2he")
+
+[node name="-+center2" type="StaticBody3D" parent="navmesh/walls"]
+transform = Transform3D(-0.422618, 0, 0.906308, 0, 1, 0, -0.906308, 0, -0.422618, -20, 1.5, 30)
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="navmesh/walls/-+center2"]
+mesh = SubResource("BoxMesh_fv2he")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="navmesh/walls/-+center2"]
+shape = SubResource("BoxShape3D_fv2he")
+
+[node name="-+center3" type="StaticBody3D" parent="navmesh/walls"]
+transform = Transform3D(0.707107, 0, 0.707107, 0, 1, 0, -0.707107, 0, 0.707107, -12, 1.5, 12)
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="navmesh/walls/-+center3"]
+mesh = SubResource("BoxMesh_5smuj")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="navmesh/walls/-+center3"]
+shape = SubResource("BoxShape3D_5smuj")
+
+[node name="--center1" type="StaticBody3D" parent="navmesh/walls"]
+transform = Transform3D(0.906308, 0, 0.422618, 0, 1, 0, -0.422618, 0, 0.906308, -18, 1.5, -12)
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="navmesh/walls/--center1"]
+mesh = SubResource("BoxMesh_vimvf")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="navmesh/walls/--center1"]
+transform = Transform3D(1, 0, -5.96046e-08, 0, 1, 0, 5.96046e-08, 0, 1, 0, 0, 0)
+shape = SubResource("BoxShape3D_vimvf")
+
+[node name="--center2" type="StaticBody3D" parent="navmesh/walls"]
+transform = Transform3D(0.422618, 0, 0.906308, 0, 1, 0, -0.906308, 0, 0.422618, -12, 1.5, -18)
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="navmesh/walls/--center2"]
+mesh = SubResource("BoxMesh_vimvf")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="navmesh/walls/--center2"]
+transform = Transform3D(1, 0, -5.96046e-08, 0, 1, 0, 5.96046e-08, 0, 1, 0, 0, 0)
+shape = SubResource("BoxShape3D_vimvf")
+
+[node name="--center3" type="StaticBody3D" parent="navmesh/walls"]
+transform = Transform3D(-0.707107, 0, 0.707107, 0, 1, 0, -0.707107, 0, -0.707107, -10, 1.5, -10)
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="navmesh/walls/--center3"]
+mesh = SubResource("BoxMesh_ghshe")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="navmesh/walls/--center3"]
+shape = SubResource("BoxShape3D_ghshe")
+
+[node name="floor" type="StaticBody3D" parent="navmesh"]
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="navmesh/floor"]
+mesh = SubResource("BoxMesh_7ycvg")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="navmesh/floor"]
+shape = SubResource("BoxShape3D_7ycvg")
+
+[node name="Player" type="CharacterBody3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 39.7063, 0, 35.676)
+collision_layer = 4
+collision_mask = 4
+script = ExtResource("1_o1tqw")
+
+[node name="player_services" type="Node" parent="Player" groups=["ps"]]
+script = ExtResource("4_wr18j")
+player_id = 1
+
+[node name="mesh" type="MeshInstance3D" parent="Player"]
+transform = Transform3D(0.1, 0, 0, 0, 0.1, 0, 0, 0, 0.1, 0, 0.3, 0)
+visible = false
+mesh = SubResource("CapsuleMesh_qxy4w")
+
+[node name="col1" type="CollisionShape3D" parent="Player"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, 0)
+shape = SubResource("BoxShape3D_i5arm")
+
+[node name="Cam" type="Camera3D" parent="Player"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.3, 0.762021)
+current = true
+
+[node name="Player1HUD" type="CanvasLayer" parent="Player"]
+
+[node name="HUD" parent="Player/Player1HUD" instance=ExtResource("2_eoku1")]
+anchors_preset = -1
+metadata/_edit_use_anchors_ = true
+
+[node name="Timer" type="Timer" parent="Player"]
+
+[node name="cam_control" type="Node3D" parent="Player"]
+script = ExtResource("5_jka67")
+
+[node name="build_manager" type="Node" parent="Player"]
+script = ExtResource("3_855mp")
+
+[node name="resource_manager" type="Node" parent="Player"]
+script = ExtResource("4_75q7d")
+
+[node name="player_manager" type="Node" parent="Player"]
+script = ExtResource("6_i5arm")
+
+[node name="select_manager" type="Node" parent="Player"]
+script = ExtResource("7_nfk4m")
+
+[node name="input_handler" type="Node" parent="Player/select_manager"]
+script = ExtResource("11_mo76n")
+
+[node name="selection_logic" type="Node" parent="Player/select_manager"]
+script = ExtResource("12_42l1d")
+
+[node name="order_handler" type="Node" parent="Player/select_manager"]
+script = ExtResource("13_m35m6")
+
+[node name="hud_controller" type="Node" parent="Player/select_manager"]
+script = ExtResource("13_2jcla")
+
+[node name="AI" type="Node3D" parent="."]
+
+[node name="ai_services" type="Node" parent="AI" groups=["ps"]]
+script = ExtResource("22_kv3aw")
+
+[node name="ai_build_manager" type="Node" parent="AI"]
+script = ExtResource("23_fv2he")
+
+[node name="ai_resource_manager" type="Node" parent="AI"]
+script = ExtResource("22_ghshe")
+
+[node name="ai_player_manager" type="Node" parent="AI"]
+script = ExtResource("24_fv2he")
+
+[node name="rbs_process" type="Node" parent="AI"]
+script = ExtResource("25_5smuj")
+
+[node name="ai_tech_state" type="Node" parent="AI"]
+script = ExtResource("26_y5ved")
+
+[node name="gat_process" type="Node" parent="AI"]
+script = ExtResource("27_kv3aw")
+
+[node name="Timer" type="Timer" parent="AI"]
+
+[node name="get_data" type="Node" parent="."]
+script = ExtResource("29_ijoax")
+
+[connection signal="area_entered" from="navmesh/fob1/fob_area1" to="navmesh/fob1/fob_area1" method="_on_area_entered"]
+[connection signal="area_exited" from="navmesh/fob1/fob_area1" to="navmesh/fob1/fob_area1" method="_on_area_exited"]
+[connection signal="area_entered" from="navmesh/fob2/fob_area2" to="navmesh/fob2/fob_area2" method="_on_area_entered"]
+[connection signal="area_exited" from="navmesh/fob2/fob_area2" to="navmesh/fob2/fob_area2" method="_on_area_exited"]
+[connection signal="timeout" from="Player/Timer" to="Player/Player1HUD/HUD" method="_on_timer_timeout"]

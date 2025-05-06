@@ -27,7 +27,7 @@ var current_health := max_health
 # Targeting
 var target: Node = null
 var target_hardness : float
-var attack_timer := 0.1
+var attack_timer := 0.0
 
 # Timers
 @onready var top_level_timer := Timer.new()
@@ -110,14 +110,17 @@ func _physics_process(delta):
 		target_velocity = Vector3.ZERO
 	
 	# Combat
-	attack_timer -= delta
 	if target and is_instance_valid(target) and target.has_method("take_damage"):
-		if global_position.distance_to(target.global_position) <= attack_range:
+		var dist = global_position.distance_to(target.global_transform.origin)
+		print("%s: checking attack on %s (dist=%.2f, nav_finished=%s, timer=%.2f)" %
+			  [name, target.name, dist, str(agent.is_navigation_finished()), attack_timer])
+		if dist <= attack_range and agent.is_navigation_finished():
 			if attack_timer <= 0:
-				if "hardness" in target:
-					target_hardness = target.hardness
-				var effective_damage := attack_damage * (1.0 - target_hardness)
-				target.take_damage(effective_damage)
+				print("%s: ATTACKING %s for damage %f" % [name, target.name, attack_damage])
+				var th = target.hardness if "hardness" in target else 0.0
+				var dmg = attack_damage * (1.0 - th)
+				print("%s: ABOUT TO DAMAGE %s (timer=%.2f)" % [name, target.name, attack_timer])
+				target.take_damage(dmg)
 				attack_timer = attack_cooldown
 	
 	velocity = target_velocity
@@ -135,24 +138,63 @@ func take_damage(amount: int):
 			find_target()
 
 func set_target(t: Node):
+	print("%s.set_target() → %s" % [name, t and t.name or "null"])
 	if t and t.has_method("take_damage") and t.owner_id != owner_id:
 		target = t
+	else:
+		print("rejected target:", t)
 
 func find_target():
-	var closest = null
-	var min_dist = 9999.0
+	var closest_unit: Node = null
+	var closest_building: Node = null
+	var min_unit_dist := INF
+	var min_building_dist := INF
+
+	var any_units_left := false
+	var units_in_range := []
+
 	for node in get_tree().get_nodes_in_group("targetable"):
 		if not node is Node3D or node == self:
 			continue
 		if node.owner_id == owner_id:
 			continue
-		if is_target_visible(node):
+		if not is_target_visible(node):
 			continue
-		var dist = global_position.distance_to(node.global_position)
-		if dist < attack_range and dist < min_dist:
-			min_dist = dist
-			closest = node
-	target = closest
+
+		# classify
+		if "move_to" in node:
+			var d = global_position.distance_to(node.global_transform.origin)
+			if d <= attack_range:
+				any_units_left = true
+				units_in_range.append("%s (%.2f)" % [node.name, d])
+				if d < min_unit_dist:
+					min_unit_dist = d
+					closest_unit = node
+		elif node.has_method("get_closest_point_to"):
+			var pt = node.get_closest_point_to(global_position)
+			var d = global_position.distance_to(pt)
+			if d <= attack_range and d < min_building_dist:
+				min_building_dist = d
+				closest_building = node
+
+	print("--- %s.find_target() debug ---" % name)
+	print("  any_units_left:", any_units_left)
+	print("  units_in_range:", units_in_range)
+	if closest_unit:
+		print("  closest_unit:", closest_unit.name, "dist=", min_unit_dist)
+	if closest_building:
+		print("  closest_building:", closest_building.name, "dist=", min_building_dist)
+
+	if any_units_left:
+		target = closest_unit
+		print("  → targeting unit")
+	elif closest_building:
+		target = closest_building
+		print("  → targeting building")
+	else:
+		target = null
+		print("  → no target")
+
 
 func is_target_visible(target: Node) -> bool:
 	var fog = get_node("/root/main/fog_viewport/fog_canvas/fog_draw")

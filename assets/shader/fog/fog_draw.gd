@@ -71,16 +71,8 @@ func draw_fog(world_pos: Vector3, solid_radius := -1.0, ring_radius := -1.0, rin
 	})
 
 func sample_visibility(world_pos: Vector3, owner_id: int) -> float:
-	var fog_manager = get_node("/root/main/fog_viewport")
-	if not fog_manager.has_method("world_to_uv"):
-		return 0.0
-	
-	var uv = fog_manager.world_to_uv(world_pos)
-	var image : Image = fog_manager.get_visibility_image(owner_id)
-	if not image or not image.is_in_bounds(uv):
-		return 0.0
-	
-	image.lock()
-	var value = image.get_pixelv(uv).r
-	image.unlock()
-	return value
+	var uv = world_to_fog_viewport(world_pos).floor() + Vector2(128, 128)
+	var image : Image = memory_image
+	var fx = int(clamp(uv.x, 0, fog_resolution.x - 1))
+	var fy = int(clamp(uv.y, 0, fog_resolution.y - 1))
+	return image.get_pixel(fx, fy).a

@@ -1,0 +1,62 @@
+[gd_scene load_steps=7 format=3 uid="uid://c2uje6xtlkcyf"]
+
+[ext_resource type="Script" uid="uid://buwf7cqrjp2v3" path="res://assets/infantry/ai/base_grunt.gd" id="1_e6vdv"]
+[ext_resource type="Material" uid="uid://dfot2yws7gpvl" path="res://assets/shader/targeting/outline.tres" id="2_c1bcw"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_s2wld"]
+size = Vector3(1, 2, 1)
+
+[sub_resource type="TubeTrailMesh" id="TubeTrailMesh_s2wld"]
+
+[sub_resource type="BoxMesh" id="BoxMesh_s2wld"]
+size = Vector3(0.02, 0.05, 0.2)
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_epnep"]
+
+[node name="grunt" type="CharacterBody3D" groups=["selectable", "targetable", "vis_control"]]
+collision_layer = 2
+collision_mask = 2
+floor_constant_speed = true
+script = ExtResource("1_e6vdv")
+
+[node name="NavigationAgent3D" type="NavigationAgent3D" parent="."]
+path_desired_distance = 0.5
+target_desired_distance = 0.1
+avoidance_enabled = true
+radius = 0.25
+neighbor_distance = 15.0
+max_neighbors = 40
+max_speed = 2.0
+avoidance_layers = 2
+avoidance_mask = 2
+debug_enabled = true
+
+[node name="col" type="CollisionShape3D" parent="."]
+transform = Transform3D(0.2, 0, 0, 0, 0.2, 0, 0, 0, 0.2, 0, 0.2, 0)
+shape = SubResource("BoxShape3D_s2wld")
+
+[node name="mesh" type="MeshInstance3D" parent="."]
+transform = Transform3D(0.2, 0, 0, 0, 0.3, 0, 0, 0, 0.2, 0, 0.2, 0)
+mesh = SubResource("TubeTrailMesh_s2wld")
+skeleton = NodePath("")
+
+[node name="outline" type="MeshInstance3D" parent="mesh"]
+transform = Transform3D(1, 0, 0, 0, 1.1, 0, 0, 0, 1, 0, 0, 0)
+visible = false
+mesh = SubResource("TubeTrailMesh_s2wld")
+skeleton = NodePath("")
+surface_material_override/0 = ExtResource("2_c1bcw")
+
+[node name="mesh2" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.1, 0.25, 0.1)
+mesh = SubResource("BoxMesh_s2wld")
+skeleton = NodePath("")
+
+[node name="area" type="Area3D" parent="." groups=["infantry"]]
+
+[node name="col" type="CollisionShape3D" parent="area"]
+transform = Transform3D(0.2, 0, 0, 0, 0.2, 0, 0, 0, 0.2, 0, 0.2, 0)
+shape = SubResource("CapsuleShape3D_epnep")
+
+[connection signal="velocity_computed" from="NavigationAgent3D" to="." method="_on_velocity_computed"]
+[connection signal="input_event" from="area" to="." method="_on_area_input_event"]

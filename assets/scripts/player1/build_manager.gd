@@ -17,6 +17,9 @@ var mat: ShaderMaterial
 @onready var player_id = services.player_id
 @onready var path_prefix = "res://assets/building/player%d/scene/" % player_id
 
+var building_r_cost
+var building_p_cost
+
 func _ready():
 	var vbox1 = hud.get_node("building/HSplitContainer/VBox1")
 	var vbox2 = hud.get_node("building/HSplitContainer/VBox2")
@@ -32,21 +35,30 @@ func _on_button_pressed(button: Button):
 	if ResourceLoader.exists(building_path):
 		var building_scene = load(building_path) as PackedScene
 		if building_scene:
+			var temp = building_scene.instantiate()
+			if "r_cost" in temp and "p_cost" in temp:
+				building_r_cost = temp.r_cost
+				building_p_cost = temp.p_cost
+			temp.queue_free()
+			
 			spawn_building(building_scene)
 			pm.set_state(pm.States.building)
 
 func _process(_delta):
 	if current_building and (pm.get_state() == pm.States.building or pm.get_state() == pm.States.blocked):
 		update_building_position()
-	
-	if mat:
-		var color = Color.GREEN if pm.get_state() == pm.States.building else Color.RED
+		
+		var can_afford = rm.requisition >= building_r_cost and rm.power >= building_p_cost
+		var color = Color.GREEN if can_afford else Color.RED
 		color.a = 0.5
 		mat.set_shader_parameter("base_color", color)
-		
+
 		if Input.is_action_just_pressed("Place_Building"):
-			lock_building()
-		
+			if can_afford:
+				lock_building()
+			else:
+				print("[BUILD] Not enough resources to place building.")
+
 		if Input.is_action_just_pressed("Cancel_Building") and pm.get_state() == pm.States.building:
 			cancel_building()
 
@@ -96,6 +108,17 @@ func lock_building():
 		col.disabled = false
 	
 	current_building.set_process(false)
+	
+	var deducted = rm.deduct_resources(building_r_cost, building_p_cost)
+	if not deducted:
+		return
+	
+	if current_building:
+		for child in current_building.get_children():
+			if child.name.ends_with("_manager"):
+				child.visible = true
+				print("[BUILD] Enabled manager visibility: ", child.name)
+	
 	pm.set_state(pm.States.play)
 	
 	if navmesh.navigation_mesh:

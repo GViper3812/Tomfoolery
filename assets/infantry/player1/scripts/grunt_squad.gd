@@ -5,6 +5,7 @@ extends Node3D
 @export var formation_spacing := 0.6
 @export var grunt_scene: PackedScene
 var owner_id: int
+@export var unit_type := "Grunt"
 
 @onready var agent: NavigationAgent3D = $NavigationAgent3D
 @onready var container: Node = $grunt_container
@@ -36,7 +37,7 @@ func unit_died(unit: Node):
 	reform_formation()
 
 func reform_formation():
-	var center = agent.global_position.origin
+	var center = self.global_position
 	var direction = (center - global_position).normalized()
 	var angle := atan2(direction.x, direction.z)
 	
@@ -73,7 +74,8 @@ func _ready():
 func _process(_delta):
 	if follow_enabled:
 		update_squad_position()
-	fog_draw.draw_fog(global_position, 8, 4, 0.2)
+	if owner_id == 1:
+		fog_draw.draw_fog(global_position, 8, 4, 0.2)
 	
 	if capture_target and is_instance_valid(capture_target):
 		var distance = global_position.distance_to(capture_target.global_position)
@@ -137,8 +139,10 @@ func assign_squad_target(target: Node):
 func attack_target(target: Node):
 	reset_capture()
 	if not target or not is_instance_valid(target):
+		print("Squad.attack_target: invalid target!")
 		return
-	
+
+	print("Squad.attack_target: ordering soldiers to hit ", target.name)
 	var target_pos = target.global_transform.origin
 	var offsets := get_formation_offsets()
 	var i := 0

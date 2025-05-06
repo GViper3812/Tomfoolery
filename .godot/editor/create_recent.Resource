@@ -1,3 +1,4 @@
+Resource
 ShaderMaterial
 SphereShape3D
 Shader

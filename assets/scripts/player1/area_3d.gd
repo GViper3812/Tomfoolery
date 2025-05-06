@@ -1,6 +1,6 @@
 extends Area3D
 
-@onready var pm = get_node("/root/main/Player1/player_manager")
+@onready var pm = get_node("/root/main/Player/player_manager")
 
 func _on_area_entered(_area: Area3D) -> void:
 	pm.set_state(pm.States.blocked)

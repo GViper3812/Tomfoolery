@@ -1,0 +1,48 @@
+[gd_scene load_steps=7 format=3 uid="uid://2dc0f2xqp51b"]
+
+[ext_resource type="Script" uid="uid://craau0s2fvlwm" path="res://assets/hud/buildingselect/AI/scripts/lp/lp_manager.gd" id="1_3kch2"]
+[ext_resource type="Script" uid="uid://ciy6gvyjkpkpm" path="res://assets/building/shared/landingpad.gd" id="1_u1s5i"]
+[ext_resource type="Script" uid="uid://b2gs8xfhcv4vf" path="res://assets/hud/buildingselect/AI/scripts/lp/lp_queue.gd" id="2_u1s5i"]
+[ext_resource type="ArrayMesh" uid="uid://c1ku4wawwsshr" path="res://assets/building/mesh/landingpad.tres" id="3_euoyc"]
+[ext_resource type="Script" uid="uid://dfm0lclfnn83t" path="res://assets/scripts/player1/area_3d.gd" id="4_qacv5"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_45v3p"]
+size = Vector3(1.7, 0.425, 0.85)
+
+[node name="landingpad" type="StaticBody3D" groups=["building", "owner_2", "targetable", "vis_control"]]
+collision_layer = 2
+script = ExtResource("1_u1s5i")
+
+[node name="lp_manager" type="Node" parent="."]
+script = ExtResource("1_3kch2")
+
+[node name="lp_queue" type="Node" parent="."]
+script = ExtResource("2_u1s5i")
+
+[node name="NavigationObstacle3D" type="NavigationObstacle3D" parent="."]
+vertices = PackedVector3Array(1.6, 0, 0.8, -1.6, 0, 0.8, -1.599, 0, -0.8, 1.6, 0, -0.8)
+affect_navigation_mesh = true
+carve_navigation_mesh = true
+
+[node name="mesh" type="MeshInstance3D" parent="."]
+transform = Transform3D(1.6, 0, 0, 0, 1.6, 0, 0, 0, 1.6, 0, 0, 0)
+mesh = ExtResource("3_euoyc")
+
+[node name="col" type="CollisionShape3D" parent="."]
+transform = Transform3D(1.9, 0, 0, 0, 1.9, 0, 0, 0, 1.9, 0, 0.425, 0)
+shape = SubResource("BoxShape3D_45v3p")
+
+[node name="area" type="Area3D" parent="." groups=["building"]]
+collision_layer = 2
+collision_mask = 2
+script = ExtResource("4_qacv5")
+
+[node name="col" type="CollisionShape3D" parent="area"]
+transform = Transform3D(1.9, 0, 0, 0, 1.9, 0, 0, 0, 1.9, 0, 0.425, 0)
+shape = SubResource("BoxShape3D_45v3p")
+
+[node name="lpmarker" type="Marker3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.5, 0, 0)
+
+[connection signal="area_entered" from="area" to="area" method="_on_area_entered"]
+[connection signal="area_exited" from="area" to="area" method="_on_area_exited"]

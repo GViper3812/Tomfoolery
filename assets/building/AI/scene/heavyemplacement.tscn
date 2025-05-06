@@ -1,0 +1,36 @@
+[gd_scene load_steps=4 format=3 uid="uid://cjb2er3ae73wj"]
+
+[ext_resource type="ArrayMesh" uid="uid://ce0g6n5lcrff5" path="res://assets/building/mesh/heavyemplacement.tres" id="1_j3r6j"]
+[ext_resource type="Script" uid="uid://dfm0lclfnn83t" path="res://assets/scripts/player1/area_3d.gd" id="2_2djfu"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_t321c"]
+size = Vector3(1.6, 1, 1.6)
+
+[node name="heavyemplacement" type="StaticBody3D"]
+collision_layer = 2
+
+[node name="NavigationObstacle3D" type="NavigationObstacle3D" parent="."]
+height = 1.25
+vertices = PackedVector3Array(0.8, 0, 0.8, -0.8, 0, 0.8, -0.8, 0, -0.8, 0.8, 0, -0.8)
+affect_navigation_mesh = true
+carve_navigation_mesh = true
+
+[node name="mesh" type="MeshInstance3D" parent="."]
+transform = Transform3D(1.6, 0, 0, 0, 1.6, 0, 0, 0, 1.6, 0, 0, 0)
+mesh = ExtResource("1_j3r6j")
+
+[node name="col" type="CollisionShape3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, 0)
+shape = SubResource("BoxShape3D_t321c")
+
+[node name="area" type="Area3D" parent="." groups=["building"]]
+collision_layer = 2
+collision_mask = 2
+script = ExtResource("2_2djfu")
+
+[node name="col" type="CollisionShape3D" parent="area"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, 0)
+shape = SubResource("BoxShape3D_t321c")
+
+[connection signal="area_entered" from="area" to="area" method="_on_area_entered"]
+[connection signal="area_exited" from="area" to="area" method="_on_area_exited"]

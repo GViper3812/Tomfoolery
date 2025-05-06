@@ -1,0 +1,37 @@
+[gd_scene load_steps=4 format=3 uid="uid://darofymhdeim8"]
+
+[ext_resource type="ArrayMesh" uid="uid://b8qum40tdb5fd" path="res://assets/building/mesh/nuclearbattery.tres" id="1_2m2wd"]
+[ext_resource type="Script" uid="uid://dfm0lclfnn83t" path="res://assets/scripts/player1/area_3d.gd" id="2_680x7"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_ynf82"]
+size = Vector3(1.275, 2, 1.275)
+
+[node name="nuclearbattery" type="StaticBody3D"]
+collision_layer = 2
+collision_mask = 2
+
+[node name="NavigationObstacle3D" type="NavigationObstacle3D" parent="."]
+height = 2.0
+vertices = PackedVector3Array(0.63, 0, 0.63, -0.63, 0, 0.63, -0.63, 0, -0.63, 0.63, 0, -0.63)
+affect_navigation_mesh = true
+carve_navigation_mesh = true
+
+[node name="mesh" type="MeshInstance3D" parent="."]
+transform = Transform3D(1.275, 0, 0, 0, 1.275, 0, 0, 0, 1.275, 0, 0, 0)
+mesh = ExtResource("1_2m2wd")
+
+[node name="col" type="CollisionShape3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
+shape = SubResource("BoxShape3D_ynf82")
+
+[node name="area" type="Area3D" parent="." groups=["building"]]
+collision_layer = 2
+collision_mask = 2
+script = ExtResource("2_680x7")
+
+[node name="col" type="CollisionShape3D" parent="area"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
+shape = SubResource("BoxShape3D_ynf82")
+
+[connection signal="area_entered" from="area" to="area" method="_on_area_entered"]
+[connection signal="area_exited" from="area" to="area" method="_on_area_exited"]
