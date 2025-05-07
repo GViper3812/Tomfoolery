@@ -6,7 +6,7 @@ class_name FogController
 
 @onready var viewport := $"../fog_viewport"
 @onready var fog_layer := $"../fog_layer"
-@onready var fog_draw := viewport.get_node("fog_canvas/fog_draw")
+@onready var fog_draw := $"../fog_viewport/fog_canvas/fog_draw"
 var ai_visibility_image: Image = Image.create(int(world_size.x), int(world_size.y), false, Image.FORMAT_RGBA8)
 
 func _ready():

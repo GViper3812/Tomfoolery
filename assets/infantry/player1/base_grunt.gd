@@ -5,6 +5,9 @@ extends CharacterBody3D
 @onready var outline_mesh: MeshInstance3D = $mesh/outline
 @onready var outline_material := preload("res://assets/shader/targeting/outline.tres")
 
+enum UnitState { IDLE, ATTACKING, RETREATING }
+var state: UnitState = UnitState.IDLE
+
 # Movement
 var current_outline: ShaderMaterial = null
 var squad_ref: Node = null
@@ -27,7 +30,7 @@ var current_health := max_health
 # Targeting
 var target: Node = null
 var target_hardness : float
-var attack_timer := 0.0
+var attack_timer := 0.1
 
 # Timers
 @onready var top_level_timer := Timer.new()
@@ -83,6 +86,15 @@ func move_to(destination: Vector3):
 	agent.target_position = safe_target
 
 func _physics_process(delta):
+	if state == UnitState.RETREATING:
+		if agent.is_navigation_finished():
+			state = UnitState.IDLE
+		var next = agent.get_next_path_position()
+		var dir = (next - global_position).normalized()
+		velocity = dir * speed
+		move_and_slide()
+		return
+	
 	# Repulsion
 	var repulsion := Vector3.ZERO
 	for other in get_tree().get_nodes_in_group("selectable"):
@@ -110,18 +122,28 @@ func _physics_process(delta):
 		target_velocity = Vector3.ZERO
 	
 	# Combat
-	if target and is_instance_valid(target) and target.has_method("take_damage"):
-		var dist = global_position.distance_to(target.global_transform.origin)
-		print("%s: checking attack on %s (dist=%.2f, nav_finished=%s, timer=%.2f)" %
-			  [name, target.name, dist, str(agent.is_navigation_finished()), attack_timer])
-		if dist <= attack_range and agent.is_navigation_finished():
-			if attack_timer <= 0:
-				print("%s: ATTACKING %s for damage %f" % [name, target.name, attack_damage])
-				var th = target.hardness if "hardness" in target else 0.0
-				var dmg = attack_damage * (1.0 - th)
-				print("%s: ABOUT TO DAMAGE %s (timer=%.2f)" % [name, target.name, attack_timer])
-				target.take_damage(dmg)
-				attack_timer = attack_cooldown
+	attack_timer -= delta
+	if target and is_instance_valid(target) and state != UnitState.RETREATING:
+		# 1) measure nav and distance to the *closest* point
+		var nav_done := agent.is_navigation_finished()
+		var hit_pos = target.global_transform.origin
+		if target.has_method("get_closest_point_to"):
+			hit_pos = target.get_closest_point_to(global_position)
+		var dist := global_position.distance_to(hit_pos)
+
+		# 2) if still moving, but *in range* of center, clamp to stop there
+		if not nav_done:
+			var center_dist := global_position.distance_to(target.global_transform.origin)
+			if center_dist <= attack_range:
+				agent.set_target_position(global_position)
+
+		# 3) fire when stopped, in range, timer expired
+		if nav_done and dist <= attack_range and attack_timer <= 0.0:
+			state = UnitState.ATTACKING
+			var th = target.hardness if "hardness" in target else 0.0
+			var dmg = attack_damage * (1.0 - th)
+			target.take_damage(dmg)
+			attack_timer = attack_cooldown
 	
 	velocity = target_velocity
 	move_and_slide()
@@ -138,11 +160,8 @@ func take_damage(amount: int):
 			find_target()
 
 func set_target(t: Node):
-	print("%s.set_target() → %s" % [name, t and t.name or "null"])
 	if t and t.has_method("take_damage") and t.owner_id != owner_id:
 		target = t
-	else:
-		print("rejected target:", t)
 
 func find_target():
 	var closest_unit: Node = null
@@ -177,24 +196,31 @@ func find_target():
 				min_building_dist = d
 				closest_building = node
 
-	print("--- %s.find_target() debug ---" % name)
-	print("  any_units_left:", any_units_left)
-	print("  units_in_range:", units_in_range)
-	if closest_unit:
-		print("  closest_unit:", closest_unit.name, "dist=", min_unit_dist)
-	if closest_building:
-		print("  closest_building:", closest_building.name, "dist=", min_building_dist)
-
 	if any_units_left:
 		target = closest_unit
-		print("  → targeting unit")
 	elif closest_building:
 		target = closest_building
-		print("  → targeting building")
 	else:
 		target = null
-		print("  → no target")
 
+func retreat_from_enemy(enemy: Node3D, retreat_distance := 5.0, gap_angle_deg := 45.0):
+	state = UnitState.RETREATING
+	if not enemy:
+		return
+	# 1) Compute the direction the enemy is facing
+	#    (in Godot forward is -Z)
+	var enemy_forward = -enemy.global_transform.basis.z.normalized()
+	# 2) Compute the “backward” vector and apply a random ±gap_angle/2
+	var backward = -enemy_forward
+	var half_gap = gap_angle_deg * 0.5
+	var random_offset = randf_range(-half_gap, half_gap)
+	var retreat_dir = backward.rotated(Vector3.UP, deg_to_rad(random_offset))
+	# 3) Send the agent to that spot
+	var retreat_pos = global_position + retreat_dir * retreat_distance
+	agent.target_position = retreat_pos
+	# 4) drop current target & reset timer so they can re-fire if cancelled
+	target = null
+	attack_timer = attack_cooldown
 
 func is_target_visible(target: Node) -> bool:
 	var fog = get_node("/root/main/fog_viewport/fog_canvas/fog_draw")

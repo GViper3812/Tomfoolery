@@ -5,7 +5,7 @@ extends CharacterBody3D
 @onready var outline_mesh: MeshInstance3D = $mesh/outline
 @onready var outline_material := preload("res://assets/shader/targeting/outline.tres")
 
-@onready var fog_draw = get_node("/root/main/fog_viewport/fog_canvas/fog_draw")
+@onready var fog_manager = get_node("/root/main/fog_manager")
 
 # Movement
 var current_outline: ShaderMaterial = null
@@ -45,7 +45,7 @@ func _ready():
 	scan_timer.start()
 
 func _process(delta):
-	fog_draw.draw_fog(global_position, 12, 6, 0.2)
+	fog_manager.reveal_to_ai(global_position, 12, 6, 0.2)
 
 func _on_scan_timer_timeout():
 	if not target or not is_instance_valid(target):
@@ -144,6 +144,25 @@ func find_target():
 			min_dist = dist
 			closest = node
 	target = closest
+
+func capture_nearest_objective():
+	var my_position = global_transform.origin
+	var nearest_obj = null
+	var nearest_dist = INF
+
+	for obj in get_tree().get_nodes_in_group("cap"):
+		if obj.owner_id == 2:
+			continue
+		var dist = my_position.distance_to(obj.global_transform.origin)
+		if dist < nearest_dist:
+			nearest_dist = dist
+			nearest_obj = obj
+
+	if nearest_obj:
+		agent.target_position = nearest_obj.global_transform.origin
+		print("[AI][Unit] Capturing: ", nearest_obj.name)
+	else:
+		print("[AI][Unit] No valid objectives found.")
 
 func is_target_visible(target: Node) -> bool:
 	var fog = get_node("/root/main/fog_viewport/fog_canvas/fog_draw")

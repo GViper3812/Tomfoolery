@@ -52,6 +52,7 @@ owner_1=""
 owner_2=""
 targetable=""
 vis_control=""
+cap=""
 
 [input]
 

@@ -200,3 +200,22 @@ func update_squad_position():
 	if valid_count > 0:
 		var avg := total / valid_count
 		global_position = Vector3(avg.x, 0.25, avg.z)
+
+func capture_nearest_objective():
+	var my_position = global_transform.origin
+	var nearest_obj = null
+	var nearest_dist = INF
+
+	for obj in get_tree().get_nodes_in_group("cap"):
+		if obj.owner_id == 2:
+			continue
+		var dist = my_position.distance_to(obj.global_transform.origin)
+		if dist < nearest_dist:
+			nearest_dist = dist
+			nearest_obj = obj
+
+	if nearest_obj:
+		agent.target_position = nearest_obj.global_transform.origin
+		print("[AI][Squad] Capturing: ", nearest_obj.name)
+	else:
+		print("[AI][Squad] No valid objectives found.")

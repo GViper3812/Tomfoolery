@@ -1,6 +1,6 @@
 [gd_scene load_steps=7 format=3 uid="uid://cm5r2e4kesa30"]
 
-[ext_resource type="Script" uid="uid://dvsmk6wpnf47h" path="res://assets/infantry/player1/scripts/scout.gd" id="1_74q8f"]
+[ext_resource type="Script" uid="uid://uk2mxnnjxw78" path="res://assets/infantry/ai/scripts/scout.gd" id="1_74q8f"]
 [ext_resource type="Material" uid="uid://dfot2yws7gpvl" path="res://assets/shader/targeting/outline.tres" id="2_lpesk"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_s2wld"]
@@ -13,7 +13,7 @@ size = Vector3(0.02, 0.05, 0.2)
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_epnep"]
 
-[node name="char" type="CharacterBody3D" groups=["selectable", "targetable"]]
+[node name="char" type="CharacterBody3D" groups=["infantry", "owner_2", "selectable", "targetable"]]
 collision_layer = 2
 collision_mask = 2
 script = ExtResource("1_74q8f")

@@ -2,7 +2,7 @@ extends Node3D
 
 class_name CapturePoint
 
-var capture_time := 1.0
+var capture_time := 10.0
 var owner_id := -1
 
 @onready var flag := $flag

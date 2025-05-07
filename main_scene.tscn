@@ -134,24 +134,24 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 37.5, 0, 37.5)
 [node name="fob2" parent="navmesh" instance=ExtResource("6_o7u2a")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -37.5, 0, -37.5)
 
-[node name="capCentral" parent="navmesh" instance=ExtResource("9_vimvf")]
+[node name="capCentral" parent="navmesh" groups=["cap"] instance=ExtResource("9_vimvf")]
 
-[node name="cap" parent="navmesh" instance=ExtResource("9_vimvf")]
+[node name="cap" parent="navmesh" groups=["cap"] instance=ExtResource("9_vimvf")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -40, 0.25, 40)
 
-[node name="cap2" parent="navmesh" instance=ExtResource("9_vimvf")]
+[node name="cap2" parent="navmesh" groups=["cap"] instance=ExtResource("9_vimvf")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 40, 0.25, -40)
 
-[node name="cap3" parent="navmesh" instance=ExtResource("9_vimvf")]
+[node name="cap3" parent="navmesh" groups=["cap"] instance=ExtResource("9_vimvf")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 10, 0.25, 35)
 
-[node name="cap4" parent="navmesh" instance=ExtResource("9_vimvf")]
+[node name="cap4" parent="navmesh" groups=["cap"] instance=ExtResource("9_vimvf")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 35, 0.25, 10)
 
-[node name="cap5" parent="navmesh" instance=ExtResource("9_vimvf")]
+[node name="cap5" parent="navmesh" groups=["cap"] instance=ExtResource("9_vimvf")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -10, 0.25, -35)
 
-[node name="cap6" parent="navmesh" instance=ExtResource("9_vimvf")]
+[node name="cap6" parent="navmesh" groups=["cap"] instance=ExtResource("9_vimvf")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -35, 0.25, -10)
 
 [node name="walls" type="Node3D" parent="navmesh"]
@@ -550,7 +550,7 @@ mesh = SubResource("BoxMesh_7ycvg")
 shape = SubResource("BoxShape3D_7ycvg")
 
 [node name="Player" type="CharacterBody3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -33.8375, 3.8147e-06, -32.9542)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -37.4774, 3.8147e-06, -42.6863)
 collision_layer = 4
 collision_mask = 4
 script = ExtResource("1_o1tqw")
@@ -621,14 +621,14 @@ script = ExtResource("22_ghshe")
 [node name="ai_manager" type="Node" parent="AI"]
 script = ExtResource("24_fv2he")
 
-[node name="rbs_process" type="Node" parent="AI"]
-script = ExtResource("25_5smuj")
-
 [node name="ai_tech_state" type="Node" parent="AI"]
 script = ExtResource("26_y5ved")
 
 [node name="gat_process" type="Node" parent="AI"]
 script = ExtResource("27_kv3aw")
+
+[node name="rbs_process" type="Node" parent="AI"]
+script = ExtResource("25_5smuj")
 
 [node name="Timer" type="Timer" parent="AI"]
 

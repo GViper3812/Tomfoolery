@@ -3,8 +3,8 @@ extends Node
 signal resources_updated(requisition, requisition_gain, power, power_gain)
 signal resource_totals(requisition, power)
 
-var requisition : float = 500
-var power : float = 150
+var requisition : float = 1000
+var power : float = 300
 var requisition_gain : float = 20
 var power_gain : float = 5
 

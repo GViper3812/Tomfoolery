@@ -22,6 +22,17 @@ class UnitRequest:
 	var power_cost: int
 	var spawn_func: Callable
 
+func _ready():
+	request_build("lp")
+	
+	await get_tree().create_timer(1.0).timeout
+	request_unit("scout")
+	
+	await get_tree().create_timer(2.0).timeout
+	request_unit("grunt")
+	
+	start_capture_loop()
+
 func request_build(building_type: String, position := Vector3.ZERO):
 	var scene_path = "res://assets/building/AI/scene/"
 	var building_files := {
@@ -53,7 +64,7 @@ func request_build(building_type: String, position := Vector3.ZERO):
 				break
 		
 		if fob:
-			position = fob.global_transform.origin + Vector3(6, 0, 6)
+			position = fob.global_transform.origin + Vector3(0, 0, -5)
 		else:
 			print("[AI][RBS] No FOB found — cannot determine LP build location.")
 			return
@@ -90,6 +101,24 @@ func request_unit(unit_type: String):
 				lp.get_node("lp_manager").queue_action("spawn grunt squad", 5.0, scene)
 			
 			try_spawn_unit(req)
+		"scout":
+			var fob = get_available_fob()
+			if not fob:
+				print("[AI][RBS] No FOB available — cannot spawn scout.")
+				return
+
+			var scene = preload("res://assets/infantry/ai/scout.tscn")
+			var req = UnitRequest.new()
+			req.scene = scene
+			req.unit_type = "infantry"
+			req.cap_cost = 1
+			req.requisition_cost = 150
+			req.power_cost = 50
+			req.spawn_func = func():
+				fob.get_node("fob_queue").add_action("spawn scout", 3.0, scene)
+			
+			try_spawn_unit(req)
+
 		_:
 			print("[AI][RBS] Unknown unit type: ", unit_type)
 
@@ -127,3 +156,25 @@ func get_available_lp() -> Node:
 		if manager and manager.owner_id == player_id:
 			return b
 	return null
+
+func get_available_fob() -> Node:
+	for b in get_tree().get_nodes_in_group("building"):
+		var manager = b.get_node_or_null("fob_manager")
+		if manager and manager.owner_id == player_id:
+			return b
+	return null
+
+func start_capture_loop():
+	call_deferred("_capture_tick")
+
+func _capture_tick():
+	var all_units = []
+	for u in get_tree().get_nodes_in_group("unit"):
+		if u.has_method("capture_nearest_objective") and u.owner_id == player_id:
+			all_units.append(u)
+	
+	for unit in all_units:
+		unit.capture_nearest_objective()
+	
+	await get_tree().create_timer(10.0).timeout
+	_capture_tick()

@@ -11,20 +11,20 @@ class_name GATCommander
 func _ready():
 	init_army_units()
 
-func _process(delta: float) -> void:
-	if randi() % 1000 < 10:
-		thinking_cycle()
+#func _process(delta: float) -> void:
+#	if randi() % 1000 < 10:
+#		thinking_cycle()
 
-func thinking_cycle():
-	print("\n[AI][GAT] Thinking cycle...")
+#func thinking_cycle():
+#	print("\n[AI][GAT] Thinking cycle...")
 	
-	update_battlefield_knowledge()
-	print_visible_enemies()
+#	update_battlefield_knowledge()
+#	print_visible_enemies()
 	
-	request_lp_if_none()
+#	request_lp_if_none()
 	
-	if ts.can_spawn_grunt():
-		request_grunt_spawn()
+#	if ts.can_spawn_grunt():
+#		request_grunt_spawn()
 
 func request_lp_if_none():
 	var lp_found := false
